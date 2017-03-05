@@ -1,0 +1,23 @@
+{
+    "name": "rjvandoesburg/jira-rest-client",
+    "authors": [
+        {
+            "name": "Robert-John van Doesburg",
+            "email": "rjvandoesburg@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "version": "dev-master",
+    "require": {
+        "php": ">=5.6.4",
+        "laravel/framework": "5.4.*",
+        "guzzlehttp/guzzle": "^6.2",
+        "vlucas/phpdotenv": "^2.4",
+        "guzzlehttp/oauth-subscriber": "^0.3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Rjvandoesburg\\Jira\\": "src/"
+        }
+    }
+}
