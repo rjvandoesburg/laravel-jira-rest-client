@@ -34,11 +34,6 @@ class Builder extends \Illuminate\Database\Eloquent\Builder
      */
     public function getModels($columns = ['*'])
     {
-
-        dd($this->model->hydrate(
-            $this->query->get($columns)->all(),
-            'jira'
-        )->all());
         return $this->model->hydrate(
             $this->query->get($columns)->all(),
             'jira'
