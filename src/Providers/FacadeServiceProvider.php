@@ -1,11 +1,11 @@
 <?php
 
-namespace Rjvandoesburg\Jira\Providers;
+namespace Atlassian\JiraRest\Providers;
 
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
-use Rjvandoesburg\Jira\Helpers\Jira;
-use Rjvandoesburg\Jira\Facades\Jira as JiraFacade;
+use Atlassian\JiraRest\Helpers\Jira;
+use Atlassian\JiraRest\Facades\Jira as JiraFacade;
 
 class FacadeServiceProvider extends ServiceProvider
 {

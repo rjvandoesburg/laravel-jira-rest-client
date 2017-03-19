@@ -1,8 +1,8 @@
 <?php
 
-namespace Rjvandoesburg\Jira\Helpers;
+namespace Atlassian\JiraRest\Helpers;
 
-use Rjvandoesburg\Jira\Requests\Issue\IssueRequest;
+use Atlassian\JiraRest\Requests\Issue\IssueRequest;
 
 class Issues
 {

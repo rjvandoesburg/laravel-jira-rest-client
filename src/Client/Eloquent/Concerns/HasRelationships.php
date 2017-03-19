@@ -1,6 +1,6 @@
 <?php
 
-namespace Rjvandoesburg\Jira\Client\Eloquent\Concerns;
+namespace Atlassian\JiraRest\Client\Eloquent\Concerns;
 
 class HasRelationships
 {

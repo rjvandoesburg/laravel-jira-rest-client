@@ -1,8 +1,8 @@
 <?php
 
-namespace Rjvandoesburg\Jira\Models\Dashboard;
+namespace Atlassian\JiraRest\Models\Dashboard;
 
-use Rjvandoesburg\Jira\Models\JiraModel;
+use Atlassian\JiraRest\Models\JiraModel;
 
 class DashboardList extends JiraModel
 {

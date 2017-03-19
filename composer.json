@@ -1,5 +1,5 @@
 {
-    "name": "rjvandoesburg/jira-rest-client",
+    "name": "rjvandoesburg/laravel-jira-rest",
     "authors": [
         {
             "name": "Robert-John van Doesburg",
@@ -17,7 +17,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Rjvandoesburg\\Jira\\": "src/"
+            "Atlassian\\JiraRest\\": "src/"
         }
     }
 }

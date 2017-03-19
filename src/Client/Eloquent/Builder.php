@@ -1,6 +1,6 @@
 <?php
 
-namespace Rjvandoesburg\Jira\Client\Eloquent;
+namespace Atlassian\JiraRest\Client\Eloquent;
 
 class Builder extends \Illuminate\Database\Eloquent\Builder
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Rjvandoesburg\Jira\Helpers;
+namespace Atlassian\JiraRest\Helpers;
 
-use Rjvandoesburg\Jira\Requests\Project\ProjectRequest;
+use Atlassian\JiraRest\Requests\Project\ProjectRequest;
 
 class Projects
 {

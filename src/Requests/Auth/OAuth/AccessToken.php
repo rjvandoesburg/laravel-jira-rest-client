@@ -1,10 +1,10 @@
 <?php
 
-namespace Rjvandoesburg\Jira\Requests\Auth\OAuth;
+namespace Atlassian\JiraRest\Requests\Auth\OAuth;
 
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Subscriber\Oauth\Oauth1;
-use Rjvandoesburg\Jira\Requests\BaseRequest;
+use Atlassian\JiraRest\Requests\BaseRequest;
 
 class AccessToken extends BaseRequest
 {
@@ -46,12 +46,12 @@ class AccessToken extends BaseRequest
         $stack = HandlerStack::create();
 
         $middleware = new Oauth1([
-            'consumer_key'     => config('jira.auth.oauth.consumer_key'),
-            'consumer_secret'  => config('jira.auth.oauth.consumer_secret'),
+            'consumer_key'     => config('atlassian.jira-rest.auth.oauth.consumer_key'),
+            'consumer_secret'  => config('atlassian.jira-rest.auth.oauth.consumer_secret'),
             'token' => $token['oauth_token'],
             'token_secret' => $token['oauth_token_secret'],
-            'private_key_file' => config('jira.auth.oauth.private_key'),
-            'private_key_passphrase' => config('jira.auth.oauth.private_key_passphrase'),
+            'private_key_file' => config('atlassian.jira-rest.auth.oauth.private_key'),
+            'private_key_passphrase' => config('atlassian.jira-rest.auth.oauth.private_key_passphrase'),
             'signature_method' => Oauth1::SIGNATURE_METHOD_RSA,
         ]);
         $stack->push($middleware);
@@ -72,7 +72,7 @@ dd($token);
             throw new \Exception("An error occurred while requesting oauth token credentials");
         }
 
-        return redirect()->to(config('jira.host') . '/plugins/servlet/oauth/authorize?oauth_token=' . $token['oauth_token']);
+        return redirect()->to(config('atlassian.jira-rest.host') . '/plugins/servlet/oauth/authorize?oauth_token=' . $token['oauth_token']);
     }
 
     /**

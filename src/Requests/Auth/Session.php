@@ -1,8 +1,8 @@
 <?php
 
-namespace Rjvandoesburg\Jira\Requests\Auth;
+namespace Atlassian\JiraRest\Requests\Auth;
 
-use Rjvandoesburg\Jira\Requests\BaseRequest;
+use Atlassian\JiraRest\Requests\BaseRequest;
 
 class Session extends BaseRequest
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Rjvandoesburg\Jira\Facades;
+namespace Atlassian\JiraRest\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
@@ -15,7 +15,7 @@ class Jira extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return \Rjvandoesburg\Jira\Helpers\Jira::class;
+        return \Atlassian\JiraRest\Helpers\Jira::class;
     }
 
 }

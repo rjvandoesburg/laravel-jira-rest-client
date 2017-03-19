@@ -1,6 +1,6 @@
 <?php
 
-namespace Rjvandoesburg\Jira\Client\Grammar;
+namespace Atlassian\JiraRest\Client\Grammar;
 
 use Illuminate\Database\Query\Grammars\Grammar;
 use Illuminate\Database\Query\JoinClause;

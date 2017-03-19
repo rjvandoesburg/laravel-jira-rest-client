@@ -1,6 +1,6 @@
 <?php
 
-namespace Rjvandoesburg\Jira\Helpers;
+namespace Atlassian\JiraRest\Helpers;
 
 class Jira
 {

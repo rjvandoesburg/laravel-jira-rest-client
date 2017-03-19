@@ -1,9 +1,9 @@
 <?php
 
-namespace Rjvandoesburg\Jira\Models\Project;
+namespace Atlassian\JiraRest\Models\Project;
 
-use Rjvandoesburg\Jira\Models\Issue\Issue;
-use Rjvandoesburg\Jira\Models\JiraEloquentModel;
+use Atlassian\JiraRest\Models\Issue\Issue;
+use Atlassian\JiraRest\Models\JiraEloquentModel;
 
 class Project extends JiraEloquentModel
 {

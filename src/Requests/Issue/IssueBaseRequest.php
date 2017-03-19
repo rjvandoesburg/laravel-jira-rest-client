@@ -1,8 +1,8 @@
 <?php
 
-namespace Rjvandoesburg\Jira\Requests\Issue;
+namespace Atlassian\JiraRest\Requests\Issue;
 
-use Rjvandoesburg\Jira\Requests\BaseRequest;
+use Atlassian\JiraRest\Requests\BaseRequest;
 
 class IssueBaseRequest extends BaseRequest
 {

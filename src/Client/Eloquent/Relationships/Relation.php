@@ -1,6 +1,6 @@
 <?php
 
-namespace Rjvandoesburg\Jira\Client\Eloquent\Relationships;
+namespace Atlassian\JiraRest\Client\Eloquent\Relationships;
 
 use Closure;
 use Illuminate\Support\Arr;

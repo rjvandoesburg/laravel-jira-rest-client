@@ -1,9 +1,9 @@
 <?php
 
-namespace Rjvandoesburg\Jira\Client;
+namespace Atlassian\JiraRest\Client;
 
-use Rjvandoesburg\Jira\Client\Query\Builder as JqlBuilder;
-use Rjvandoesburg\Jira\Client\Grammar\JqlGrammar as QueryGrammar;
+use Atlassian\JiraRest\Client\Query\Builder as JqlBuilder;
+use Atlassian\JiraRest\Client\Grammar\JqlGrammar as QueryGrammar;
 use Illuminate\Database\Connection;
 
 class JiraConnection extends Connection

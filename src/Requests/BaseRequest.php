@@ -1,14 +1,14 @@
 <?php
 
-namespace Rjvandoesburg\Jira\Requests;
+namespace Atlassian\JiraRest\Requests;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Psr7;
-use Rjvandoesburg\Jira\Exceptions\JiraClientException;
-use Rjvandoesburg\Jira\Exceptions\JiraRequestException;
-use Rjvandoesburg\Jira\Exceptions\JiraUnauthorizedException;
-use Rjvandoesburg\Jira\Requests\Auth\Session;
+use Atlassian\JiraRest\Exceptions\JiraClientException;
+use Atlassian\JiraRest\Exceptions\JiraRequestException;
+use Atlassian\JiraRest\Exceptions\JiraUnauthorizedException;
+use Atlassian\JiraRest\Requests\Auth\Session;
 
 abstract class BaseRequest
 {
@@ -32,7 +32,7 @@ abstract class BaseRequest
     {
         if ($this->client === null) {
             $options = [
-                'base_uri' => config('jira.host'),
+                'base_uri' => config('atlassian.jira-rest.host'),
                 'headers' => [
                     'Accept' => 'application/json',
                     'Content-Type' => 'application/json'
@@ -41,11 +41,11 @@ abstract class BaseRequest
 
             // TODO: OAUTH
             if (! $this->skipAuthentication) {
-                switch (config('jira.default_auth')) {
+                switch (config('atlassian.jira-rest.default_auth')) {
                     case 'basic':
                         $options['auth'] = [
-                            config('jira.auth.basic.username'),
-                            config('jira.auth.basic.password')
+                            config('atlassian.jira-rest.auth.basic.username'),
+                            config('atlassian.jira-rest.auth.basic.password')
                         ];
                         break;
                     case 'cookie':
@@ -59,8 +59,8 @@ abstract class BaseRequest
 
                             $sessionRequest = new Session();
                             $cookie = $sessionRequest->post([
-                                'username' => config('jira.auth.basic.username'),
-                                'password' => config('jira.auth.basic.password')
+                                'username' => config('atlassian.jira-rest.auth.basic.username'),
+                                'password' => config('atlassian.jira-rest.auth.basic.password')
                             ]);
 
                             $cookie = json_decode($cookie);
@@ -231,7 +231,7 @@ abstract class BaseRequest
      */
     protected function getJiraHost()
     {
-        $host = config('jira.host');
+        $host = config('atlassian.jira-rest.host');
         $uri  = Psr7\uri_for($host);
 
         return $uri->getHost();

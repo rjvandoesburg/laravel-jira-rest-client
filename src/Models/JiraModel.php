@@ -1,8 +1,8 @@
 <?php
 
-namespace Rjvandoesburg\Jira\Models;
+namespace Atlassian\JiraRest\Models;
 
-use Rjvandoesburg\Jira\Traits\HasAttributes;
+use Atlassian\JiraRest\Traits\HasAttributes;
 
 abstract class JiraModel
 {

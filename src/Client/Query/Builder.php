@@ -1,6 +1,6 @@
 <?php
 
-namespace Rjvandoesburg\Jira\Client\Query;
+namespace Atlassian\JiraRest\Client\Query;
 
 use Closure;
 use Illuminate\Database\Query\Expression;

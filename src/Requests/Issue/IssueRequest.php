@@ -1,9 +1,9 @@
 <?php
 
-namespace Rjvandoesburg\Jira\Requests\Issue;
+namespace Atlassian\JiraRest\Requests\Issue;
 
-use Rjvandoesburg\Jira\Models\Issue\Issue;
-use Rjvandoesburg\Jira\Models\Issue\IssueList;
+use Atlassian\JiraRest\Models\Issue\Issue;
+use Atlassian\JiraRest\Models\Issue\IssueList;
 
 class IssueRequest extends IssueBaseRequest
 {

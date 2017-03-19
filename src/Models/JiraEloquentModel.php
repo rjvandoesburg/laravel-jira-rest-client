@@ -1,12 +1,12 @@
 <?php
 
-namespace Rjvandoesburg\Jira\Models;
+namespace Atlassian\JiraRest\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Rjvandoesburg\Jira\Client\Eloquent\Builder;
-use Rjvandoesburg\Jira\Client\Eloquent\Relationships\HasMany;
-use Rjvandoesburg\Jira\Client\JiraConnection;
-use Rjvandoesburg\Jira\Client\Query\Builder as QueryBuilder;
+use Atlassian\JiraRest\Client\Eloquent\Builder;
+use Atlassian\JiraRest\Client\Eloquent\Relationships\HasMany;
+use Atlassian\JiraRest\Client\JiraConnection;
+use Atlassian\JiraRest\Client\Query\Builder as QueryBuilder;
 
 abstract class JiraEloquentModel extends Model
 {

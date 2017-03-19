@@ -1,9 +1,9 @@
 <?php
 
-namespace Rjvandoesburg\Jira\Requests\Dashboard;
+namespace Atlassian\JiraRest\Requests\Dashboard;
 
-use Rjvandoesburg\Jira\Models\Dashboard\DashboardList;
-use Rjvandoesburg\Jira\Models\Dashboard\Dashboard as DashboardResponse;
+use Atlassian\JiraRest\Models\Dashboard\DashboardList;
+use Atlassian\JiraRest\Models\Dashboard\Dashboard as DashboardResponse;
 
 class Dashboard extends DashboardBaseRequest
 {

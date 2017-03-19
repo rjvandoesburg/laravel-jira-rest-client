@@ -1,6 +1,6 @@
 <?php
 
-namespace Rjvandoesburg\Jira\Traits;
+namespace Atlassian\JiraRest\Traits;
 
 use Carbon\Carbon;
 use DateTimeInterface;

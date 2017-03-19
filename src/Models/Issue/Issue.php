@@ -1,8 +1,8 @@
 <?php
 
-namespace Rjvandoesburg\Jira\Models\Issue;
+namespace Atlassian\JiraRest\Models\Issue;
 
-use Rjvandoesburg\Jira\Models\JiraEloquentModel;
+use Atlassian\JiraRest\Models\JiraEloquentModel;
 
 class Issue extends JiraEloquentModel
 {

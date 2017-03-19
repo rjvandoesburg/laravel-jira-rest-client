@@ -1,8 +1,8 @@
 <?php
 
-namespace Rjvandoesburg\Jira\Requests\Dashboard;
+namespace Atlassian\JiraRest\Requests\Dashboard;
 
-use Rjvandoesburg\Jira\Requests\BaseRequest;
+use Atlassian\JiraRest\Requests\BaseRequest;
 
 abstract class DashboardBaseRequest extends BaseRequest
 {

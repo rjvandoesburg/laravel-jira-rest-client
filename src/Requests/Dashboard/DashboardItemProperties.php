@@ -1,6 +1,6 @@
 <?php
 
-namespace Rjvandoesburg\Jira\Requests\Dashboard;
+namespace Atlassian\JiraRest\Requests\Dashboard;
 
 class DashboardItemProperties extends DashboardBaseRequest
 {

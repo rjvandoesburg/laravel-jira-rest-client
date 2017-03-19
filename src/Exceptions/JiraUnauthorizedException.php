@@ -1,6 +1,6 @@
 <?php
 
-namespace Rjvandoesburg\Jira\Exceptions;
+namespace Atlassian\JiraRest\Exceptions;
 
 use Illuminate\Validation\UnauthorizedException;
 
