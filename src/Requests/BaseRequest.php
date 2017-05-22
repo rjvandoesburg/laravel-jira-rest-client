@@ -2,13 +2,15 @@
 
 namespace Atlassian\JiraRest\Requests;
 
+use Atlassian\JiraRest\BasicAuthMiddleware;
+use Atlassian\JiraRest\FilterAcceptedOptions;
+use Atlassian\JiraRest\RequestBody;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Psr7;
 use Atlassian\JiraRest\Exceptions\JiraClientException;
 use Atlassian\JiraRest\Exceptions\JiraRequestException;
 use Atlassian\JiraRest\Exceptions\JiraUnauthorizedException;
-use Atlassian\JiraRest\Requests\Auth\Session;
 
 abstract class BaseRequest
 {
@@ -23,7 +25,11 @@ abstract class BaseRequest
 
     protected $requestResponse = null;
 
-    protected $skipAuthentication = false;
+    protected $skipAuthentication = true;
+
+    protected $middleware = [];
+
+    protected $requestBody;
 
     /**
      * @return Client
@@ -39,43 +45,19 @@ abstract class BaseRequest
                 ]
             ];
 
-            // TODO: OAUTH
-            if (! $this->skipAuthentication) {
-                switch (config('atlassian.jira-rest.default_auth')) {
-                    case 'basic':
-                        $options['auth'] = [
-                            config('atlassian.jira-rest.auth.basic.username'),
-                            config('atlassian.jira-rest.auth.basic.password')
-                        ];
-                        break;
-                    case 'cookie':
-                        // Perform new session request
-
-                        if ($cookie = \Cache::get('jira_cookie', false)) {
-                            $cookie = json_decode($cookie);
-
-                            $options['headers']['cookie'] = $cookie->name .'='.$cookie->value;
-                        } else {
-
-                            $sessionRequest = new Session();
-                            $cookie = $sessionRequest->post([
-                                'username' => config('atlassian.jira-rest.auth.basic.username'),
-                                'password' => config('atlassian.jira-rest.auth.basic.password')
-                            ]);
-
-                            $cookie = json_decode($cookie);
-
-                            $options['headers']['cookie'] = $cookie->name .'='.$cookie->value;
-                        }
-                        break;
-                }
-            }
-
             if (method_exists($this, 'beforeClientCreate')) {
                 $options = $this->beforeClientCreate($options);
             }
 
-            $this->client = new Client($options);
+            $this->middleware[] = BasicAuthMiddleware::class;
+
+            (app(\Illuminate\Pipeline\Pipeline::class))
+                ->send($options)
+                ->through($this->middleware)
+                ->then(function($options) {
+                    $this->client = new Client($options);
+                });
+
 
             if (method_exists($this, 'afterClientCreate')) {
                 $this->afterClientCreate();
@@ -131,10 +113,18 @@ abstract class BaseRequest
             $this->beforeHandle($method, $options);
         }
 
+        $requestBody = new RequestBody($method, $options);
         // Reject all options that are not set in $this->options
+        (app(\Illuminate\Pipeline\Pipeline::class))
+            ->send($requestBody)
+            ->through([
+                FilterAcceptedOptions::class
+            ])
+            ->then(function($requestBody) {
+                $this->requestBody = $requestBody;
+            });
 
 
-        $options = $this->FilterAcceptedOptions($method, $options);
 
         $this->execute($method, $options);
 
@@ -160,6 +150,7 @@ abstract class BaseRequest
             }
 
             $this->requestResponse = $client->request(strtoupper($method), $this->getRequestUrl(), $options);
+            dd($this->requestResponse);
         } catch (ClientException $exception) {
             if ($exception->getCode() === 401) {
                 throw new JiraUnauthorizedException('You are not authenticated. Authentication required to perform this operation.');
