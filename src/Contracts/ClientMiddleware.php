@@ -1,6 +1,6 @@
 <?php
 
-namespace Atlassian\JiraRest;
+namespace Atlassian\JiraRest\Contracts;
 
 interface ClientMiddleware
 {

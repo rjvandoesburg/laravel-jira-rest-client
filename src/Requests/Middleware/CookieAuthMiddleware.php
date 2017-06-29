@@ -1,7 +1,8 @@
 <?php
 
-namespace Atlassian\JiraRest;
+namespace Atlassian\JiraRest\Requests\Middleware;
 
+use Atlassian\JiraRest\Contracts\ClientMiddleware;
 use Closure;
 use Atlassian\JiraRest\Requests\Auth\Session;
 

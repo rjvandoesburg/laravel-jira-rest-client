@@ -1,19 +1,33 @@
 <?php
 
-namespace Atlassian\JiraRest;
+namespace Atlassian\JiraRest\Requests;
 
+use Atlassian\JiraRest\Requests\BaseRequest;
 use Illuminate\Contracts\Support\Arrayable;
 
 class RequestBody implements Arrayable
 {
+
+    /**
+     * @var BaseRequest
+     */
+    protected $request;
+
+    /**
+     * @var string
+     */
     protected $method;
 
+    /**
+     * @var array
+     */
     protected $options;
 
-    public function __construct($method, $options)
+    public function __construct(BaseRequest $request, $method, array $options = [])
     {
         $this->method = $method;
         $this->options = $options;
+        $this->request = $request;
     }
 
     /**
@@ -51,6 +65,14 @@ class RequestBody implements Arrayable
     public function setOptions($options)
     {
         $this->options = $options;
+    }
+
+    /**
+     * @return BaseRequest
+     */
+    public function getRequest()
+    {
+        return $this->request;
     }
 
 

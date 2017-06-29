@@ -20,7 +20,7 @@
             "Atlassian\\JiraRest\\": "src/"
         },
         "files": [
-            "src/Helpers.php"
+            "src/helpers.php"
         ]
     }
 }

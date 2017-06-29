@@ -1,20 +1,18 @@
 <?php
 
-namespace Atlassian\JiraRest;
+namespace Atlassian\JiraRest\Requests\Middleware;
 
+use Atlassian\JiraRest\Contracts\ClientMiddleware;
 use Closure;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 
 class BasicAuthMiddleware implements ClientMiddleware
 {
 
-
     public function handle($options, Closure $next)
     {
         $options['auth'] = [
-            config('atlassian.jira-rest.auth.basic.username'),
-            config('atlassian.jira-rest.auth.basic.password')
+            config('atlassian.jira.auth.basic.username'),
+            config('atlassian.jira.auth.basic.password')
         ];
 
 

@@ -2,9 +2,8 @@
 
 namespace Atlassian\JiraRest\Requests;
 
-use Atlassian\JiraRest\BasicAuthMiddleware;
-use Atlassian\JiraRest\FilterAcceptedOptions;
-use Atlassian\JiraRest\RequestBody;
+use Atlassian\JiraRest\Requests\Middleware\BasicAuthMiddleware;
+use Atlassian\JiraRest\Requests\Middleware\FilterAcceptedOptions;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Psr7;
@@ -27,42 +26,42 @@ abstract class BaseRequest
 
     protected $skipAuthentication = true;
 
-    protected $middleware = [];
+    protected $clientOptionsMiddleware = [
+        BasicAuthMiddleware::class
+    ];
+
+    protected $requestMiddleware = [
+        FilterAcceptedOptions::class
+    ];
 
     protected $requestBody;
 
     /**
      * @return Client
      */
-    public function getClient()
+    public function createClient()
     {
-        if ($this->client === null) {
-            $options = [
-                'base_uri' => config('atlassian.jira-rest.host'),
-                'headers' => [
-                    'Accept' => 'application/json',
-                    'Content-Type' => 'application/json'
-                ]
-            ];
+        $handlerStack = new HandlerStack();
+        $handlerStack->setHandler(\GuzzleHttp\choose_handler());
+        $handlerStack->handle();
 
-            if (method_exists($this, 'beforeClientCreate')) {
-                $options = $this->beforeClientCreate($options);
-            }
+        // Default Options
+        $options = [
+            'base_uri' => config('atlassian.jira.host'),
+            'headers' => [
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json'
+            ],
+            'handler' => $handlerStack
+        ];
 
-            $this->middleware[] = BasicAuthMiddleware::class;
-
-            (app(\Illuminate\Pipeline\Pipeline::class))
-                ->send($options)
-                ->through($this->middleware)
-                ->then(function($options) {
-                    $this->client = new Client($options);
-                });
-
-
-            if (method_exists($this, 'afterClientCreate')) {
-                $this->afterClientCreate();
-            }
-        }
+        // Pipe the options through all middleware
+        (app(\Illuminate\Pipeline\Pipeline::class))
+            ->send($options)
+            ->through($this->clientOptionsMiddleware)
+            ->then(function($options) {
+                $this->client = new Client($options);
+            });
 
         return $this->client;
     }
@@ -107,50 +106,46 @@ abstract class BaseRequest
         ];
     }
 
+    /**
+     * @param $method
+     * @param array $options
+     *
+     * @return \GuzzleHttp\Psr7\Stream
+     */
     protected function handle($method, $options = [])
     {
         if (method_exists($this, 'beforeHandle')) {
             $this->beforeHandle($method, $options);
         }
 
-        $requestBody = new RequestBody($method, $options);
-        // Reject all options that are not set in $this->options
+        // Pipe the request through middleware before executing the request
         (app(\Illuminate\Pipeline\Pipeline::class))
-            ->send($requestBody)
-            ->through([
-                FilterAcceptedOptions::class
-            ])
-            ->then(function($requestBody) {
-                $this->requestBody = $requestBody;
+            ->send(new RequestBody($this, $method, $options))
+            ->through($this->requestMiddleware)
+            ->then(function(RequestBody $requestBody) {
+                $this->execute($requestBody);
             });
 
-
-
-        $this->execute($method, $options);
-
         if (method_exists($this, 'handleResponse')) {
-            return $this->handleResponse($this->requestResponse->getBody()->getContents(), $method);
+            return $this->handleResponse($this->requestResponse->getBody(), $method);
         }
 
-        return json_decode($this->requestResponse->getBody()->getContents());
+        return $this->requestResponse->getBody();
     }
 
-    protected function execute($method, $options)
+    /**
+     * Execute the request and return the response as a stream
+     *
+     * @param RequestBody $requestBody
+     *
+     * @throws JiraClientException
+     */
+    protected function execute(RequestBody $requestBody)
     {
-        $client = $this->getClient();
-        try {
-            if ($method === 'get') {
-                $options = [
-                    'query' => $options
-                ];
-            } else {
-                $options = [
-                    'json' => $options
-                ];
-            }
+        $client = $this->createClient();
 
-            $this->requestResponse = $client->request(strtoupper($method), $this->getRequestUrl(), $options);
-            dd($this->requestResponse);
+        try {
+            $this->requestResponse = $client->request(strtoupper($requestBody->getMethod()), $this->getRequestUrl(), $requestBody->toArray());
         } catch (ClientException $exception) {
             if ($exception->getCode() === 401) {
                 throw new JiraUnauthorizedException('You are not authenticated. Authentication required to perform this operation.');
@@ -198,34 +193,34 @@ abstract class BaseRequest
     }
 
     /**
-     * @param $method
-     * @param $options
-     *
-     * @return array
-     */
-    protected function FilterAcceptedOptions($method, $options)
-    {
-        return collect($options)->mapWithKeys(function ($value, $option) {
-            // Just in case we want to use lowe case :)
-            return [camel_case($option) => $value];
-        })->filter(function ($value, $option) use ($method) {
-            if (! isset($this->options[$method])) {
-                return false;
-            }
-
-            return in_array($option, $this->options[$method]);
-        })->toArray();
-    }
-
-    /**
      * @return string
      */
     protected function getJiraHost()
     {
-        $host = config('atlassian.jira-rest.host');
+        $host = config('atlassian.jira.host');
         $uri  = Psr7\uri_for($host);
 
         return $uri->getHost();
+    }
+
+    /**
+     * Get all available options or options specific for a method
+     *
+     * @param null $method
+     *
+     * @return array
+     */
+    public function getAvailableOptions($method = null)
+    {
+        if ($method === null) {
+            return $this->options;
+        }
+
+        if (array_key_exists($method, $this->options)) {
+            return $this->options[$method];
+        }
+
+        return [];
     }
 
 }

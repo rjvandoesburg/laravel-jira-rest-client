@@ -1,29 +1,31 @@
 <?php
 
-namespace Atlassian\JiraRest;
+namespace Atlassian\JiraRest\Requests\Middleware;
 
+use Atlassian\JiraRest\Requests\RequestBody;
 use Closure;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 
 class FilterAcceptedOptions
 {
 
 
-    public function handle(RequestBody $request, Closure $next)
+    public function handle(RequestBody $requestBody, Closure $next)
     {
-        $options = collect($request->getOptions())
+        $availableOptions = $requestBody->getRequest()->getAvailableOptions($requestBody->getMethod());
+
+        $options = collect($requestBody->getOptions())
             ->mapWithKeys(function ($value, $option) {
-            // Just in case we want to use lowe case :)
+            // Just in case we want to use lower case :)
             return [camel_case($option) => $value];
-        })->filter(function ($value, $option) use ($request) {
-            if (! isset($this->options[$method])) {
+        })->filter(function ($value, $option) use ($availableOptions) {
+            if (empty($availableOptions)) {
                 return false;
             }
-
-            return in_array($option, $this->options[$method]);
+            return in_array($option, $availableOptions);
         })->toArray();
 
-        return $next($options);
+        $requestBody->setOptions($options);
+
+        return $next($requestBody);
     }
 }

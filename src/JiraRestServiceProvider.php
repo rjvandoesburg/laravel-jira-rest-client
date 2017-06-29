@@ -16,7 +16,7 @@ class JiraRestServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/Config/jira-rest.php' => config_path('jira-rest.php'),
+            __DIR__.'/Config/jira.php' => config_path('atlassian/jira.php'),
         ]);
     }
 
@@ -28,7 +28,7 @@ class JiraRestServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(
-            __DIR__.'/Config/jira-rest.php', 'atlassian.jira-rest'
+            __DIR__.'/Config/jira.php', 'atlassian.jira'
         );
 
         $this->app->register(FacadeServiceProvider::class);
