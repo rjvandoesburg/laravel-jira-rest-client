@@ -6,11 +6,11 @@
             "email": "rjvandoesburg@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
-    "version": "dev-master",
+    "minimum-stability": "stable",
+    "version": "0.0.2",
     "require": {
-        "php": ">=5.6.4",
-        "laravel/framework": "5.4.*",
+        "php": ">=7.0",
+        "laravel/framework": ">=5.4",
         "guzzlehttp/guzzle": "^6.2",
         "vlucas/phpdotenv": "^2.4",
         "guzzlehttp/oauth-subscriber": "^0.3.0"
