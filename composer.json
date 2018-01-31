@@ -6,11 +6,11 @@
             "email": "rjvandoesburg@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "version": "dev-master",
     "require": {
-        "php": ">=5.6.4",
-        "laravel/framework": "5.4.*",
+        "php": ">=7.0",
+        "laravel/framework": ">=5.4",
         "guzzlehttp/guzzle": "^6.2",
         "vlucas/phpdotenv": "^2.4",
         "guzzlehttp/oauth-subscriber": "^0.3.0"
@@ -22,5 +22,15 @@
         "files": [
             "src/helpers.php"
         ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Atlassian\\JiraRest\\JiraRestServiceProvider"
+            ],
+            "aliases": {
+                "Jira": "Atlassian\\JiraRest\\Facades\\Jira"
+            }
+        }
     }
 }

@@ -3,7 +3,6 @@
 namespace Atlassian\JiraRest;
 
 use Illuminate\Support\ServiceProvider;
-use Atlassian\JiraRest\Providers\FacadeServiceProvider;
 
 class JiraRestServiceProvider extends ServiceProvider
 {
@@ -30,7 +29,5 @@ class JiraRestServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__.'/Config/jira.php', 'atlassian.jira'
         );
-
-        $this->app->register(FacadeServiceProvider::class);
     }
 }
