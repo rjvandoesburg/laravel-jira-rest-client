@@ -3,7 +3,6 @@
 namespace Atlassian\JiraRest;
 
 use Illuminate\Support\ServiceProvider;
-use Atlassian\JiraRest\Providers\FacadeServiceProvider;
 
 class JiraRestServiceProvider extends ServiceProvider
 {
@@ -16,7 +15,7 @@ class JiraRestServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/Config/jira-rest.php' => config_path('jira-rest.php'),
+            __DIR__.'/jira-rest.php' => config_path('atlassian/jira-rest.php'),
         ]);
     }
 
@@ -30,7 +29,5 @@ class JiraRestServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__.'/Config/jira-rest.php', 'atlassian.jira-rest'
         );
-
-        $this->app->register(FacadeServiceProvider::class);
     }
 }

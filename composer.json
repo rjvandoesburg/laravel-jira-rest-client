@@ -7,7 +7,7 @@
         }
     ],
     "minimum-stability": "stable",
-    "version": "0.0.2",
+    "version": "dev-master",
     "require": {
         "php": ">=7.0",
         "laravel/framework": ">=5.4",
@@ -18,6 +18,16 @@
     "autoload": {
         "psr-4": {
             "Atlassian\\JiraRest\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Atlassian\\JiraRest\\JiraRestServiceProvider"
+            ],
+            "aliases": {
+                "Jira": "Atlassian\\JiraRest\\Facades\\Jira"
+            }
         }
     }
 }
