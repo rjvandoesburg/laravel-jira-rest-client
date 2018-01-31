@@ -2,9 +2,9 @@
 
 namespace Atlassian\JiraRest\Requests\Project;
 
-use Atlassian\JiraRest\Requests\BaseRequest;
+use Atlassian\JiraRest\Requests\AbstractRequest;
 
-class ProjectBaseRequest extends BaseRequest
+class ProjectAbstractRequest extends AbstractRequest
 {
 
     /**

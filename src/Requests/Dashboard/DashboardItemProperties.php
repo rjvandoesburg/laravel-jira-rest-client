@@ -2,7 +2,7 @@
 
 namespace Atlassian\JiraRest\Requests\Dashboard;
 
-class DashboardItemProperties extends DashboardBaseRequest
+class DashboardItemProperties extends DashboardAbstractRequest
 {
     protected $dashboardId;
 

@@ -4,9 +4,9 @@ namespace Atlassian\JiraRest\Requests\Auth\OAuth;
 
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Subscriber\Oauth\Oauth1;
-use Atlassian\JiraRest\Requests\BaseRequest;
+use Atlassian\JiraRest\Requests\AbstractRequest;
 
-class AccessToken extends BaseRequest
+class AccessToken extends AbstractRequest
 {
     protected $skipAuthentication = true;
 
@@ -64,10 +64,9 @@ class AccessToken extends BaseRequest
 
     public function handleResponse($response)
     {
-
         $token = [];
         parse_str($response, $token);
-dd($token);
+
         if (empty($token)) {
             throw new \Exception("An error occurred while requesting oauth token credentials");
         }

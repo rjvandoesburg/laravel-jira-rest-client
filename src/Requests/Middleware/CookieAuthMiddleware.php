@@ -4,7 +4,7 @@ namespace Atlassian\JiraRest\Requests\Middleware;
 
 use Atlassian\JiraRest\Contracts\ClientMiddleware;
 use Closure;
-use Atlassian\JiraRest\Requests\Auth\Session;
+use Atlassian\JiraRest\Requests\Auth\SessionRequest;
 
 class CookieAuthMiddleware implements ClientMiddleware
 {
@@ -17,7 +17,7 @@ class CookieAuthMiddleware implements ClientMiddleware
 
             $options['headers']['cookie'] = $cookie->name .'='.$cookie->value;
         } else {
-            $sessionRequest = new Session();
+            $sessionRequest = new SessionRequest();
             $cookie = $sessionRequest->post([
                 'username' => config('atlassian.jira-rest.auth.basic.username'),
                 'password' => config('atlassian.jira-rest.auth.basic.password')

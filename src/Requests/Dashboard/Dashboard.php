@@ -5,7 +5,7 @@ namespace Atlassian\JiraRest\Requests\Dashboard;
 use Atlassian\JiraRest\Models\Dashboard\DashboardList;
 use Atlassian\JiraRest\Models\Dashboard\Dashboard as DashboardResponse;
 
-class Dashboard extends DashboardBaseRequest
+class Dashboard extends DashboardAbstractRequest
 {
     protected $dashboardId = null;
 

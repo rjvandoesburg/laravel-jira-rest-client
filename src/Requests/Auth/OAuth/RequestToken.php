@@ -4,9 +4,9 @@ namespace Atlassian\JiraRest\Requests\Auth\OAuth;
 
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Subscriber\Oauth\Oauth1;
-use Atlassian\JiraRest\Requests\BaseRequest;
+use Atlassian\JiraRest\Requests\AbstractRequest;
 
-class RequestToken extends BaseRequest
+class RequestToken extends AbstractRequest
 {
 
     protected $skipAuthentication = true;

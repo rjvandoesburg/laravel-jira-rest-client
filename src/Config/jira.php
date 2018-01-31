@@ -20,4 +20,16 @@ return [
     ],
 
     'log_level' => env('JIRA_LOG_LEVEL', 'WARNING'),
+
+    'client_options' => [
+        'auth' => \Atlassian\JiraRest\Requests\Middleware\BasicAuthMiddleware::class,
+    ],
+
+    // List of custom fields defined in Jira
+    'customfields' => [],
+
+    'session' => [
+        'name' => 'jira_session',
+        'duration' => 3600
+    ]
 ];

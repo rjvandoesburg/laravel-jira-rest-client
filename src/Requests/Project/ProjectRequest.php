@@ -4,7 +4,7 @@ namespace Atlassian\JiraRest\Requests\Project;
 
 use Atlassian\JiraRest\Models\Project\Project;
 
-class ProjectRequest extends ProjectBaseRequest
+class ProjectRequest extends ProjectAbstractRequest
 {
 
     protected $project = null;

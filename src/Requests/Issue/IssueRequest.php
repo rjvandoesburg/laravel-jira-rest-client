@@ -2,59 +2,121 @@
 
 namespace Atlassian\JiraRest\Requests\Issue;
 
-use Atlassian\JiraRest\Models\Issue\Issue;
-use Atlassian\JiraRest\Models\Issue\IssueList;
+use Atlassian\JiraRest\Requests\AbstractRequest;
+use Atlassian\JiraRest\Requests\Issue\Parameters\CreateParameters;
+use Atlassian\JiraRest\Requests\Issue\Parameters\DeleteParameters;
+use Atlassian\JiraRest\Requests\Issue\Parameters\GetParameters;
+use Atlassian\JiraRest\Requests\Issue\Parameters\SearchParameters;
+use Atlassian\JiraRest\Requests\Issue\Parameters\EditParameters;
 
-class IssueRequest extends IssueBaseRequest
+class IssueRequest extends AbstractRequest
 {
-
-    protected $issue = null;
-
-    protected $options = [
-        'get' => [
-            'jql',
-            'start_at',
-            'max_results',
-            'validate_query',
-            'fields',
-            'expand'
-        ]
-    ];
-
     /**
-     * @var bool
-     */
-    protected $raw;
-
-    public function __construct($issue = null, $raw = false)
-    {
-        $this->issue = $issue;
-        $this->raw = $raw;
-    }
-
-    /**
-     * Get the resource to call
+     * Api resource to hit
      *
-     * @return string
+     * @var string
      */
-    public function getResource()
+    protected $resource = 'issue';
+
+    /**
+     * Creates an issue or a sub-task from a JSON representation.
+     *
+     * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-issue-post
+     *
+     * @param \Atlassian\JiraRest\Requests\Issue\Parameters\CreateParameters|array $parameters
+     *
+     * @return \GuzzleHttp\Psr7\Response
+     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \TypeError
+     */
+    public function create($parameters = [])
     {
-        return 'search';
+        $this->validateParameters($parameters, CreateParameters::class);
+
+        return $this->execute('post', $parameters);
     }
 
-    public function handleResponse($response)
+    /**
+     * Returns a full representation of the issue for the given issue key.
+     *
+     * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-issue-issueIdOrKey-get
+     *
+     * @param string|int $issueIdOrKey
+     * @param \Atlassian\JiraRest\Requests\Issue\Parameters\GetParameters|array $parameters
+     *
+     * @return \GuzzleHttp\Psr7\Response
+     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \TypeError
+     */
+    public function get($issueIdOrKey, $parameters = [])
     {
-        $response = json_decode($response);
+        $this->validateParameters($parameters, GetParameters::class);
 
-        if ($this->raw) {
-            return $response;
-        }
+        $this->setResource("issue/{$issueIdOrKey}");
 
-        if ($this->issue === null) {
-            return IssueList::fromJira($response)->issues;
-        }
+        return $this->execute('get', $parameters);
+    }
 
-        return Issue::fromJira($response);
+    /**
+     * Edits the issue from a JSON representation.
+     *
+     * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-issue-issueIdOrKey-put
+     *
+     * @param string|int $issueIdOrKey
+     * @param \Atlassian\JiraRest\Requests\Issue\Parameters\EditParameters|array $parameters
+     *
+     * @return \GuzzleHttp\Psr7\Response
+     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \TypeError
+     */
+    public function edit($issueIdOrKey, $parameters = [])
+    {
+        $this->validateParameters($parameters, EditParameters::class);
+
+        $this->setResource("issue/{$issueIdOrKey}");
+
+        return $this->execute('put', $parameters);
+    }
+
+    /**
+     * Deletes an individual issue.
+     *
+     * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-issue-issueIdOrKey-delete
+     *
+     * @param string|int $issueIdOrKey
+     * @param \Atlassian\JiraRest\Requests\Issue\Parameters\DeleteParameters|array $parameters
+     *
+     * @return \GuzzleHttp\Psr7\Response
+     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \TypeError
+     */
+    public function delete($issueIdOrKey, $parameters = [])
+    {
+        $this->validateParameters($parameters, DeleteParameters::class);
+
+        $this->setResource("issue/{$issueIdOrKey}");
+
+        return $this->execute('delete', $parameters);
+    }
+
+    /**
+     * Searches for issues using JQL.
+     *
+     * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-search-get
+     *
+     * @param \Atlassian\JiraRest\Requests\Issue\Parameters\SearchParameters|array $parameters
+     *
+     * @return \GuzzleHttp\Psr7\Response
+     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \TypeError
+     */
+    public function search($parameters)
+    {
+        $this->validateParameters($parameters, SearchParameters::class);
+
+        $this->setResource('search');
+
+        return $this->execute('post', $parameters);
     }
 
 }

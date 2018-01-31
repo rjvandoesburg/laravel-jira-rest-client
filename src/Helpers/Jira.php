@@ -4,14 +4,27 @@ namespace Atlassian\JiraRest\Helpers;
 
 class Jira
 {
-
-    public function projects()
+    /**
+     * @return \Atlassian\JiraRest\Helpers\Session
+     */
+    public function session()
     {
-        return new Projects();
+        return new Session;
     }
 
+    /**
+     * @return \Atlassian\JiraRest\Helpers\Projects
+     */
+    public function projects()
+    {
+        return new Projects;
+    }
+
+    /**
+     * @return \Atlassian\JiraRest\Helpers\Issues
+     */
     public function issues()
     {
-        return new Issues();
+        return new Issues;
     }
 }
