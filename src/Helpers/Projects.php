@@ -6,18 +6,42 @@ use Atlassian\JiraRest\Requests\Project\ProjectRequest;
 
 class Projects
 {
-    public function all()
-    {
-        $request = new ProjectRequest();
+    /**
+     * @var \Atlassian\JiraRest\Requests\Issue\IssueRequest
+     */
+    protected $request;
 
-        return $request->get();
+    /**
+     * Session constructor.
+     */
+    public function __construct()
+    {
+        $this->request = app(ProjectRequest::class);
     }
 
-    public function get($project)
+    /**
+     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \TypeError
+     */
+    public function all()
     {
-        $request = new ProjectRequest($project);
+        $response = $this->request->all();
 
-        return $request->get();
+        return json_decode($response->getBody(), true);
+    }
+
+    /**
+     * @param int|string $projectIdOrKey
+     *
+     * @return mixed
+     */
+    public function get($projectIdOrKey)
+    {
+        $response = $this->request->get($projectIdOrKey);
+
+        return json_decode($response->getBody(), true);
     }
 
 }

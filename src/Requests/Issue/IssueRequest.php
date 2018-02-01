@@ -27,13 +27,15 @@ class IssueRequest extends AbstractRequest
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      * @throws \TypeError
      */
     public function create($parameters = [])
     {
         $this->validateParameters($parameters, CreateParameters::class);
 
-        return $this->execute('post', $parameters);
+        return $this->execute('post', 'issue', $parameters);
     }
 
     /**
@@ -46,15 +48,15 @@ class IssueRequest extends AbstractRequest
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      * @throws \TypeError
      */
     public function get($issueIdOrKey, $parameters = [])
     {
         $this->validateParameters($parameters, GetParameters::class);
 
-        $this->setResource("issue/{$issueIdOrKey}");
-
-        return $this->execute('get', $parameters);
+        return $this->execute('get', "issue/{$issueIdOrKey}", $parameters);
     }
 
     /**
@@ -67,15 +69,15 @@ class IssueRequest extends AbstractRequest
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      * @throws \TypeError
      */
     public function edit($issueIdOrKey, $parameters = [])
     {
         $this->validateParameters($parameters, EditParameters::class);
 
-        $this->setResource("issue/{$issueIdOrKey}");
-
-        return $this->execute('put', $parameters);
+        return $this->execute('put', "issue/{$issueIdOrKey}", $parameters);
     }
 
     /**
@@ -88,15 +90,15 @@ class IssueRequest extends AbstractRequest
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      * @throws \TypeError
      */
     public function delete($issueIdOrKey, $parameters = [])
     {
         $this->validateParameters($parameters, DeleteParameters::class);
 
-        $this->setResource("issue/{$issueIdOrKey}");
-
-        return $this->execute('delete', $parameters);
+        return $this->execute('delete', "issue/{$issueIdOrKey}", $parameters);
     }
 
     /**
@@ -108,15 +110,15 @@ class IssueRequest extends AbstractRequest
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      * @throws \TypeError
      */
     public function search($parameters)
     {
         $this->validateParameters($parameters, SearchParameters::class);
 
-        $this->setResource('search');
-
-        return $this->execute('post', $parameters);
+        return $this->execute('post', 'search', $parameters);
     }
 
 }

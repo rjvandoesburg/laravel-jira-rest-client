@@ -2,13 +2,13 @@
 
 namespace Atlassian\JiraRest\Requests\Middleware;
 
-use Atlassian\JiraRest\Contracts\ClientMiddleware;
 use Closure;
 
-class SudoMiddleware implements ClientMiddleware
+class SudoMiddleware
 {
-
     /**
+     * Handle an incoming request.
+     *
      * @param $options
      * @param \Closure $next
      *

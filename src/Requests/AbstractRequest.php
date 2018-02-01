@@ -67,11 +67,13 @@ abstract class AbstractRequest
     /**
      * Get the request url
      *
+     * @param string $resource
+     *
      * @return \Psr\Http\Message\UriInterface
      */
-    public function getRequestUrl()
+    public function getRequestUrl($resource)
     {
-        return Psr7\uri_for($this->getApi().'/'.$this->getResource());
+        return Psr7\uri_for($this->getApi().'/'.$resource);
     }
 
     /**
@@ -85,43 +87,24 @@ abstract class AbstractRequest
     }
 
     /**
-     * Get the resource to call
-     *
-     * @return string
-     */
-    public function getResource()
-    {
-        return $this->resource;
-    }
-
-    /**
-     * @param $resource
-     *
-     * @return \Atlassian\JiraRest\Requests\AbstractRequest
-     */
-    public function setResource($resource)
-    {
-        $this->resource = $resource;
-
-        return $this;
-    }
-
-    /**
      * Execute the request and return the response as a stream
      *
-     * @param $method
+     * @param string $method
+     * @param string $resource
      * @param array $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      */
-    protected function execute($method, $parameters = [])
+    protected function execute($method, $resource, $parameters = [])
     {
+        $method = strtoupper($method);
         $client = $this->createClient();
 
         try {
-            return $client->request(strtoupper($method), $this->getRequestUrl(),
-                $this->getOptions($method, $parameters));
+            return $client->request($method, $this->getRequestUrl($resource), $this->getOptions($method, $parameters));
         } catch (RequestException $exception) {
             $message = $this->getJiraException($exception);
 
@@ -177,7 +160,7 @@ abstract class AbstractRequest
         }
 
         // When dealing with a get request set the parameters as query
-        if ($method === 'get') {
+        if ($method === 'GET') {
             return [
                 'query' => $parameters,
             ];

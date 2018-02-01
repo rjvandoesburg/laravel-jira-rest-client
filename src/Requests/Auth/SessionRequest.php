@@ -8,13 +8,6 @@ use Atlassian\JiraRest\Requests\AbstractRequest;
 class SessionRequest extends AbstractRequest
 {
     /**
-     * Api resource to hit
-     *
-     * @var string
-     */
-    protected $resource = 'session';
-
-    /**
      * Get the Api to call agains
      *
      * @return string
@@ -31,11 +24,13 @@ class SessionRequest extends AbstractRequest
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      * @throws \TypeError
      */
     public function get()
     {
-        return $this->execute('get');
+        return $this->execute('get', 'session');
     }
 
     /**
@@ -47,6 +42,8 @@ class SessionRequest extends AbstractRequest
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      * @throws \TypeError
      */
     public function login($parameters)
@@ -54,7 +51,7 @@ class SessionRequest extends AbstractRequest
         $this->validateParameters($parameters, LoginParameters::class);
         $this->disableMiddleware('auth');
 
-        return $this->execute('post', $parameters);
+        return $this->execute('post', 'session', $parameters);
     }
 
     /**
@@ -64,10 +61,12 @@ class SessionRequest extends AbstractRequest
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      * @throws \TypeError
      */
     public function logout()
     {
-        return $this->execute('delete');
+        return $this->execute('delete', 'session');
     }
 }

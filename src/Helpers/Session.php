@@ -29,16 +29,19 @@ class Session
     }
 
     /**
-     * @param $parameters
+     * @param $username
+     * @param $password
      *
      * @return string
-     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
-     * @throws \TypeError
      */
-    public function login($parameters)
+    public function login($username, $password)
     {
-        $response = $this->request->login($parameters);
-        $response = json_decode((string) $response->getBody(), true);
+        $response = $this->request->login([
+            'username' => $username,
+            'password' => $password
+        ]);
+
+        $response = json_decode($response->getBody(), true);
 
         $cookie = json_encode(Arr::get($response, 'session'));
 
@@ -49,8 +52,6 @@ class Session
 
     /**
      * @return bool
-     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
-     * @throws \TypeError
      */
     public function logout()
     {
