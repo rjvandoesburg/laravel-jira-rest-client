@@ -3,6 +3,8 @@
 namespace Atlassian\JiraRest\Requests\Project;
 
 use Atlassian\JiraRest\Requests\AbstractRequest;
+use Atlassian\JiraRest\Requests\Project\Parameters\CreateParameters;
+use Atlassian\JiraRest\Requests\Project\Parameters\GetAllParameters;
 
 class ProjectRequest extends AbstractRequest
 {
@@ -12,15 +14,18 @@ class ProjectRequest extends AbstractRequest
      *
      * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-project-get
      *
+     * @param \Atlassian\JiraRest\Requests\Project\Parameters\GetAllParameters|array $parameters
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      * @throws \TypeError
      */
-    public function all()
+    public function all($parameters = [])
     {
-        // TODO: Implement all method
+        $this->validateParameters($parameters, GetAllParameters::class);
+
+        return $this->execute('get', 'project', $parameters);
     }
 
     /**
@@ -28,15 +33,18 @@ class ProjectRequest extends AbstractRequest
      *
      * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-project-post
      *
+     * @param \Atlassian\JiraRest\Requests\Project\Parameters\CreateParameters|array $parameters
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      * @throws \TypeError
      */
-    public function create()
+    public function create($parameters = [])
     {
-        // TODO: Implement create method
+        $this->validateParameters($parameters, CreateParameters::class);
+
+        return $this->execute('post', 'project', $parameters);
     }
 
     /**
@@ -45,6 +53,7 @@ class ProjectRequest extends AbstractRequest
      * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-project-projectIdOrKey-get
      *
      * @param int|string $projectIdOrKey
+     * @param \Atlassian\JiraRest\Requests\Project\Parameters\GetParameters|array $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
@@ -52,9 +61,11 @@ class ProjectRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      * @throws \TypeError
      */
-    public function get($projectIdOrKey)
+    public function get($projectIdOrKey, $parameters = [])
     {
-        // TODO: Implement get method
+        $this->validateParameters($parameters, GetAllParameters::class);
+
+        return $this->execute('get', "project/{$projectIdOrKey}", $parameters);
     }
 
     /**
@@ -63,6 +74,7 @@ class ProjectRequest extends AbstractRequest
      * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-project-projectIdOrKey-put
      *
      * @param int|string $projectIdOrKey
+     * @param \Atlassian\JiraRest\Requests\Project\Parameters\UpdateParameters|array $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
@@ -70,9 +82,11 @@ class ProjectRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      * @throws \TypeError
      */
-    public function update($projectIdOrKey)
+    public function update($projectIdOrKey, $parameters = [])
     {
-        // TODO: Implement update method
+        $this->validateParameters($parameters, GetAllParameters::class);
+
+        return $this->execute('put', "project/{$projectIdOrKey}", $parameters);
     }
 
     /**
@@ -90,7 +104,7 @@ class ProjectRequest extends AbstractRequest
      */
     public function delete($projectIdOrKey)
     {
-        // TODO: Implement delete method
+        return $this->execute('delete', "project/{$projectIdOrKey}");
     }
 
     /**
@@ -107,7 +121,7 @@ class ProjectRequest extends AbstractRequest
      */
     public function getAllProjectTypes()
     {
-        // TODO: Implement getAllProjectTypes method
+        return $this->execute('get', 'project/type');
     }
 
     /**
@@ -125,7 +139,7 @@ class ProjectRequest extends AbstractRequest
      */
     public function getProjectType($projectTypeKey)
     {
-        // TODO: Implement getProjectType method
+        return $this->execute('get', "project/type/{$projectTypeKey}");
     }
 
     /**
@@ -143,7 +157,7 @@ class ProjectRequest extends AbstractRequest
      */
     public function getAccessibleProjectType($projectTypeKey)
     {
-        // TODO: Implement getAccessibleProjectType method
+        return $this->execute('get', "project/type/{$projectTypeKey}/accessible");
     }
 
 }
