@@ -92,19 +92,20 @@ abstract class AbstractRequest
      * @param string $method
      * @param string $resource
      * @param array $parameters
+     * @param bool $asQueryParameters Some non-GET requests require sending query parameters instead.
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      */
-    protected function execute($method, $resource, $parameters = [])
+    protected function execute($method, $resource, $parameters = [], $asQueryParameters = false)
     {
         $method = strtoupper($method);
         $client = $this->createClient();
 
         try {
-            return $client->request($method, $this->getRequestUrl($resource), $this->getOptions($method, $parameters));
+            return $client->request($method, $this->getRequestUrl($resource), $this->getOptions($method, $parameters, $asQueryParameters));
         } catch (RequestException $exception) {
             $message = $this->getJiraException($exception);
 
@@ -144,23 +145,19 @@ abstract class AbstractRequest
     /**
      * @param $method
      * @param \Atlassian\JiraRest\Requests\AbstractParameters|array $parameters
+     * @param bool $asQueryParameters Some non-GET requests require sending query parameters instead.
      *
      * @return array
      */
-    public function getOptions($method, $parameters = [])
+    public function getOptions($method, $parameters = [], $asQueryParameters = false)
     {
         // Check if the parameters is an array or an instance of AbstractParameters
         if ($parameters instanceof AbstractParameters) {
             $parameters = $parameters->toArray();
         }
 
-        // Parameters are empty so nothing to send
-        if (empty($parameters)) {
-            return [];
-        }
-
         // When dealing with a get request set the parameters as query
-        if ($method === 'GET') {
+        if ($method === 'GET' || $asQueryParameters) {
             return [
                 'query' => $parameters,
             ];

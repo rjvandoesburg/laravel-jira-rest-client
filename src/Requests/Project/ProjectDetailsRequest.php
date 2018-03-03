@@ -3,6 +3,12 @@
 namespace Atlassian\JiraRest\Requests\Project;
 
 use Atlassian\JiraRest\Requests\AbstractRequest;
+use Atlassian\JiraRest\Requests\Project\Parameters\AddActorParameters;
+use Atlassian\JiraRest\Requests\Project\Parameters\AssignedPermissionSchemeParameters;
+use Atlassian\JiraRest\Requests\Project\Parameters\DeleteActorParameters;
+use Atlassian\JiraRest\Requests\Project\Parameters\NotificationSchemaParameters;
+use Atlassian\JiraRest\Requests\Project\Parameters\SetActorsParameters;
+use Atlassian\JiraRest\Requests\Project\Parameters\VersionsPageinatedParameters;
 
 class ProjectDetailsRequest extends AbstractRequest
 {
@@ -17,11 +23,10 @@ class ProjectDetailsRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
      */
     public function getComponents($projectIdOrKey)
     {
-        // TODO: Implement getComponents method
+        return $this->execute('get', "project/{$projectIdOrKey}/components");
     }
 
     /**
@@ -35,11 +40,10 @@ class ProjectDetailsRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
      */
     public function getPropertyKeys($projectIdOrKey)
     {
-        // TODO: Implement getPropertyKeys method
+        return $this->execute('get', "project/{$projectIdOrKey}/properties");
     }
 
     /**
@@ -55,11 +59,10 @@ class ProjectDetailsRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
      */
     public function getProperty($projectIdOrKey, $propertyKey)
     {
-        // TODO: Implement getProperty method
+        return $this->execute('get', "project/{$projectIdOrKey}/properties/{$propertyKey}");
     }
 
     /**
@@ -70,15 +73,15 @@ class ProjectDetailsRequest extends AbstractRequest
      * @param int|string $projectIdOrKey
      * @param string $propertyKey
      *
+     * @param $value
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
      */
-    public function setProperty($projectIdOrKey, $propertyKey)
+    public function setProperty($projectIdOrKey, $propertyKey, $value)
     {
-        // TODO: Implement setProperty method
+        return $this->execute('put', "project/{$projectIdOrKey}/properties/{$propertyKey}", $value);
     }
 
     /**
@@ -94,11 +97,10 @@ class ProjectDetailsRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
      */
     public function deleteProperty($projectIdOrKey, $propertyKey)
     {
-        // TODO: Implement deleteProperty method
+        return $this->execute('delete', "project/{$projectIdOrKey}/properties/{$propertyKey}");
     }
 
     /**
@@ -112,11 +114,10 @@ class ProjectDetailsRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
      */
     public function getRoles($projectIdOrKey)
     {
-        // TODO: Implement getRoles method
+        return $this->execute('get', "project/{$projectIdOrKey}/role");
     }
 
     /**
@@ -131,11 +132,10 @@ class ProjectDetailsRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
      */
     public function getRole($projectIdOrKey, $roleId)
     {
-        // TODO: Implement getRole method
+        return $this->execute('get', "project/{$projectIdOrKey}/role/{$roleId}");
     }
 
     /**
@@ -145,6 +145,7 @@ class ProjectDetailsRequest extends AbstractRequest
      *
      * @param int|string $projectIdOrKey
      * @param int $roleId
+     * @param \Atlassian\JiraRest\Requests\Project\Parameters\AddActorParameters|array $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
@@ -152,9 +153,11 @@ class ProjectDetailsRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      * @throws \TypeError
      */
-    public function addActor($projectIdOrKey, $roleId)
+    public function addActor($projectIdOrKey, $roleId, $parameters = [])
     {
-        // TODO: Implement addActor method
+        $this->validateParameters($parameters, AddActorParameters::class);
+
+        return $this->execute('post', "project/{$projectIdOrKey}/role/{$roleId}", $parameters);
     }
 
     /**
@@ -164,6 +167,7 @@ class ProjectDetailsRequest extends AbstractRequest
      *
      * @param int|string $projectIdOrKey
      * @param int $roleId
+     * @param \Atlassian\JiraRest\Requests\Project\Parameters\SetActorsParameters|array $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
@@ -171,9 +175,11 @@ class ProjectDetailsRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      * @throws \TypeError
      */
-    public function setActors($projectIdOrKey, $roleId)
+    public function setActors($projectIdOrKey, $roleId, $parameters = [])
     {
-        // TODO: Implement setActors method
+        $this->validateParameters($parameters, SetActorsParameters::class);
+
+        return $this->execute('put', "project/{$projectIdOrKey}/role/{$roleId}", $parameters);
     }
 
     /**
@@ -183,6 +189,7 @@ class ProjectDetailsRequest extends AbstractRequest
      *
      * @param int|string $projectIdOrKey
      * @param int $roleId
+     * @param \Atlassian\JiraRest\Requests\Project\Parameters\DeleteActorParameters|array $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
@@ -190,9 +197,11 @@ class ProjectDetailsRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      * @throws \TypeError
      */
-    public function deleteActor($projectIdOrKey, $roleId)
+    public function deleteActor($projectIdOrKey, $roleId, $parameters = [])
     {
-        // TODO: Implement deleteActor method
+        $this->validateParameters($parameters, DeleteActorParameters::class);
+
+        return $this->execute('delete', "project/{$projectIdOrKey}/role/{$roleId}", $parameters, true);
     }
 
     /**
@@ -206,11 +215,10 @@ class ProjectDetailsRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
      */
     public function getRoleDetails($projectIdOrKey)
     {
-        // TODO: Implement getRoleDetails method
+        return $this->execute('get', "project/{$projectIdOrKey}/roledetails");
     }
 
     /**
@@ -225,11 +233,10 @@ class ProjectDetailsRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
      */
     public function getStatuses($projectIdOrKey)
     {
-        // TODO: Implement getStatuses method
+        return $this->execute('get', "project/{$projectIdOrKey}/statuses");
     }
 
     /**
@@ -244,11 +251,10 @@ class ProjectDetailsRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
      */
     public function updateProjectType($projectIdOrKey, $newProjectTypeKey)
     {
-        // TODO: Implement updateProjectType method
+        return $this->execute('put', "project/{$projectIdOrKey}/type/{$newProjectTypeKey}");
     }
 
     /**
@@ -257,6 +263,7 @@ class ProjectDetailsRequest extends AbstractRequest
      * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-project-projectIdOrKey-version-get
      *
      * @param int|string $projectIdOrKey
+     * @param \Atlassian\JiraRest\Requests\Project\Parameters\VersionsPageinatedParameters|array $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
@@ -264,9 +271,11 @@ class ProjectDetailsRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      * @throws \TypeError
      */
-    public function getVersionsPaginated($projectIdOrKey)
+    public function getVersionsPaginated($projectIdOrKey, $parameters = [])
     {
-        // TODO: Implement getVersionsPaginated method
+        $this->validateParameters($parameters, VersionsPageinatedParameters::class);
+
+        return $this->execute('get', "project/{$projectIdOrKey}/version", $parameters);
     }
 
     /**
@@ -280,11 +289,10 @@ class ProjectDetailsRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
      */
     public function getVersions($projectIdOrKey)
     {
-        // TODO: Implement getVersions method
+        return $this->execute('get', "project/{$projectIdOrKey}/versions");
     }
 
     /**
@@ -298,20 +306,19 @@ class ProjectDetailsRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
      */
     public function getIssueSecurityScheme($projectIdOrKey)
     {
-        // TODO: Implement getIssueSecurityScheme method
+        return $this->execute('get', "project/{$projectIdOrKey}/issuesecuritylevelscheme");
     }
 
     /**
      * Gets a notification scheme associated with the project.
-     * Follow the documentation of /notificationscheme/{id} resource for all details about returned value.
      *
      * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-project-projectKeyOrId-notificationscheme-get
      *
      * @param int|string $projectIdOrKey
+     * @param \Atlassian\JiraRest\Requests\Project\Parameters\NotificationSchemaParameters|array $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
@@ -319,9 +326,11 @@ class ProjectDetailsRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      * @throws \TypeError
      */
-    public function getNotificationScheme($projectIdOrKey)
+    public function getNotificationScheme($projectIdOrKey, $parameters = [])
     {
-        // TODO: Implement getNotificationScheme method
+        $this->validateParameters($parameters, NotificationSchemaParameters::class);
+
+        return $this->execute('get', "project/{$projectIdOrKey}/notificationscheme");
     }
 
     /**
@@ -330,6 +339,7 @@ class ProjectDetailsRequest extends AbstractRequest
      * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-project-projectKeyOrId-permissionscheme-get
      *
      * @param int|string $projectIdOrKey
+     * @param \Atlassian\JiraRest\Requests\Project\Parameters\AssignedPermissionSchemeParameters|array $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
@@ -337,9 +347,11 @@ class ProjectDetailsRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      * @throws \TypeError
      */
-    public function getAssignedPermissionScheme($projectIdOrKey)
+    public function getAssignedPermissionScheme($projectIdOrKey, $parameters = [])
     {
-        // TODO: Implement getAssignedPermissionScheme method
+        $this->validateParameters($parameters, AssignedPermissionSchemeParameters::class);
+
+        return $this->execute('get', "project/{$projectIdOrKey}/permissionscheme");
     }
 
     /**
@@ -348,16 +360,16 @@ class ProjectDetailsRequest extends AbstractRequest
      * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-project-projectKeyOrId-permissionscheme-put
      *
      * @param int|string $projectIdOrKey
+     * @param int $newPermissionScheme
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
      */
-    public function assignPermissionScheme($projectIdOrKey)
+    public function assignPermissionScheme($projectIdOrKey, $newPermissionScheme)
     {
-        // TODO: Implement assignPermissionScheme method
+        return $this->execute('put', "project/{$projectIdOrKey}/permissionscheme", $newPermissionScheme);
     }
 
     /**
@@ -372,11 +384,10 @@ class ProjectDetailsRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
      */
     public function getSecurityLevels($projectIdOrKey)
     {
-        // TODO: Implement getSecurityLevels method
+        return $this->execute('get', "project/{$projectIdOrKey}/securitylevel");
     }
 
 }

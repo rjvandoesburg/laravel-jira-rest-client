@@ -100,7 +100,6 @@ class ProjectRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
      */
     public function delete($projectIdOrKey)
     {
@@ -117,7 +116,6 @@ class ProjectRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
      */
     public function getAllProjectTypes()
     {
@@ -135,7 +133,6 @@ class ProjectRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
      */
     public function getProjectType($projectTypeKey)
     {
@@ -153,7 +150,6 @@ class ProjectRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
      */
     public function getAccessibleProjectType($projectTypeKey)
     {
