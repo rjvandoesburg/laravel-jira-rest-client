@@ -19,8 +19,8 @@ class CookieAuthMiddleware implements ClientMiddleware
         } else {
             $sessionRequest = new Session();
             $cookie = $sessionRequest->post([
-                'username' => config('atlassian.jira-rest.auth.basic.username'),
-                'password' => config('atlassian.jira-rest.auth.basic.password')
+                'username' => config('atlassian.jira.auth.basic.username'),
+                'password' => config('atlassian.jira.auth.basic.password')
             ]);
 
             $cookie = json_decode($cookie);

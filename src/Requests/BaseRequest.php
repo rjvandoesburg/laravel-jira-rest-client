@@ -193,17 +193,6 @@ abstract class BaseRequest
     }
 
     /**
-     * @return string
-     */
-    protected function getJiraHost()
-    {
-        $host = config('atlassian.jira.host');
-        $uri  = Psr7\uri_for($host);
-
-        return $uri->getHost();
-    }
-
-    /**
      * Get all available options or options specific for a method
      *
      * @param null $method
