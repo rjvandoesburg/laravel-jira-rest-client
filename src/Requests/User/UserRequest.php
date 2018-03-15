@@ -28,6 +28,7 @@ class UserRequest extends AbstractRequest
 
         return $this->execute('get', 'user', $parameters);
     }
+
     /**
      * Returns a list of users that match the search string and/or property.
      * This resource cannot be accessed anonymously.
