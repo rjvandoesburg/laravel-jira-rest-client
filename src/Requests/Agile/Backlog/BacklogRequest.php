@@ -26,9 +26,8 @@ class BacklogRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      */
-    public function moveIssues(array $issues = [])
+    public function moveIssues(array $issues)
     {
         return $this->execute('post', 'backlog/issue', ['issues' => $issues]);
     }
-
 }

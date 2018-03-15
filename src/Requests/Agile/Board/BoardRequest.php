@@ -459,6 +459,4 @@ class BoardRequest extends AbstractRequest
 
         return $this->execute('get', "board/{$boardId}/version", $parameters);
     }
-
-
 }

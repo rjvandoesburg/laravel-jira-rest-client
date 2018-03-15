@@ -257,5 +257,4 @@ class SprintRequest extends AbstractRequest
     {
         return $this->execute('get', "sprint/{$sprintId}", ['sprintToSwapWith' => $sprintToSwapWith]);
     }
-
 }
