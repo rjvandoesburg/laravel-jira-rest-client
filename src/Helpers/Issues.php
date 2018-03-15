@@ -20,11 +20,16 @@ class Issues
     }
 
     /**
-     * @param array $parameters
+     * @param \Atlassian\JiraRest\Requests\Issue\Parameters\CreateParameters|array $parameters
+     * @param bool $assoc
      *
-     * @return bool|array
+     * @return bool|array|\stdClass
+     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \TypeError
      */
-    public function create($parameters = [])
+    public function create($parameters = [], $assoc = true)
     {
         $response = $this->request->create($parameters);
 
@@ -32,58 +37,24 @@ class Issues
             return false;
         }
 
-        return json_decode($response->getBody(), true);
+        return json_decode($response->getBody(), $assoc);
     }
 
     /**
-     * @param $issueIdOrKey
+     * @param \Atlassian\JiraRest\Requests\Issue\Parameters\SearchParameters|array $parameters
+     * @param bool $assoc
      *
-     * @return array
+     * @return array|\stdClass
+     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \TypeError
      */
-    public function get($issueIdOrKey)
-    {
-        $response = $this->request->get($issueIdOrKey);
-
-        return json_decode($response->getBody(), true);
-    }
-
-    /**
-     * @param int|string $issueIdOrKey
-     * @param array $parameters
-     *
-     * @return bool
-     */
-    public function edit($issueIdOrKey, $parameters = [])
-    {
-        $response = $this->request->edit($issueIdOrKey, $parameters);
-
-        // 204 is returned if the issue was updated successfully.
-        return $response->getStatusCode() === 204;
-    }
-
-    /**
-     * @param $issueIdOrKey
-     *
-     * @return bool
-     */
-    public function delete($issueIdOrKey)
-    {
-        $response = $this->request->get($issueIdOrKey);
-
-        // 204 is returned if the issue was sucessfully removed.
-        return $response->getStatusCode() === 204;
-    }
-
-    /**
-     * @param $parameters
-     *
-     * @return string
-     */
-    public function search($parameters)
+    public function search($parameters, $assoc = true)
     {
         $response = $this->request->search($parameters);
 
-        return json_decode($response->getBody(), true);
+        return json_decode($response->getBody(), $assoc);
     }
 
 }

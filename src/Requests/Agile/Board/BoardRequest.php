@@ -224,7 +224,7 @@ class BoardRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      * @throws \TypeError
      */
-    public function issuesForBoard($boardId, $parameters = [])
+    public function issues($boardId, $parameters = [])
     {
         $this->validateParameters($parameters, IssuesParameters::class);
 

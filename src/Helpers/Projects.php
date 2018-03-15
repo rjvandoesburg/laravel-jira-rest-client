@@ -7,7 +7,7 @@ use Atlassian\JiraRest\Requests\Project\ProjectRequest;
 class Projects
 {
     /**
-     * @var \Atlassian\JiraRest\Requests\Issue\IssueRequest
+     * @var \Atlassian\JiraRest\Requests\Project\ProjectRequest
      */
     protected $request;
 
@@ -20,14 +20,18 @@ class Projects
     }
 
     /**
+     * @param \Atlassian\JiraRest\Requests\Project\Parameters\GetAllParameters|array $parameters
+     *
+     * @return array
+     *
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      * @throws \TypeError
      */
-    public function all()
+    public function all($parameters = [])
     {
-        $response = $this->request->all();
+        $response = $this->request->all($parameters);
 
         return json_decode($response->getBody(), true);
     }
@@ -35,13 +39,15 @@ class Projects
     /**
      * @param int|string $projectIdOrKey
      *
+     * @param bool $assoc
+     *
      * @return mixed
      */
-    public function get($projectIdOrKey)
+    public function get($projectIdOrKey, $assoc = true)
     {
         $response = $this->request->get($projectIdOrKey);
 
-        return json_decode($response->getBody(), true);
+        return json_decode($response->getBody(), $assoc);
     }
 
 }

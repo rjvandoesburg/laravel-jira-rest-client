@@ -8,7 +8,7 @@ use Atlassian\JiraRest\Requests\AbstractParameters;
  * Class SearchParameters
  *
  * @package Atlassian\JiraRest\Requests\Issue\Parameters
- * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-search-post
+ * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-search-get
  */
 class SearchParameters extends AbstractParameters
 {
@@ -20,7 +20,8 @@ class SearchParameters extends AbstractParameters
     public $expand;
 
     /**
-     * The list of fields to return for each issue. By default, all navigable and Agile fields are returned.
+     * The list of fields to return for each issue.
+     * By default, all navigable and Agile fields are returned.
      *
      * @var string
      */

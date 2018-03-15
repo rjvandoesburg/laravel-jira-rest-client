@@ -29,9 +29,10 @@ class Fields
             ->filter(function ($field) {
                 return $field['custom'];
             })->mapWithKeys(function ($field) {
+                $key = str_replace('customfield_', '', $field['id']);
                 $name = camel_case(str_slug($field['name']));
 
-                return [$field['id'] => $name];
+                return [$key => $name];
             })
             ->toArray();
 

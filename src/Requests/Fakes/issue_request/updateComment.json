@@ -1,0 +1,37 @@
+{
+  "self": "http:\/\/localhost:8080\/rest\/api\/2\/issue\/10000\/comment\/10605",
+  "id": "10605",
+  "author": {
+    "self": "http:\/\/localhost:8080\/rest\/api\/2\/user?username=test-user%40example.com",
+    "name": "test-user@example.com",
+    "key": "test-user@example.com",
+    "emailAddress": "test-user@example.com",
+    "avatarUrls": {
+      "48x48": "http:\/\/localhost:8080\/secure\/useravatar?avatarId=10334",
+      "24x24": "http:\/\/localhost:8080\/secure\/useravatar?size=small&avatarId=10334",
+      "16x16": "http:\/\/localhost:8080\/secure\/useravatar?size=xsmall&avatarId=10334",
+      "32x32": "http:\/\/localhost:8080\/secure\/useravatar?size=medium&avatarId=10334"
+    },
+    "displayName": "test-user",
+    "active": true,
+    "timeZone": "Europe\/Amsterdam"
+  },
+  "body": "This is an updated body",
+  "updateAuthor": {
+    "self": "http:\/\/localhost:8080\/rest\/api\/2\/user?username=test-user%40example.com",
+    "name": "test-user@example.com",
+    "key": "test-user@example.com",
+    "emailAddress": "test-user@example.com",
+    "avatarUrls": {
+      "48x48": "http:\/\/localhost:8080\/secure\/useravatar?avatarId=10334",
+      "24x24": "http:\/\/localhost:8080\/secure\/useravatar?size=small&avatarId=10334",
+      "16x16": "http:\/\/localhost:8080\/secure\/useravatar?size=xsmall&avatarId=10334",
+      "32x32": "http:\/\/localhost:8080\/secure\/useravatar?size=medium&avatarId=10334"
+    },
+    "displayName": "test-user",
+    "active": true,
+    "timeZone": "Europe\/Amsterdam"
+  },
+  "created": "2018-03-15T16:02:54.313+0100",
+  "updated": "2018-03-15T16:16:49.624+0100"
+}

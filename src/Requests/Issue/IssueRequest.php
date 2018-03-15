@@ -88,20 +88,17 @@ class IssueRequest extends AbstractRequest
      *
      * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-issue-issueIdOrKey-delete
      *
-     * @param string|int $issueIdOrKey
-     * @param \Atlassian\JiraRest\Requests\Issue\Parameters\DeleteParameters|array $parameters
+     * @param string|int $issueIdOrKey ID or key of the issue to be deleted.
+     * @param bool $deleteSubtasks A true or false value indicating if sub-tasks should be deleted.
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
      */
-    public function delete($issueIdOrKey, $parameters = [])
+    public function delete($issueIdOrKey, $deleteSubtasks = false)
     {
-        $this->validateParameters($parameters, DeleteParameters::class);
-
-        return $this->execute('delete', "issue/{$issueIdOrKey}", $parameters);
+        return $this->execute('delete', "issue/{$issueIdOrKey}", ['deleteSubtasks' => $deleteSubtasks], true);
     }
 
     /**
@@ -121,7 +118,7 @@ class IssueRequest extends AbstractRequest
     {
         $this->validateParameters($parameters, SearchParameters::class);
 
-        return $this->execute('post', 'search', $parameters);
+        return $this->execute('get', 'search', $parameters);
     }
 
     /**
