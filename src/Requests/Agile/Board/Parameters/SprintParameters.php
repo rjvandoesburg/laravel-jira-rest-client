@@ -2,9 +2,14 @@
 
 namespace Atlassian\JiraRest\Requests\Agile\Board\Parameters;
 
-use Modules\Jira\Requests\RequestParametersBase;
+use Atlassian\JiraRest\Requests\AbstractParameters;
 
-class SprintParameters extends RequestParametersBase
+/**
+ * Class SprintParameters
+ *
+ * @package Atlassian\JiraRest\Requests\Agile\Board\Parameters
+ */
+class SprintParameters extends AbstractParameters
 {
     /**
      * The maximum number of boards to return per page.

@@ -2,9 +2,15 @@
 
 namespace Atlassian\JiraRest\Requests\Agile\Board\Parameters;
 
-use Modules\Jira\Requests\RequestParametersBase;
+use Atlassian\JiraRest\Requests\AbstractParameters;
 
-class GetAllParameters extends RequestParametersBase
+/**
+ * Class GetAllParameters
+ *
+ * @package Atlassian\JiraRest\Requests\Agile\Board\Parameters
+ * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-board-get
+ */
+class GetAllParameters extends AbstractParameters
 {
     /**
      * The maximum number of boards to return per page. Default: 50. See the ‘Pagination’ section at the top of this

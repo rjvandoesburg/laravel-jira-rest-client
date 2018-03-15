@@ -1,10 +1,10 @@
 <?php
 
-namespace Atlassian\JiraRest\Requests\Agile\Board\Parameters;
+namespace Atlassian\JiraRest\Requests\Agile\Parameters;
 
-use Modules\Jira\Requests\RequestParametersBase;
+use Atlassian\JiraRest\Requests\AbstractParameters;
 
-class IssuesParameters extends RequestParametersBase
+class IssuesParameters extends AbstractParameters
 {
     /**
      * This parameter is currently not used.

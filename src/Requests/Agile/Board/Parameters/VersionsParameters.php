@@ -2,9 +2,15 @@
 
 namespace Atlassian\JiraRest\Requests\Agile\Board\Parameters;
 
-use Modules\Jira\Requests\RequestParametersBase;
+use Atlassian\JiraRest\Requests\AbstractParameters;
 
-class VersionsParameters extends RequestParametersBase
+/**
+ * Class VersionsParameters
+ *
+ * @package Atlassian\JiraRest\Requests\Agile\Board\Parameters
+ * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-board-boardId-version-get
+ */
+class VersionsParameters extends AbstractParameters
 {
 
     /**

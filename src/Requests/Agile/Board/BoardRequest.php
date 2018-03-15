@@ -4,13 +4,13 @@ namespace Atlassian\JiraRest\Requests\Agile\Board;
 
 use Atlassian\JiraRest\Requests\Agile\AbstractRequest;
 use Atlassian\JiraRest\Requests\Agile\Board\Parameters\AllQuickFiltersParameters;
-use Atlassian\JiraRest\Requests\Agile\Board\Parameters\AllSprintsParameters;
+use Atlassian\JiraRest\Requests\Agile\Board\Parameters\SprintsParameters;
 use Atlassian\JiraRest\Requests\Agile\Board\Parameters\CreateParameters;
 use Atlassian\JiraRest\Requests\Agile\Board\Parameters\EpicsParameters;
 use Atlassian\JiraRest\Requests\Agile\Board\Parameters\GetAllParameters;
-use Atlassian\JiraRest\Requests\Agile\Board\Parameters\IssuesParameters;
 use Atlassian\JiraRest\Requests\Agile\Board\Parameters\ProjectsParameters;
 use Atlassian\JiraRest\Requests\Agile\Board\Parameters\VersionsParameters;
+use Atlassian\JiraRest\Requests\Agile\Parameters\IssuesParameters;
 
 class BoardRequest extends AbstractRequest
 {
@@ -102,7 +102,7 @@ class BoardRequest extends AbstractRequest
      * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-board-boardId-backlog-get
      *
      * @param int $boardId
-     * @param \Atlassian\JiraRest\Requests\Agile\Board\Parameters\IssuesParameters|array $parameters
+     * @param \Atlassian\JiraRest\Requests\Agile\Parameters\IssuesParameters|array $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
@@ -167,7 +167,7 @@ class BoardRequest extends AbstractRequest
      *
      * @param int $boardId
      * @param int $epicId
-     * @param \Atlassian\JiraRest\Requests\Agile\Board\Parameters\IssuesParameters|array $parameters
+     * @param \Atlassian\JiraRest\Requests\Agile\Parameters\IssuesParameters|array $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
@@ -191,7 +191,7 @@ class BoardRequest extends AbstractRequest
      * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-board-boardId-epic-none-issue-get
      *
      * @param int $boardId
-     * @param \Atlassian\JiraRest\Requests\Agile\Board\Parameters\IssuesParameters|array $parameters
+     * @param \Atlassian\JiraRest\Requests\Agile\Parameters\IssuesParameters|array $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
@@ -216,7 +216,7 @@ class BoardRequest extends AbstractRequest
      * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-board-boardId-issue-get
      *
      * @param int $boardId
-     * @param \Atlassian\JiraRest\Requests\Agile\Board\Parameters\IssuesParameters|array $parameters
+     * @param \Atlassian\JiraRest\Requests\Agile\Parameters\IssuesParameters|array $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
@@ -396,7 +396,7 @@ class BoardRequest extends AbstractRequest
      * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-board-boardId-sprint-get
      *
      * @param int $boardId
-     * @param \Atlassian\JiraRest\Requests\Agile\Board\Parameters\AllSprintsParameters|array $parameters
+     * @param \Atlassian\JiraRest\Requests\Agile\Board\Parameters\SprintsParameters|array $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
@@ -404,9 +404,9 @@ class BoardRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      * @throws \TypeError
      */
-    public function allSprints($boardId, $parameters = [])
+    public function sprints($boardId, $parameters = [])
     {
-         $this->validateParameters($parameters, AllSprintsParameters::class);
+         $this->validateParameters($parameters, SprintsParameters::class);
 
         return $this->execute('get', "board/{$boardId}/sprint", $parameters);
     }
@@ -421,7 +421,7 @@ class BoardRequest extends AbstractRequest
      *
      * @param int $boardId
      * @param int $sprintId
-     * @param \Atlassian\JiraRest\Requests\Agile\Board\Parameters\IssuesParameters|array $parameters
+     * @param \Atlassian\JiraRest\Requests\Agile\Parameters\IssuesParameters|array $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException

@@ -2,9 +2,15 @@
 
 namespace Atlassian\JiraRest\Requests\Agile\Board\Parameters;
 
-use Modules\Jira\Requests\RequestParametersBase;
+use Atlassian\JiraRest\Requests\AbstractParameters;
 
-class EpicsParameters extends RequestParametersBase
+/**
+ * Class EpicsParameters
+ *
+ * @package Atlassian\JiraRest\Requests\Agile\Board\Parameters
+ * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-board-boardId-epic-get
+ */
+class EpicsParameters extends AbstractParameters
 {
     /**
      * Filters results to epics that are either done or not done.
