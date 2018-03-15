@@ -27,4 +27,12 @@ class Jira
     {
         return new Issues;
     }
+
+    /**
+     * @return \Atlassian\JiraRest\Helpers\Fields
+     */
+    public function fields()
+    {
+        return new Fields;
+    }
 }
