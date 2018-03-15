@@ -7,6 +7,8 @@ use Illuminate\Support\ServiceProvider;
 class JiraRestServiceProvider extends ServiceProvider
 {
 
+    const CONFIG_KEY = 'atlassian.jira';
+
     /**
      * Boot the service provider.
      *
@@ -27,7 +29,7 @@ class JiraRestServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(
-            __DIR__.'/Config/jira.php', 'atlassian.jira'
+            __DIR__.'/Config/jira.php', static::CONFIG_KEY
         );
     }
 }
