@@ -1,16 +1,16 @@
 <?php
 
-namespace Atlassian\JiraRest\Requests\Issue\Comment\Parameters;
+namespace Atlassian\JiraRest\Requests\Issue\Parameters\Comment;
 
 use Atlassian\JiraRest\Requests\AbstractParameters;
 
 /**
- * Class AddParameters
+ * Class UpdateParameters
  *
- * @package Atlassian\JiraRest\Requests\Issue\Comment\Parameters
- * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-issue-issueIdOrKey-comment-post
+ * @package Atlassian\JiraRest\Requests\Issue\Parameters\Comments
+ * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-issue-issueIdOrKey-comment-id-put
  */
-class AddParameters extends AbstractParameters
+class UpdateParameters extends AbstractParameters
 {
     /**
      * @var array

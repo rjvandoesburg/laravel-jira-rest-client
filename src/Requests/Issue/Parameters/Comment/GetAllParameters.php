@@ -1,13 +1,13 @@
 <?php
 
-namespace Atlassian\JiraRest\Requests\Issue\Comment\Parameters;
+namespace Atlassian\JiraRest\Requests\Issue\Parameters\Comment;
 
 use Atlassian\JiraRest\Requests\AbstractParameters;
 
 /**
  * Class GetAllParameters
  *
- * @package Atlassian\JiraRest\Requests\Issue\Comment\Parameters
+ * @package Atlassian\JiraRest\Requests\Issue\Parameters\Comments
  * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-issue-issueIdOrKey-comment-get
  */
 class GetAllParameters extends AbstractParameters

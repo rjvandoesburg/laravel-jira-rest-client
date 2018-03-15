@@ -19,6 +19,7 @@ class IssueRequest extends AbstractRequest
 {
     use Traits\PropertiesRequests;
     use Traits\TransitionsRequests;
+    use Traits\CommentRequests;
 
     /**
      * Creates an issue or a sub-task from a JSON representation.

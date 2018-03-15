@@ -1,14 +1,19 @@
 <?php
 
-namespace Atlassian\JiraRest\Requests\Issue\Comment;
+namespace Atlassian\JiraRest\Requests\Issue\Traits;
 
-use Atlassian\JiraRest\Requests\AbstractRequest;
-use Atlassian\JiraRest\Requests\Issue\Comment\Parameters\AddParameters;
-use Atlassian\JiraRest\Requests\Issue\Comment\Parameters\GetAllParameters;
-use Atlassian\JiraRest\Requests\Issue\Comment\Parameters\UpdateParameters;
+use Atlassian\JiraRest\Requests\Issue\Parameters\Comment\GetAllParameters;
+use Atlassian\JiraRest\Requests\Issue\Parameters\Comment\AddParameters;
+use Atlassian\JiraRest\Requests\Issue\Parameters\Comment\UpdateParameters;
 
-class IssueCommentRequest extends AbstractRequest
+/**
+ * Trait CommentsRequests
+ *
+ * @package Atlassian\JiraRest\Requests\Issue\Traits
+ */
+trait CommentRequests
 {
+
     /**
      * Returns all comments for an issue.
      * Results can be ordered by the “created” field which means the date a comment was added.
@@ -16,7 +21,7 @@ class IssueCommentRequest extends AbstractRequest
      * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-issue-issueIdOrKey-comment-get
      *
      * @param int|string $issueIdOrKey
-     * @param \Atlassian\JiraRest\Requests\Issue\Comment\Parameters\GetAllParameters|array $parameters
+     * @param \Atlassian\JiraRest\Requests\Issue\Parameters\Comment\GetAllParameters|array $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
@@ -24,7 +29,7 @@ class IssueCommentRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      * @throws \TypeError
      */
-    public function all($issueIdOrKey, $parameters = [])
+    public function getComments($issueIdOrKey, $parameters = [])
     {
         $this->validateParameters($parameters, GetAllParameters::class);
 
@@ -37,7 +42,7 @@ class IssueCommentRequest extends AbstractRequest
      * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-issue-issueIdOrKey-comment-post
      *
      * @param int|string $issueIdOrKey
-     * @param \Atlassian\JiraRest\Requests\Issue\Comment\Parameters\AddParameters|array $parameters
+     * @param \Atlassian\JiraRest\Requests\Issue\Parameters\Comment\AddParameters|array $parameters
      * @param string $expand
      *
      * @return \GuzzleHttp\Psr7\Response
@@ -46,7 +51,7 @@ class IssueCommentRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      * @throws \TypeError
      */
-    public function add($issueIdOrKey, $parameters, $expand = '')
+    public function addComment($issueIdOrKey, $parameters, $expand = '')
     {
         $this->validateParameters($parameters, AddParameters::class);
 
@@ -67,7 +72,7 @@ class IssueCommentRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      */
-    public function get($issueIdOrKey, $commentId, $expand = '')
+    public function getComment($issueIdOrKey, $commentId, $expand = '')
     {
         return $this->execute('get', "issue/{$issueIdOrKey}/comment/{$commentId}", ['expand' => $expand]);
     }
@@ -79,7 +84,7 @@ class IssueCommentRequest extends AbstractRequest
      *
      * @param int|string $issueIdOrKey
      * @param int $commentId
-     * @param \Atlassian\JiraRest\Requests\Issue\Comment\Parameters\UpdateParameters|array $parameters
+     * @param \Atlassian\JiraRest\Requests\Issue\Parameters\Comment\UpdateParameters|array $parameters
      * @param string $expand
      *
      * @return \GuzzleHttp\Psr7\Response
@@ -88,7 +93,7 @@ class IssueCommentRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      * @throws \TypeError
      */
-    public function update($issueIdOrKey, $commentId, $parameters, $expand = '')
+    public function updateComment($issueIdOrKey, $commentId, $parameters, $expand = '')
     {
         $this->validateParameters($parameters, UpdateParameters::class);
 
@@ -108,9 +113,8 @@ class IssueCommentRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      */
-    public function delete($issueIdOrKey, $commentId)
+    public function deleteComment($issueIdOrKey, $commentId)
     {
         return $this->execute('delete', "issue/{$issueIdOrKey}/comment/{$commentId}");
     }
-
 }
