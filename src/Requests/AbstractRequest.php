@@ -18,13 +18,6 @@ abstract class AbstractRequest
     protected $client = null;
 
     /**
-     * Api resource to hit
-     *
-     * @var string
-     */
-    protected $resource = '';
-
-    /**
      * A list of middleware to use for the current request
      *
      * @var array
