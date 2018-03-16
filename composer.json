@@ -1,5 +1,6 @@
 {
     "name": "rjvandoesburg/laravel-jira-rest-client",
+    "license": "MIT",
     "authors": [
         {
             "name": "Robert-John van Doesburg",
