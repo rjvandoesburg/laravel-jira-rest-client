@@ -7,7 +7,6 @@
         }
     ],
     "minimum-stability": "stable",
-    "version": "dev-master",
     "require": {
         "php": ">=7.0",
         "laravel/framework": ">=5.4",
