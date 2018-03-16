@@ -30,5 +30,8 @@
                 "Jira": "Atlassian\\JiraRest\\Facades\\Jira"
             }
         }
+    },
+    "suggest": {
+        "salsify/json-streaming-parser": "Require this when you want to parse the response in blocks"
     }
 }
