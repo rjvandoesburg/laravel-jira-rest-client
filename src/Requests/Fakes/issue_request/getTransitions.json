@@ -1,0 +1,59 @@
+{
+  "expand": "transitions",
+  "transitions": [
+    {
+      "id": "11",
+      "name": "To Do",
+      "to": {
+        "self": "http://localhost:8080/rest/api/2/status/10000",
+        "description": "",
+        "iconUrl": "http://localhost:8080/",
+        "name": "To Do",
+        "id": "10000",
+        "statusCategory": {
+          "self": "http://localhost:8080/rest/api/2/statuscategory/2",
+          "id": 2,
+          "key": "new",
+          "colorName": "blue-gray",
+          "name": "To Do"
+        }
+      }
+    },
+    {
+      "id": "21",
+      "name": "In Progress",
+      "to": {
+        "self": "http://localhost:8080/rest/api/2/status/3",
+        "description": "This issue is being actively worked on at the moment by the assignee.",
+        "iconUrl": "http://localhost:8080/images/icons/statuses/inprogress.png",
+        "name": "In Progress",
+        "id": "3",
+        "statusCategory": {
+          "self": "http://localhost:8080/rest/api/2/statuscategory/4",
+          "id": 4,
+          "key": "indeterminate",
+          "colorName": "yellow",
+          "name": "In Progress"
+        }
+      }
+    },
+    {
+      "id": "31",
+      "name": "Done",
+      "to": {
+        "self": "http://localhost:8080/rest/api/2/status/10001",
+        "description": "",
+        "iconUrl": "http://localhost:8080/",
+        "name": "Done",
+        "id": "10001",
+        "statusCategory": {
+          "self": "http://localhost:8080/rest/api/2/statuscategory/3",
+          "id": 3,
+          "key": "done",
+          "colorName": "green",
+          "name": "Done"
+        }
+      }
+    }
+  ]
+}

@@ -53,6 +53,7 @@ class IssueRequestFake extends IssueRequest
             case 'addComment':
                 return 201;
             case 'edit':
+            case 'doTransition':
                 return 204;
             default:
                 return 200;

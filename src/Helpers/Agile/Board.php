@@ -13,7 +13,7 @@ class Board
     protected $boardId;
 
     /**
-     * @var \Atlassian\JiraRest\Requests\Agile\Board\BoardRequest|\Illuminate\Foundation\Application|mixed
+     * @var \Atlassian\JiraRest\Requests\Agile\Board\BoardRequest
      */
     protected $request;
 
@@ -32,6 +32,9 @@ class Board
      * @param bool $assoc
      *
      * @return array|\stdClass
+     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      */
     public function get($assoc = true)
     {

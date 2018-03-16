@@ -3,6 +3,7 @@
 namespace Atlassian\JiraRest\Helpers;
 
 use Atlassian\JiraRest\Requests\Issue\IssueRequest;
+use Atlassian\JiraRest\Requests\Issue\Parameters\Transitions\DoTransitionsParameters;
 
 class Issue
 {
@@ -107,6 +108,47 @@ class Issue
         $response = $this->request->updateComment($this->issueIdOrKey, $commentId, $parameters, $expand);
 
         return json_decode($response->getBody(), $assoc);
+    }
+
+    /**
+     * @param \Atlassian\JiraRest\Requests\Issue\Parameters\Transitions\GetTransitionsParameters|array
+     * @param bool $assoc
+     *
+     * @return mixed
+     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \TypeError
+     */
+    public function getTransitions($parameters = [], $assoc = true)
+    {
+        $response = $this->request->getTransitions($this->issueIdOrKey, $parameters);
+
+        return json_decode($response->getBody(), $assoc);
+    }
+
+    /**
+     * @param int $transition
+     * @param \Atlassian\JiraRest\Requests\Issue\Parameters\Transitions\DoTransitionsParameters|array
+     *
+     * @return bool
+     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \TypeError
+     */
+    public function doTransition($transition, $parameters = [])
+    {
+        if (is_array($parameters)) {
+            $parameters = new DoTransitionsParameters($parameters);
+        }
+
+        $parameters->transition['id'] = $transition;
+
+        $response = $this->request->doTransition($this->issueIdOrKey, $parameters);
+
+        // 204 is returned if the transition was done
+        return $response->getStatusCode() === 204;
     }
 
 
