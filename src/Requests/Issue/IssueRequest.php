@@ -3,7 +3,7 @@
 namespace Atlassian\JiraRest\Requests\Issue;
 
 use Atlassian\JiraRest\Requests\AbstractRequest;
-use Atlassian\JiraRest\Requests\Issue\Parameters\CreateParameters;
+use Atlassian\JiraRest\Requests\Issue\Parameters\UpdateOrCreateParameters;
 use Atlassian\JiraRest\Requests\Issue\Parameters\DeleteParameters;
 use Atlassian\JiraRest\Requests\Issue\Parameters\GetParameters;
 use Atlassian\JiraRest\Requests\Issue\Parameters\SearchParameters;
@@ -26,7 +26,7 @@ class IssueRequest extends AbstractRequest
      *
      * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-issue-post
      *
-     * @param \Atlassian\JiraRest\Requests\Issue\Parameters\CreateParameters|array $parameters
+     * @param \Atlassian\JiraRest\Requests\Issue\Parameters\UpdateOrCreateParameters|array $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
@@ -36,7 +36,7 @@ class IssueRequest extends AbstractRequest
      */
     public function create($parameters = [])
     {
-        $this->validateParameters($parameters, CreateParameters::class);
+        $this->validateParameters($parameters, UpdateOrCreateParameters::class);
 
         return $this->execute('post', 'issue', $parameters);
     }
@@ -68,7 +68,7 @@ class IssueRequest extends AbstractRequest
      * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-issue-issueIdOrKey-put
      *
      * @param string|int $issueIdOrKey
-     * @param \Atlassian\JiraRest\Requests\Issue\Parameters\EditParameters|array $parameters
+     * @param \Atlassian\JiraRest\Requests\Issue\Parameters\UpdateOrCreateParameters|array $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
@@ -78,7 +78,7 @@ class IssueRequest extends AbstractRequest
      */
     public function edit($issueIdOrKey, $parameters = [])
     {
-        $this->validateParameters($parameters, EditParameters::class);
+        $this->validateParameters($parameters, UpdateOrCreateParameters::class);
 
         return $this->execute('put', "issue/{$issueIdOrKey}", $parameters);
     }

@@ -20,7 +20,7 @@ class Issues
     }
 
     /**
-     * @param \Atlassian\JiraRest\Requests\Issue\Parameters\CreateParameters|array $parameters
+     * @param \Atlassian\JiraRest\Requests\Issue\Parameters\UpdateOrCreateParameters|array $parameters
      * @param bool $assoc
      *
      * @return bool|array|\stdClass
