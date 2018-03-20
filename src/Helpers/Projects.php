@@ -38,14 +38,14 @@ class Projects
 
     /**
      * @param int|string $projectIdOrKey
-     *
+     * @param \Atlassian\JiraRest\Requests\Project\Parameters\GetParameters|array $parameters
      * @param bool $assoc
      *
      * @return mixed
      */
-    public function get($projectIdOrKey, $assoc = true)
+    public function get($projectIdOrKey, $parameters = [], $assoc = true)
     {
-        $response = $this->request->get($projectIdOrKey);
+        $response = $this->request->get($projectIdOrKey, $parameters);
 
         return json_decode($response->getBody(), $assoc);
     }

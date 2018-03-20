@@ -1,11 +1,10 @@
 <?php
 
-namespace Atlassian\JiraRest\Requests\Project;
+namespace Atlassian\JiraRest\Requests\Project\Traits;
 
-use Atlassian\JiraRest\Requests\AbstractRequest;
-
-class ProjectAvatarRequest extends AbstractRequest
+trait AvatarRequests
 {
+
     /**
      * Update project avatar
      *
@@ -19,7 +18,7 @@ class ProjectAvatarRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      * @throws \TypeError
      */
-    public function update($projectIdOrKey)
+    public function updateAvatar($projectIdOrKey)
     {
         // TODO: Implement update method
     }
@@ -37,7 +36,7 @@ class ProjectAvatarRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      * @throws \TypeError
      */
-    public function delete($projectIdOrKey)
+    public function deleteAvatar($projectIdOrKey)
     {
         // TODO: Implement delete method
     }
@@ -60,7 +59,7 @@ class ProjectAvatarRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      * @throws \TypeError
      */
-    public function create($projectIdOrKey)
+    public function createAvatar($projectIdOrKey)
     {
         // TODO: Implement create method
     }
@@ -79,9 +78,8 @@ class ProjectAvatarRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      * @throws \TypeError
      */
-    public function get($projectIdOrKey)
+    public function getAvatar($projectIdOrKey)
     {
         // TODO: Implement get method
     }
-
 }
