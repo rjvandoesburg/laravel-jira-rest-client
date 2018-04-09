@@ -40,6 +40,6 @@ class Sprint
     {
         $response = $this->request->get($this->sprint);
 
-        return json_decode($response, $assoc);
+        return json_decode($response->getBody(), $assoc);
     }
 }
