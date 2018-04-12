@@ -91,6 +91,7 @@ abstract class AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     protected function execute($method, $resource, $parameters = [], $asQueryParameters = false)
     {
