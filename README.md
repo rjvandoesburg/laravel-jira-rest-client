@@ -64,12 +64,12 @@ Now because for the most part you don't want to spend time writing the requests 
 
 To fetch a single issue you can use the following code:
 ```php
-$issue = jira()->issues()->get('ISSUE-3');
+$issue = jira()->issue('ISSUE-3')->get();
 ```
 
 Or use the facade if you prefer:
 ```php
-$issue = \Jira::issues()->get('ISSUE-3');
+$issue = \Jira::issue('ISSUE-3')->get();
 ```
 
 ### Middleware
