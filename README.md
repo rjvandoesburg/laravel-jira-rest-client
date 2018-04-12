@@ -9,9 +9,9 @@ By creating your own implementation or de simple helpers provided with the packa
 
 To get the latest version of `laravel-jira-rest-client`, run the following command
 ```shell
-composer require rjvandoesburg/laravel-jira-rest-client dev-master
+composer require rjvandoesburg/laravel-jira-rest-client
 ```
-Because the package is not fully ready yet (unless all you need is getting issue data) you need to use the master branch as this will have the most up-to-date changes
+Do note that not all methods have been implemented yet.
 
 Laravel 5.5 uses Package Auto-Discovery, so doesn't require you to manually add the ServiceProvider.
 
