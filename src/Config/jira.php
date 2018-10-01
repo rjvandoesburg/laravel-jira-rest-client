@@ -15,7 +15,8 @@ return [
             'consumer_key' => env('JIRA_CONSUMER_KEY', ''),
             'consumer_secret' => env('JIRA_CONSUMER_SECRET', ''),
             'private_key' => env('JIRA_PRIVATE_KEY', ''),
-            'private_key_passphrase' => env('JIRA_PRIVATE_KEY_PASSPHRASE', '')
+            'private_key_passphrase' => env('JIRA_PRIVATE_KEY_PASSPHRASE', ''),
+            'impersonate'=> env('JIRA_IMPERSONATE', false)
         ]
     ],
 
