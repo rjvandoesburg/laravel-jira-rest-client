@@ -14,10 +14,12 @@ return [
         'oauth' => [
             'consumer_key' => env('JIRA_CONSUMER_KEY', ''),
             'consumer_secret' => env('JIRA_CONSUMER_SECRET', ''),
+            'oauth_token' => env('JIRA_OAUTH_TOKEN', ''),
+            'oauth_token_secret' => env('JIRA_OAUTH_TOKEN_SECRET', ''),
             'private_key' => env('JIRA_PRIVATE_KEY', ''),
             'private_key_passphrase' => env('JIRA_PRIVATE_KEY_PASSPHRASE', ''),
             'impersonate'=> env('JIRA_IMPERSONATE', false)
-        ]
+        ],
     ],
 
     'log_level' => env('JIRA_LOG_LEVEL', 'WARNING'),
@@ -32,5 +34,5 @@ return [
     'session' => [
         'name' => 'jira_session',
         'duration' => 3600
-    ]
+    ],
 ];
