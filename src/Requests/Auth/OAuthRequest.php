@@ -17,19 +17,32 @@ class OAuthRequest extends AbstractRequest
         return 'plugins/servlet/oauth';
     }
 
+    /**
+     * @param $callbackUrl
+     *
+     * @return \GuzzleHttp\Psr7\Response
+     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function getRequestToken($callbackUrl)
     {
         return $this->execute('post', "request-token?oauth_callback={$callbackUrl}");
     }
 
+    /**
+     * @param $verifier
+     *
+     * @return \GuzzleHttp\Psr7\Response
+     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function getAccessToken($verifier)
     {
         return $this->execute('post', "access-token?oauth_verifier={$verifier}");
-    }
-
-    public function requestAuthCredentials($token, $secret, $verifier)
-    {
-
     }
 
     /**
@@ -44,6 +57,7 @@ class OAuthRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      * @throws \TypeError
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function login($parameters)
     {

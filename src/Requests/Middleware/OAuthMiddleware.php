@@ -41,9 +41,9 @@ class OAuthMiddleware
         // For a request-token request these need to be empty to prevent a 401
         if (! session()->pull(Provider::CONFIG_KEY.'.oauth.initial-request', false)) {
             // Check if the session has values
-            if (session()->has(Provider::CONFIG_KEY.'oauth.tokens')) {
-                $token = session()->get(Provider::CONFIG_KEY.'oauth.tokens.oauth_token');
-                $tokenSecret = session()->get(Provider::CONFIG_KEY.'oauth.tokens.oauth_token_secret');
+            if (session()->has(Provider::CONFIG_KEY.'.oauth.tokens')) {
+                $token = session()->get(Provider::CONFIG_KEY.'.oauth.tokens.oauth_token');
+                $tokenSecret = session()->get(Provider::CONFIG_KEY.'.oauth.tokens.oauth_token_secret');
             } else {
                 // Get the default tokens from the config
                 $token = config(Provider::CONFIG_KEY.'.auth.oauth.oauth_token', '');

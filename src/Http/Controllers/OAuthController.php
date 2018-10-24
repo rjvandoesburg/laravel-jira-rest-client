@@ -24,6 +24,10 @@ class OAuthController extends \Illuminate\Routing\Controller
      * @param \Atlassian\JiraRest\Requests\Auth\OAuthRequest $oauthRequest
      *
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function requestToken(Request $request, OAuthRequest $oauthRequest)
     {
@@ -31,7 +35,6 @@ class OAuthController extends \Illuminate\Routing\Controller
         $request->session()->flash(JiraRestServiceProvider::CONFIG_KEY.'.oauth.redirect', URL::previous());
         // Application -> Jira - Request request token
         $requestTokenRequest = $oauthRequest->getRequestToken(route('atlassian.jira.oauth.callback'));
-
         // Jira -> Application - Grant authorized request token
         parse_str($requestTokenRequest->getBody(), $requestTokenResponse);
         event(new RequestTokensReceived($requestTokenResponse));
@@ -52,6 +55,10 @@ class OAuthController extends \Illuminate\Routing\Controller
      * @param \Atlassian\JiraRest\Requests\Auth\OAuthRequest $oauthRequest
      *
      * @return array
+     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function callback(Request $request, OAuthRequest $oauthRequest)
     {
