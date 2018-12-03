@@ -110,7 +110,6 @@ abstract class AbstractRequest
                 case 404:
                     throw new JiraNotFoundException($message, 404, $exception);
                 default:
-                    \Log::error($exception);
                     throw new JiraClientException($message, $exception->getCode(), $exception);
             }
         }
