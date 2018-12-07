@@ -3,7 +3,7 @@
 Perform various operations of [Jira APIs](https://developer.atlassian.com/cloud/jira/platform/rest/) with Laravel 5.4+
 
 The aim of the package is to make it easier to communicate with the API. By default the response from the request is not altered in any way.
-By creating your own implementation or de simple helpers provided with the package you are able to integrate Jira the way you like.
+By creating your own implementation or by using the simple helpers provided with the package you are able to integrate Jira the way you like.
 
 ## Installation
 
@@ -74,14 +74,39 @@ $issue = \Jira::issue('ISSUE-3')->get();
 
 ### Middleware
 To alter the Guzzle Client used for requests you can add middleware to alter the options. To add new middleware you need to alter `config/atlassian/jira.php` and add the class to the `client_options` array.
+
+#### Basic Auth
 ```php
 'client_options' => [
     'auth' => \Atlassian\JiraRest\Requests\Middleware\BasicAuthMiddleware::class,
 ],
 ```
-By default the `BasicAuthMiddleware` is added and used for authentication with Jira. (Sessions and OAuth tokens are WIP)
+By default the `BasicAuthMiddleware` is added and used for authentication with Jira. (Sessions are WIP)
 
-ps. I'm not quite happy with the middleware as it is implemented at this time but I do want to incorporate them in a way.
+#### OAuth 1.0
+```php
+'client_options' => [
+    'auth' => \Atlassian\JiraRest\Requests\Middleware\OAuthMiddleware::class,
+],
+
+```
+**Impersonation**
+
+To impersonate a user through Jira requests you must set `JIRA_IMPERSONATE=true` in your .env file. 
+
+Once impersonation is enabled, Laravel will use the authentificated users' `name` by default. 
+However, it's also possible to impersonate a user manually by sending a user's name to constructor of the middleware. To do this you would need to manually register the middleware and pass the user.
+
+
+**JIRA Setup for Impersonation**
+1. Follow [Jira documentation](https://developer.atlassian.com/server/jira/platform/oauth/#see-it-in-action) to generate an RSA public/private key pair.
+2. Go to Jira --> Application Links (Admin)
+3. Create a new link with your server url 
+4. Ignore the "No response" warning
+5. Enter anything in all the field and keep "Create incoming link unchecked". Jira has a weird behaviour when it comes to setting up app links. If you create your incoming link now, you won't have access to 2-Legged auth (Impersonation).
+6. Click continue (ignore the warning). This should have created your new app link.
+7. Edit that link (notice there are no Outgoing info even if you added dummy info at creation).
+8. You may now enter all the info for OAuth and setup impersonation (Allow 2-Legged OAuth). 
 
 ## TODO
 - More helpers
@@ -89,6 +114,5 @@ ps. I'm not quite happy with the middleware as it is implemented at this time bu
 - Middleware
 - Better README
 - Sessions auth
-- OAuth
 - A way to alter the request before it is send out (globally for each request and possibility for specific requests)
 - Tests
