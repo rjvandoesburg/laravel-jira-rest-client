@@ -2,6 +2,7 @@
 
 namespace Atlassian\JiraRest;
 
+use Atlassian\JiraRest\Providers\RouteServiceProvider;
 use Illuminate\Support\ServiceProvider;
 
 class JiraRestServiceProvider extends ServiceProvider
@@ -31,5 +32,9 @@ class JiraRestServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__.'/Config/jira.php', static::CONFIG_KEY
         );
+
+        if (config('atlassian.jira.auth.oauth.routes')) {
+            $this->app->register(RouteServiceProvider::class);
+        }
     }
 }

@@ -20,7 +20,7 @@ class Projects
     }
 
     /**
-     * @param \Atlassian\JiraRest\Requests\Project\Parameters\GetAllParameters|array $parameters
+     * @param \Atlassian\JiraRest\Requests\Project\Parameters\SearchParameters|array $parameters
      *
      * @return array
      *
