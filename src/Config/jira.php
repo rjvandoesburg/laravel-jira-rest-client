@@ -11,6 +11,7 @@ return [
             'username' => env('JIRA_USER'),
             'password' => env('JIRA_PASS'),
         ],
+
         'oauth' => [
             'consumer_key' => env('JIRA_CONSUMER_KEY', ''),
             'consumer_secret' => env('JIRA_CONSUMER_SECRET', ''),
@@ -18,7 +19,9 @@ return [
             'oauth_token_secret' => env('JIRA_OAUTH_TOKEN_SECRET', ''),
             'private_key' => env('JIRA_PRIVATE_KEY', ''),
             'private_key_passphrase' => env('JIRA_PRIVATE_KEY_PASSPHRASE', ''),
-            'impersonate'=> env('JIRA_IMPERSONATE', false)
+            'impersonate'=> env('JIRA_IMPERSONATE', false),
+
+            'routes' => env('JIRA_OAUTH_ROUTES', false),
         ],
     ],
 
@@ -28,11 +31,12 @@ return [
         'auth' => \Atlassian\JiraRest\Requests\Middleware\BasicAuthMiddleware::class,
     ],
 
-    // List of custom fields defined in Jira
-    'customfields' => [],
-
     'session' => [
         'name' => 'jira_session',
         'duration' => 3600
     ],
+
+    // List of custom fields defined in Jira
+    'customfields' => [],
+
 ];

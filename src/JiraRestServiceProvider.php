@@ -33,7 +33,8 @@ class JiraRestServiceProvider extends ServiceProvider
             __DIR__.'/Config/jira.php', static::CONFIG_KEY
         );
 
-        // TODO: Add flag for user if default routes should be added
-        $this->app->register(RouteServiceProvider::class);
+        if (config('atlassian.jira.auth.oauth.routes')) {
+            $this->app->register(RouteServiceProvider::class);
+        }
     }
 }
