@@ -6,7 +6,6 @@ use Atlassian\JiraRest\JiraRestServiceProvider as Provider;
 use Closure;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Subscriber\Oauth\Oauth1;
-use Illuminate\Support\Arr;
 
 class OAuthMiddleware
 {
@@ -68,5 +67,4 @@ class OAuthMiddleware
 
         return $next($options);
     }
-
 }

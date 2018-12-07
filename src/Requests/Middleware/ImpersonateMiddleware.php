@@ -21,11 +21,16 @@ class ImpersonateMiddleware
         $this->userId = $userId;
     }
 
+    /**
+     * @param callable $handler
+     *
+     * @return \Closure
+     */
     public function __invoke(callable $handler)
     {
         return function (RequestInterface $request, array $options) use ($handler) {
             $queryparams = \GuzzleHttp\Psr7\parse_query($request->getUri()->getQuery());
-            $query = \GuzzleHttp\Psr7\build_query(["user_id" => $this->userId] + $queryparams);
+            $query = \GuzzleHttp\Psr7\build_query(array_merge(['user_id' => $this->userId, $queryparams]));
 
             return $handler($request->withUri($request->getUri()->withQuery($query)), $options);
         };
