@@ -6,6 +6,7 @@ use Atlassian\JiraRest\Requests\AbstractRequest;
 use Atlassian\JiraRest\Requests\Project\Parameters\AssignedPermissionSchemeParameters;
 use Atlassian\JiraRest\Requests\Project\Parameters\CreateParameters;
 use Atlassian\JiraRest\Requests\Project\Parameters\GetAllParameters;
+use Atlassian\JiraRest\Requests\Project\Parameters\SearchParameters;
 use Atlassian\JiraRest\Requests\Project\Parameters\NotificationSchemaParameters;
 use Atlassian\JiraRest\Requests\Project\Parameters\VersionsPageinatedParameters;
 use Atlassian\JiraRest\Requests\Project\Traits\AvatarRequests;
@@ -19,17 +20,22 @@ class ProjectRequest extends AbstractRequest
     use RoleRequests;
 
     /**
-     * Returns all projects visible for the currently logged in user, ie. all the projects the user has either ‘Browse projects’ or ‘Administer projects’ permission.
+     * Returns all projects visible for the currently logged in user, ie. all the projects the user has either ‘Browse
+     * projects’ or ‘Administer projects’ permission.
      * If no user is logged in, it returns all projects that are visible for anonymous users.
      *
      * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-project-get
      *
      * @param \Atlassian\JiraRest\Requests\Project\Parameters\GetAllParameters|array $parameters
+     *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \TypeError
+     *
+     * @deprecated Use search instead
      */
     public function all($parameters = [])
     {
@@ -39,12 +45,37 @@ class ProjectRequest extends AbstractRequest
     }
 
     /**
+     * Returns all projects visible for the currently logged in user, ie. all the projects the user has either ‘Browse
+     * projects’ or ‘Administer projects’ permission. If no user is logged in, it returns all projects that are visible
+     * for anonymous users.
+     *
+     * @see https://developer.atlassian.com/cloud/jira/platform/rest/v3/#api-api-3-project-search-get
+     *
+     * @param \Atlassian\JiraRest\Requests\Project\Parameters\SearchParameters|array $parameters
+     *
+     * @return \GuzzleHttp\Psr7\Response
+     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \TypeError
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function search($parameters = [])
+    {
+        $this->validateParameters($parameters, SearchParameters::class);
+
+        return $this->execute('get', 'project/search', $parameters);
+    }
+
+    /**
      * Creates a new project from a JSON representation.
      *
      * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-project-post
      *
      * @param \Atlassian\JiraRest\Requests\Project\Parameters\CreateParameters|array $parameters
+     *
      * @return \GuzzleHttp\Psr7\Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
@@ -66,6 +97,7 @@ class ProjectRequest extends AbstractRequest
      * @param \Atlassian\JiraRest\Requests\Project\Parameters\GetParameters|array $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
@@ -73,7 +105,7 @@ class ProjectRequest extends AbstractRequest
      */
     public function get($projectIdOrKey, $parameters = [])
     {
-        $this->validateParameters($parameters, GetAllParameters::class);
+        $this->validateParameters($parameters, SearchParameters::class);
 
         return $this->execute('get', "project/{$projectIdOrKey}", $parameters);
     }
@@ -87,6 +119,7 @@ class ProjectRequest extends AbstractRequest
      * @param \Atlassian\JiraRest\Requests\Project\Parameters\UpdateParameters|array $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
@@ -94,7 +127,7 @@ class ProjectRequest extends AbstractRequest
      */
     public function update($projectIdOrKey, $parameters = [])
     {
-        $this->validateParameters($parameters, GetAllParameters::class);
+        $this->validateParameters($parameters, SearchParameters::class);
 
         return $this->execute('put', "project/{$projectIdOrKey}", $parameters);
     }
@@ -107,6 +140,7 @@ class ProjectRequest extends AbstractRequest
      * @param int|string $projectIdOrKey
      *
      * @return \GuzzleHttp\Psr7\Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
@@ -123,6 +157,7 @@ class ProjectRequest extends AbstractRequest
      * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-project-type-get
      *
      * @return \GuzzleHttp\Psr7\Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
@@ -140,6 +175,7 @@ class ProjectRequest extends AbstractRequest
      * @param string $projectTypeKey
      *
      * @return \GuzzleHttp\Psr7\Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
@@ -157,6 +193,7 @@ class ProjectRequest extends AbstractRequest
      * @param string $projectTypeKey
      *
      * @return \GuzzleHttp\Psr7\Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
@@ -173,6 +210,7 @@ class ProjectRequest extends AbstractRequest
      * @param int|string $projectIdOrKey
      *
      * @return \GuzzleHttp\Psr7\Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
@@ -191,6 +229,7 @@ class ProjectRequest extends AbstractRequest
      * @param int|string $projectIdOrKey
      *
      * @return \GuzzleHttp\Psr7\Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
@@ -209,6 +248,7 @@ class ProjectRequest extends AbstractRequest
      * @param string $newProjectTypeKey
      *
      * @return \GuzzleHttp\Psr7\Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
@@ -227,6 +267,7 @@ class ProjectRequest extends AbstractRequest
      * @param \Atlassian\JiraRest\Requests\Project\Parameters\VersionsPageinatedParameters|array $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
@@ -247,6 +288,7 @@ class ProjectRequest extends AbstractRequest
      * @param int|string $projectIdOrKey
      *
      * @return \GuzzleHttp\Psr7\Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
@@ -264,6 +306,7 @@ class ProjectRequest extends AbstractRequest
      * @param int|string $projectIdOrKey
      *
      * @return \GuzzleHttp\Psr7\Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
@@ -282,6 +325,7 @@ class ProjectRequest extends AbstractRequest
      * @param \Atlassian\JiraRest\Requests\Project\Parameters\NotificationSchemaParameters|array $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
@@ -303,6 +347,7 @@ class ProjectRequest extends AbstractRequest
      * @param \Atlassian\JiraRest\Requests\Project\Parameters\AssignedPermissionSchemeParameters|array $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
@@ -324,6 +369,7 @@ class ProjectRequest extends AbstractRequest
      * @param int $newPermissionScheme
      *
      * @return \GuzzleHttp\Psr7\Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
@@ -342,6 +388,7 @@ class ProjectRequest extends AbstractRequest
      * @param int|string $projectIdOrKey
      *
      * @return \GuzzleHttp\Psr7\Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
