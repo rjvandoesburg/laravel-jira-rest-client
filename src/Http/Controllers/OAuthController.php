@@ -32,7 +32,7 @@ class OAuthController extends \Illuminate\Routing\Controller
     public function requestToken(Request $request, OAuthRequest $oauthRequest)
     {
         $request->session()->flash(JiraRestServiceProvider::CONFIG_KEY.'.oauth.initial-request', true);
-        $request->session()->flash(JiraRestServiceProvider::CONFIG_KEY.'.oauth.redirect', URL::previous());
+        $request->session()->flash(JiraRestServiceProvider::CONFIG_KEY.'.oauth.redirect', $request->get('redirect_url', URL::previous()));
         // Application -> Jira - Request request token
         $requestTokenRequest = $oauthRequest->getRequestToken(route('atlassian.jira.oauth.callback'));
         // Jira -> Application - Grant authorized request token
@@ -68,6 +68,14 @@ class OAuthController extends \Illuminate\Routing\Controller
         ]);
 
         $verifier = $request->get('oauth_verifier');
+
+        if ($verifier === 'denied') {
+            return redirect()
+                ->to($request->session()->get(JiraRestServiceProvider::CONFIG_KEY.'.oauth.redirect'))
+                ->with([
+                    JiraRestServiceProvider::CONFIG_KEY.'.oauth.denied' => true
+                ]);
+        }
 
         // Application -> Jira - Use authorized request token to request access token
         $accessTokenRequest = $oauthRequest->getAccessToken($verifier);
