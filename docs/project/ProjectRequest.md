@@ -2,6 +2,11 @@
 
 [All documentation regarding project requests](https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-group-Project)
 
+## Table of Contents
+
+- [Create a project](#create-a-project)
+- [Get project issue security levels](#get-project-issue-security-levels)
+
 ## Create a project
 _Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-project-post_
 
