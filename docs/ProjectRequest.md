@@ -1,6 +1,6 @@
-# Examples
+# Project examples
 
-[All documentation regarding project requests](https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-group-Project)
+[All documentation](https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-group-Project)
 
 ## Table of Contents
 

@@ -4,10 +4,8 @@ namespace Atlassian\JiraRest\Requests\Issue;
 
 use Atlassian\JiraRest\Requests\AbstractRequest;
 use Atlassian\JiraRest\Requests\Issue\Parameters\UpdateOrCreateParameters;
-use Atlassian\JiraRest\Requests\Issue\Parameters\DeleteParameters;
 use Atlassian\JiraRest\Requests\Issue\Parameters\GetParameters;
 use Atlassian\JiraRest\Requests\Issue\Parameters\SearchParameters;
-use Atlassian\JiraRest\Requests\Issue\Parameters\EditParameters;
 use Atlassian\JiraRest\Requests\Issue\Traits;
 
 /**
@@ -32,6 +30,7 @@ class IssueRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \TypeError
      */
     public function create($parameters = [])
@@ -53,6 +52,7 @@ class IssueRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \TypeError
      */
     public function get($issueIdOrKey, $parameters = [])
@@ -74,6 +74,7 @@ class IssueRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \TypeError
      */
     public function edit($issueIdOrKey, $parameters = [])
@@ -95,6 +96,7 @@ class IssueRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function delete($issueIdOrKey, $deleteSubtasks = false)
     {
@@ -112,6 +114,7 @@ class IssueRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \TypeError
      */
     public function search($parameters)
@@ -187,6 +190,4 @@ class IssueRequest extends AbstractRequest
     {
         // TODO: implement
     }
-
-
 }
