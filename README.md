@@ -59,7 +59,68 @@ $response = json_decode($response->getBody(), true);
 ``` 
 Which will return a response like seen in the [API](https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-issue-issueIdOrKey-get)
 
-### Helpers
+###Parameters
+Most request have additional parameters like `maxResults` and `startAt` or `query`.
+
+Within the package I try to create a parameter class for every request that has multiple.
+
+For example:
+
+Requesting projects with fewer results
+```php
+<?php
+use Atlassian\JiraRest\Requests\Project;
+
+/** @var \Atlassian\JiraRest\Requests\Project\ProjectRequest $request */
+$request = app(Project\ProjectRequest::class);
+
+$parameters = new Project\Parameters\SearchParameters;
+$parameters->maxResults = 10;
+$parameters->startAt = 0;
+
+$response = $request->search($parameters);
+
+$output = json_decode($response->getBody());
+```
+
+Using it like this you can manipulate the default search parameters.
+
+But other ways of using the parameters are as followed:
+
+```php
+<?php
+use Atlassian\JiraRest\Requests\Project;
+
+/** @var \Atlassian\JiraRest\Requests\Project\ProjectRequest $request */
+$request = app(Project\ProjectRequest::class);
+
+$parameters = new Project\Parameters\SearchParameters([
+    'maxResults' => 10,
+    'startAt' => 0
+]);
+
+$response = $request->search($parameters);
+
+$output = json_decode($response->getBody());
+```
+
+Or as an array directly in the request.
+```php
+<?php
+use Atlassian\JiraRest\Requests\Project;
+
+/** @var \Atlassian\JiraRest\Requests\Project\ProjectRequest $request */
+$request = app(Project\ProjectRequest::class);
+
+$response = $request->search([
+    'maxResults' => 10,
+    'startAt' => 0
+]);
+
+$output = json_decode($response->getBody());
+```
+
+### Helpers (deprecated)
 Now because for the most part you don't want to spend time writing the requests yourself there are some useful helpers to get you communicating with the api.
 
 To fetch a single issue you can use the following code:
@@ -71,6 +132,8 @@ Or use the facade if you prefer:
 ```php
 $issue = \Jira::issue('ISSUE-3')->get();
 ```
+
+_deprecating most helpers because writing helpers for all classes is too much maintenance_
 
 ### Middleware
 To alter the Guzzle Client used for requests you can add middleware to alter the options. To add new middleware you need to alter `config/atlassian/jira.php` and add the class to the `client_options` array.
@@ -109,8 +172,7 @@ However, it's also possible to impersonate a user manually by sending a user's n
 8. You may now enter all the info for OAuth and setup impersonation (Allow 2-Legged OAuth). 
 
 ## TODO
-- More helpers
-- Implement missing
+- Implement missing requests
 - Middleware
 - Better README
 - Sessions auth
