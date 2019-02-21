@@ -59,7 +59,7 @@ $response = json_decode($response->getBody(), true);
 ``` 
 Which will return a response like seen in the [API](https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-issue-issueIdOrKey-get)
 
-###Parameters
+### Parameters
 Most request have additional parameters like `maxResults` and `startAt` or `query`.
 
 Within the package I try to create a parameter class for every request that has multiple.

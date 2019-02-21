@@ -1,8 +1,8 @@
-#Examples
+# Examples
 
 [All documentation regarding project requests](https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-group-Project)
 
-##Create a project
+## Create a project
 _Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-project-post_
 
 Creating a new project
@@ -34,7 +34,7 @@ $response = $request->create($parameters);
 $output = json_decode($response->getBody());
 ```
 
-##Get project paginated
+## Get project paginated
 _Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-project-search-get_
 
 Requesting all project with default search parameters
@@ -67,7 +67,7 @@ $response = $request->search($arameters);
 $output = json_decode($response->getBody());
 ```
 
-##Get all project types
+## Get all project types
 _Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-project-type-get_
 
 ```php
@@ -82,7 +82,7 @@ $response = $request->getAllProjectTypes();
 $output = json_decode($response->getBody());
 ```
 
-##Get project type by key
+## Get project type by key
 _Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-project-type-projectTypeKey-get_
 
 ```php
@@ -97,7 +97,7 @@ $response = $request->getProjectType('software');
 $output = json_decode($response->getBody());
 ```
 
-##Get accessible project type by key
+## Get accessible project type by key
 _Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-project-type-projectTypeKey-accessible-get_
 
 ```php
@@ -112,7 +112,7 @@ $response = $request->getAccessibleProjectType('software');
 $output = json_decode($response->getBody());
 ```
 
-##Get project
+## Get project
 _Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-project-projectIdOrKey-get_
 
 ```php
@@ -143,7 +143,7 @@ $response = $request->get('EX', $parameters);
 $output = json_decode($response->getBody());
 ```
 
-##Update project
+## Update project
 _Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-project-projectIdOrKey-put_
 
 ```php
@@ -176,7 +176,7 @@ $response = $request->update('EX', $parameters);
 $output = json_decode($response->getBody());
 ```
 
-##Delete project
+## Delete project
 _Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-project-projectIdOrKey-delete_
 
 ```php
@@ -191,27 +191,27 @@ $response = $request->delete('EX');
 $output = json_decode($response->getBody());
 ```
 
-##Set project avatar
+## Set project avatar
 _Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-project-projectIdOrKey-avatar-put_
 
 Not yet implemented
 
-##Delete project avatar
+## Delete project avatar
 _Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-project-projectIdOrKey-avatar-id-delete_
 
 Not yet implemented
 
-##Load project avatar
+## Load project avatar
 _Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-project-projectIdOrKey-avatar2-post_
 
 Not yet implemented
 
-##Get all project avatars
+## Get all project avatars
 _Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-project-projectIdOrKey-avatars-get_
 
 Not yet implemented
 
-##Get project components paginated
+## Get project components paginated
 _Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-project-projectIdOrKey-component-get_
 
 ```php
@@ -226,7 +226,7 @@ $response = $request->getComponentsPaginated('EX');
 $output = json_decode($response->getBody());
 ```
 
-##Get project components
+## Get project components
 _Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-project-projectIdOrKey-components-get_
 
 ```php
@@ -241,7 +241,7 @@ $response = $request->getComponents('EX');
 $output = json_decode($response->getBody());
 ```
 
-##Get project property keys
+## Get project property keys
 _Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-project-projectIdOrKey-properties-get_
 
 ```php
@@ -256,7 +256,7 @@ $response = $request->getPropertyKeys('EX');
 $output = json_decode($response->getBody());
 ```
 
-##Get project property
+## Get project property
 _Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-project-projectIdOrKey-properties-propertyKey-get_
 
 ```php
@@ -271,7 +271,7 @@ $response = $request->getProperty('EX', 'projectAccount');
 $output = json_decode($response->getBody());
 ```
 
-##Set project property
+## Set project property
 _Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-project-projectIdOrKey-properties-propertyKey-put_
 
 ```php
@@ -286,7 +286,7 @@ $response = $request->setProperty('EX', 'office', 'New-York');
 $output = json_decode($response->getBody());
 ```
 
-##Delete project property
+## Delete project property
 _Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-project-projectIdOrKey-properties-propertyKey-delete_
 
 ```php
@@ -301,7 +301,7 @@ $response = $request->deleteProperty('EX', 'office');
 $output = json_decode($response->getBody());
 ```
 
-##Get project roles for project
+## Get project roles for project
 _Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-project-projectIdOrKey-role-get_
 
 ```php
@@ -316,7 +316,7 @@ $response = $request->getRoles('EX');
 $output = json_decode($response->getBody());
 ```
 
-##Get project role for project
+## Get project role for project
 _Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-project-projectIdOrKey-role-id-get_
 
 ```php
@@ -331,7 +331,7 @@ $response = $request->getRoles('EX');
 $output = json_decode($response->getBody());
 ```
 
-##Set actors for project role
+## Set actors for project role
 _Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-project-projectIdOrKey-role-id-put_
 
 ```php
@@ -357,7 +357,7 @@ $response = $request->setActors('EX', 10001, $parameters);
 $output = json_decode($response->getBody());
 ```
 
-##Add actors to project role
+## Add actors to project role
 _Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-project-projectIdOrKey-role-id-post_
 
 ```php
@@ -378,7 +378,7 @@ $response = $request->addActor('EX', 10001, $parameters);
 $output = json_decode($response->getBody());
 ```
 
-##Delete actors from project role
+## Delete actors from project role
 _Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-project-projectIdOrKey-role-id-delete_
 
 ```php
@@ -399,7 +399,7 @@ $response = $request->deleteActor('EX', 10001, $parameters);
 $output = json_decode($response->getBody());
 ```
 
-##Get project role details
+## Get project role details
 _Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-project-projectIdOrKey-roledetails-get_
 
 ```php
@@ -414,7 +414,7 @@ $response = $request->getRole('EX', 10001);
 $output = json_decode($response->getBody());
 ```
 
-##Get all statuses for project
+## Get all statuses for project
 _Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-project-projectIdOrKey-statuses-get_
 
 ```php
@@ -429,7 +429,7 @@ $response = $request->getStatuses('EX');
 $output = json_decode($response->getBody());
 ```
 
-##Update project type
+## Update project type
 _Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-project-projectIdOrKey-type-newProjectTypeKey-put_
 
 ```php
@@ -444,7 +444,7 @@ $response = $request->updateProjectType('EX', 'business');
 $output = json_decode($response->getBody());
 ```
 
-##Get project versions paginated
+## Get project versions paginated
 _Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-project-projectIdOrKey-version-get_
 
 ```php
@@ -476,7 +476,7 @@ $response = $request->getVersionsPaginated('EX', $parameters);
 $output = json_decode($response->getBody());
 ```
 
-##Get project versions
+## Get project versions
 _Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-project-projectIdOrKey-versions-get_
 
 ```php
@@ -491,7 +491,7 @@ $response = $request->getVersions('EX');
 $output = json_decode($response->getBody());
 ```
 
-##Get project issue security scheme
+## Get project issue security scheme
 _Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-project-projectKeyOrId-issuesecuritylevelscheme-get_
 
 ```php
@@ -506,7 +506,7 @@ $response = $request->getIssueSecurityScheme('EX');
 $output = json_decode($response->getBody());
 ```
 
-##Get project notification scheme
+## Get project notification scheme
 _Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-project-projectKeyOrId-notificationscheme-get_
 
 ```php
@@ -521,7 +521,7 @@ $response = $request->getNotificationScheme('EX');
 $output = json_decode($response->getBody());
 ```
 
-##Get assigned permission scheme
+## Get assigned permission scheme
 _Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-project-projectKeyOrId-permissionscheme-get_
 
 ```php
@@ -536,7 +536,7 @@ $response = $request->getAssignedPermissionScheme('EX');
 $output = json_decode($response->getBody());
 ```
 
-##Assign permission scheme
+## Assign permission scheme
 _Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-project-projectKeyOrId-permissionscheme-put_
 
 ```php
@@ -551,7 +551,7 @@ $response = $request->assignPermissionScheme('EX', 10000);
 $output = json_decode($response->getBody());
 ```
 
-##Get project issue security levels
+## Get project issue security levels
 _Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-project-projectKeyOrId-securitylevel-get_
 
 ```php
