@@ -13,7 +13,7 @@ use Atlassian\JiraRest\Requests\AbstractParameters;
 class SearchParameters extends AbstractParameters
 {
     /**
-     * The starting index of the first item returned in the page of results (page offset). The base index is 0.
+     * The index of the first item to return in a page of results (page offset).
      *
      * @var int
      */

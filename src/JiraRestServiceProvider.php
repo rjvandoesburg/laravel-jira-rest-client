@@ -8,7 +8,10 @@ use Illuminate\Support\ServiceProvider;
 class JiraRestServiceProvider extends ServiceProvider
 {
 
-    const CONFIG_KEY = 'atlassian.jira';
+    /**
+     * Define the prefix for the config
+     */
+    public const CONFIG_KEY = 'atlassian.jira';
 
     /**
      * Boot the service provider.
@@ -29,9 +32,7 @@ class JiraRestServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(
-            __DIR__.'/Config/jira.php', static::CONFIG_KEY
-        );
+        $this->mergeConfigFrom(__DIR__.'/Config/jira.php', static::CONFIG_KEY);
 
         if (config('atlassian.jira.auth.oauth.routes')) {
             $this->app->register(RouteServiceProvider::class);

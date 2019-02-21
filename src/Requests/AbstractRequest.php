@@ -15,7 +15,7 @@ abstract class AbstractRequest
     /**
      * @var \GuzzleHttp\Client
      */
-    protected $client = null;
+    protected $client;
 
     /**
      * A list of middleware to use for the current request
@@ -29,6 +29,7 @@ abstract class AbstractRequest
      */
     public function __construct()
     {
+        // TODO: Check for default_auth to add the default auth and merge with client middleware options
         $this->middleware = config('atlassian.jira.client_options', []);
     }
 
@@ -47,7 +48,7 @@ abstract class AbstractRequest
         ];
 
         // Pipe the options through all middleware defined in the config
-        (app(\Illuminate\Pipeline\Pipeline::class))
+        app(\Illuminate\Pipeline\Pipeline::class)
             ->send($options)
             ->through($this->middleware)
             ->then(function ($options) {
@@ -84,7 +85,7 @@ abstract class AbstractRequest
      *
      * @param string $method
      * @param string $resource
-     * @param array $parameters
+     * @param \Atlassian\JiraRest\Requests\AbstractParameters|array $parameters
      * @param bool $asQueryParameters Some non-GET requests require sending query parameters instead.
      *
      * @return \GuzzleHttp\Psr7\Response
@@ -136,7 +137,7 @@ abstract class AbstractRequest
     }
 
     /**
-     * @param $method
+     * @param string $method
      * @param \Atlassian\JiraRest\Requests\AbstractParameters|array $parameters
      * @param bool $asQueryParameters Some non-GET requests require sending query parameters instead.
      *
@@ -213,7 +214,7 @@ abstract class AbstractRequest
     }
 
     /**
-     * @param $middleware
+     * @param string $middleware
      * @param null|string $name
      *
      * @return \Atlassian\JiraRest\Requests\AbstractRequest

@@ -202,6 +202,26 @@ class ProjectRequest extends AbstractRequest
     {
         return $this->execute('get', "project/type/{$projectTypeKey}/accessible");
     }
+
+    /**
+     * Returns a paginated representation of all components existing in a single project.
+     * See the Get project components resource if you want to get a full list of versions without pagination.
+     *
+     * @see https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-project-projectIdOrKey-component-get
+     *
+     * @param int|string $projectIdOrKey
+     *
+     * @return \GuzzleHttp\Psr7\Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     */
+    public function getComponentsPaginated($projectIdOrKey)
+    {
+        return $this->execute('get', "project/{$projectIdOrKey}/component");
+    }
+
     /**
      * Contains a full representation of a the specified project's components.
      *

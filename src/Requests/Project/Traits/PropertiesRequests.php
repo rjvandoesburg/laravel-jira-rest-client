@@ -48,12 +48,13 @@ trait PropertiesRequests
      *
      * @param int|string $projectIdOrKey
      * @param string $propertyKey
+     * @param mixed $value
      *
-     * @param $value
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function setProperty($projectIdOrKey, $propertyKey, $value)
     {
@@ -73,6 +74,7 @@ trait PropertiesRequests
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function deleteProperty($projectIdOrKey, $propertyKey)
     {
