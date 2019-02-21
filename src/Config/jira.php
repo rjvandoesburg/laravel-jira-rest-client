@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     'host' => env('JIRA_HOST'),
 
     'default_auth' => env('JIRA_AUTHENTICATION', 'basic'),
@@ -35,8 +34,4 @@ return [
         'name' => 'jira_session',
         'duration' => 3600
     ],
-
-    // List of custom fields defined in Jira
-    'customfields' => [],
-
 ];
