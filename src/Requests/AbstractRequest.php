@@ -29,8 +29,27 @@ abstract class AbstractRequest
      */
     public function __construct()
     {
-        // TODO: Check for default_auth to add the default auth and merge with client middleware options
-        $this->middleware = config('atlassian.jira.client_options', []);
+        // If the user has set default auth, include it
+        if (($defaultAuth = config('atlassian.jira.default_auth')) !== null) {
+            switch ($defaultAuth) {
+                case 'basic':
+                    $middleware = config('atlassian.jira.basic.middleware', \Atlassian\JiraRest\Requests\Middleware\BasicAuthMiddleware::class);
+                    $this->addMiddleware($middleware , 'auth');
+                    break;
+                case 'oauth':
+                    $middleware = config('atlassian.jira.oauth.middleware', \Atlassian\JiraRest\Requests\Middleware\OAuthMiddleware::class);
+                    $this->addMiddleware($middleware , 'auth');
+                    break;
+                case 'session':
+                    // TODO: implement session default middleware
+                    break;
+            }
+        }
+
+        // TODO: Implement middleware groups etc like the kernel so the user can decide what middleware to add
+        foreach (config('atlassian.jira.client_options') as $key => $value) {
+            $this->addMiddleware($value, is_string($key) ? $key : null);
+        }
     }
 
     /**

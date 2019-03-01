@@ -9,6 +9,8 @@ return [
         'basic' => [
             'username' => env('JIRA_USER'),
             'password' => env('JIRA_PASS'),
+
+            'middelware' => \Atlassian\JiraRest\Requests\Middleware\BasicAuthMiddleware::class,
         ],
 
         'oauth' => [
@@ -18,20 +20,22 @@ return [
             'oauth_token_secret' => env('JIRA_OAUTH_TOKEN_SECRET', ''),
             'private_key' => env('JIRA_PRIVATE_KEY', ''),
             'private_key_passphrase' => env('JIRA_PRIVATE_KEY_PASSPHRASE', ''),
-            'impersonate'=> env('JIRA_IMPERSONATE', false),
+            'impersonate' => env('JIRA_IMPERSONATE', false),
 
             'routes' => env('JIRA_OAUTH_ROUTES', false),
+
+            'middelware' => \Atlassian\JiraRest\Requests\Middleware\OAuthMiddleware::class,
         ],
     ],
 
     'log_level' => env('JIRA_LOG_LEVEL', 'WARNING'),
 
     'client_options' => [
-        'auth' => \Atlassian\JiraRest\Requests\Middleware\BasicAuthMiddleware::class,
+
     ],
 
     'session' => [
         'name' => 'jira_session',
-        'duration' => 3600
+        'duration' => 3600,
     ],
 ];

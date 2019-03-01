@@ -19,6 +19,8 @@ Laravel 5.5 uses Package Auto-Discovery, so doesn't require you to manually add 
 
 If you don't use auto-discovery, add the ServiceProvider to the providers array in `config/app.php`
 ```php
+<?php
+
 'providers' => [
     // ...
 
@@ -29,6 +31,8 @@ If you don't use auto-discovery, add the ServiceProvider to the providers array 
 Also locate the `Aliases` key in your `config/app.php` file and register the Facade:
 
 ```php
+<?php
+
 'aliases' => [
     // ...
 
@@ -49,6 +53,8 @@ This desicion was made so the package is more versitile allowing users to handle
 
 For example, to fetch a specific issue you could do the following
 ```php
+<?php
+
 $request = new \Atlassian\JiraRest\Requests\Issue\IssueRequest;
 $response = $request->get('ISSUE-3');
 ```
@@ -69,6 +75,7 @@ For example:
 Requesting projects with fewer results
 ```php
 <?php
+
 use Atlassian\JiraRest\Requests\Project;
 
 /** @var \Atlassian\JiraRest\Requests\Project\ProjectRequest $request */
@@ -89,6 +96,7 @@ But other ways of using the parameters are as followed:
 
 ```php
 <?php
+
 use Atlassian\JiraRest\Requests\Project;
 
 /** @var \Atlassian\JiraRest\Requests\Project\ProjectRequest $request */
@@ -107,6 +115,7 @@ $output = json_decode($response->getBody());
 Or as an array directly in the request.
 ```php
 <?php
+
 use Atlassian\JiraRest\Requests\Project;
 
 /** @var \Atlassian\JiraRest\Requests\Project\ProjectRequest $request */
@@ -136,23 +145,36 @@ $issue = \Jira::issue('ISSUE-3')->get();
 _deprecating most helpers because writing helpers for all classes is too much maintenance_
 
 ### Middleware
-To alter the Guzzle Client used for requests you can add middleware to alter the options. To add new middleware you need to alter `config/atlassian/jira.php` and add the class to the `client_options` array.
+To alter the Guzzle Client used for requests you can add 'middleware' to alter the options. 
 
-#### Basic Auth
+There are multiple ways to add middleware.
+
+#### Using the config
+You can set one or more middleware using the `client_options` array in the config `config/atlassian/jira.php`
+
+For example:
 ```php
+<?php
+
 'client_options' => [
-    'auth' => \Atlassian\JiraRest\Requests\Middleware\BasicAuthMiddleware::class,
+    'auth' => \App\Services\Jira\Middleware\LogRequestMiddleware::class,
 ],
 ```
-By default the `BasicAuthMiddleware` is added and used for authentication with Jira. (Sessions are WIP)
+_These can be named or just a value_
 
-#### OAuth 1.0
+#### Using the `addMiddleware` method
+When you have an `AbstractRequest` instance you can add multiple middleware by calling `addMiddlware` like so:
+
 ```php
-'client_options' => [
-    'auth' => \Atlassian\JiraRest\Requests\Middleware\OAuthMiddleware::class,
-],
+<?php
 
+use Atlassian\JiraRest\Requests;
+
+/** @var \Atlassian\JiraRest\Requests\ServerInfoRequest $request */
+$request = app(Requests\ServerInfoRequest::class);
+$request->addMiddleware(\App\Services\Jira\Middleware\LogRequestMiddleware::class);
 ```
+
 **Impersonation**
 
 To impersonate a user through Jira requests you must set `JIRA_IMPERSONATE=true` in your .env file. 
