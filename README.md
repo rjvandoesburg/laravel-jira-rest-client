@@ -129,6 +129,56 @@ $response = $request->search([
 $output = json_decode($response->getBody());
 ```
 
+
+### Authentication
+So Jira allows for multiple ways of authentication. By default this is basic auth.
+
+#### Basic Auth
+To use basic auth, you need to add the following to your `.env`
+```
+JIRA_USER=
+JIRA_PASS=
+```
+Where the credentials are the same as the user you are logging in.
+
+If you wish have each user be identified by their own credentials you need to set these in the config on runtime 
+```php
+<?php
+
+config('atlassian.jira.auth.basic.username', 'info@example.com');
+config('atlassian.jira.auth.basic.password', 'secret');
+```
+
+#### Session
+Another implementation is session, but that is not (yet) implemented by this package.
+
+#### OAuth
+_To use OAuth you need to add the OAuth package for Guzzle: `composer require guzzlehttp/oauth-subscriber`_
+
+Lastly there is the option for OAuth, please read the Jira documentation first before continuing https://developer.atlassian.com/server/jira/platform/oauth/
+
+After reading that you need to create an application on Jira's side (as explained on that page) and set the credentials in you `.env`
+
+```
+JIRA_HOST={url of your Jira instance}
+JIRA_CONSUMER_KEY={as set in Jira}
+JIRA_PRIVATE_KEY={full path location to your key used for authentication}
+```
+
+These credentials should be enough to talk to the api to login. In `src/Http/Controllers/OAuthController.php` you can find how you can do the 'oauth' dance.
+
+This controller can be enabled by setting `JIRA_OAUTH_ROUTES=true` in the `.env` file. Once enabled you are able to navigate to `/atlassian/jira/oauth/access` which will redirect you to Jira to grant access.
+
+Once that is done you will find oauth tokens in the session ([flashed](https://laravel.com/docs/5.8/redirects#redirecting-with-flashed-session-data)) which will allow you to request resources from Jira. 
+This allows you to decide where to store the keys e.g. database or session.
+Alternatively you can catch the event `\Atlassian\JiraRest\Events\OAuth\AccessTokensReceived` to handle the tokens.
+You can also set those credentials in the `.env` so you don't have to authenticate again in the future as tokens are valid for 5 years (according to Jira)
+
+```
+JIRA_OAUTH_TOKEN=
+JIRA_OAUTH_TOKEN_SECRET=
+```
+
 ### Helpers (deprecated)
 Now because for the most part you don't want to spend time writing the requests yourself there are some useful helpers to get you communicating with the api.
 

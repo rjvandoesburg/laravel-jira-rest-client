@@ -33,6 +33,7 @@
         }
     },
     "suggest": {
-        "salsify/json-streaming-parser": "Require this when you want to parse the response in blocks"
+        "salsify/json-streaming-parser": "Require this when you want to parse the response in blocks",
+        "guzzlehttp/oauth-subscriber": "Required when using OAuth authentication"
     }
 }

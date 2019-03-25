@@ -109,6 +109,7 @@ class IssueRequest extends AbstractRequest
      * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-search-get
      *
      * @param \Atlassian\JiraRest\Requests\Issue\Parameters\SearchParameters|array $parameters
+     * @param bool $asGet
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
@@ -117,11 +118,11 @@ class IssueRequest extends AbstractRequest
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \TypeError
      */
-    public function search($parameters)
+    public function search($parameters, $asGet = true)
     {
         $this->validateParameters($parameters, SearchParameters::class);
 
-        return $this->execute('get', 'search', $parameters);
+        return $this->execute($asGet ? 'get' : 'post', 'search', $parameters);
     }
 
     /**
