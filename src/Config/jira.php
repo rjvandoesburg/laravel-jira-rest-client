@@ -10,7 +10,7 @@ return [
             'username' => env('JIRA_USER'),
             'password' => env('JIRA_PASS'),
 
-            'middelware' => \Atlassian\JiraRest\Requests\Middleware\BasicAuthMiddleware::class,
+            'middleware' => \Atlassian\JiraRest\Requests\Middleware\BasicAuthMiddleware::class,
         ],
 
         'oauth' => [
@@ -24,7 +24,7 @@ return [
 
             'routes' => env('JIRA_OAUTH_ROUTES', false),
 
-            'middelware' => \Atlassian\JiraRest\Requests\Middleware\OAuthMiddleware::class,
+            'middleware' => \Atlassian\JiraRest\Requests\Middleware\OAuthMiddleware::class,
         ],
     ],
 

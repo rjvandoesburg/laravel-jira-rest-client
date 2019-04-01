@@ -33,11 +33,11 @@ abstract class AbstractRequest
         if (($defaultAuth = config('atlassian.jira.default_auth')) !== null) {
             switch ($defaultAuth) {
                 case 'basic':
-                    $middleware = config('atlassian.jira.basic.middleware', \Atlassian\JiraRest\Requests\Middleware\BasicAuthMiddleware::class);
+                    $middleware = config('atlassian.jira.auth.basic.middleware', \Atlassian\JiraRest\Requests\Middleware\BasicAuthMiddleware::class);
                     $this->addMiddleware($middleware , 'auth');
                     break;
                 case 'oauth':
-                    $middleware = config('atlassian.jira.oauth.middleware', \Atlassian\JiraRest\Requests\Middleware\OAuthMiddleware::class);
+                    $middleware = config('atlassian.jira.auth.oauth.middleware', \Atlassian\JiraRest\Requests\Middleware\OAuthMiddleware::class);
                     $this->addMiddleware($middleware , 'auth');
                     break;
                 case 'session':
