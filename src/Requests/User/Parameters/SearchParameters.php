@@ -40,12 +40,12 @@ class SearchParameters extends AbstractParameters
      *
      * @var bool
      */
-    public $includeActive = true;
+    public $includeActiveUsers = true;
 
     /**
      * If true, then inactive users are included in the results
      *
      * @var bool
      */
-    public $includeInactive = false;
+    public $includeInactiveUsers = false;
 }
