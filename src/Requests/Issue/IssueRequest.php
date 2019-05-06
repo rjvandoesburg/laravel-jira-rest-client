@@ -191,4 +191,117 @@ class IssueRequest extends AbstractRequest
     {
         // TODO: implement
     }
+
+    /**
+     * Returns all worklogs for an issue.
+     *
+     * @see https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-rest-api-3-issue-issueIdOrKey-worklog-get
+     *
+     * @param string|int $issueIdOrKey
+     * @param \Atlassian\JiraRest\Requests\Issue\Parameters\GetParameters|array $parameters
+     *
+     * @return \GuzzleHttp\Psr7\Response
+     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \TypeError
+     */
+    public function getWorklogs($issueIdOrKey, $parameters = [])
+    {
+        $this->validateParameters($parameters, SearchParameters::class);
+
+        return $this->execute('get', "issue/{$issueIdOrKey}/worklog", $parameters);
+    }
+
+    /**
+     * Returns all worklogs for an issue.
+     *
+     * @see https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-rest-api-3-issue-issueIdOrKey-worklog-get
+     *
+     * @param string|int $issueIdOrKey
+     * @param int $workdlogId
+     * @param \Atlassian\JiraRest\Requests\Issue\Parameters\GetParameters|array $parameters
+     *
+     * @return \GuzzleHttp\Psr7\Response
+     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \TypeError
+     */
+    public function getWorklog($issueIdOrKey, $workdlogId, $parameters = [])
+    {
+        $this->validateParameters($parameters, SearchParameters::class);
+
+        return $this->execute('get', "issue/{$issueIdOrKey}/worklog/$workdlogId", $parameters);
+    }
+
+    /**
+     * Adds a worklog to an issue.
+     *
+     * @see https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-rest-api-3-issue-issueIdOrKey-worklog-post
+     *
+     * @param string|int $issueIdOrKey
+     * @param \Atlassian\JiraRest\Requests\Issue\Parameters\GetParameters|array $parameters
+     *
+     * @return \GuzzleHttp\Psr7\Response
+     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \TypeError
+     */
+    public function addWorklog($issueIdOrKey, $parameters = [])
+    {
+        $this->validateParameters($parameters, SearchParameters::class);
+
+        return $this->execute('post', "issue/{$issueIdOrKey}/worklog", $parameters);
+    }
+
+    /**
+     * Updates a worklog.
+     *
+     * @see https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-rest-api-3-issue-issueIdOrKey-worklog-post
+     *
+     * @param string|int $issueIdOrKey
+     * @param int $workdlogId
+     * @param \Atlassian\JiraRest\Requests\Issue\Parameters\GetParameters|array $parameters
+     *
+     * @return \GuzzleHttp\Psr7\Response
+     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \TypeError
+     */
+    public function putWorklog($issueIdOrKey, $workdlogId, $parameters = [])
+    {
+        $this->validateParameters($parameters, SearchParameters::class);
+
+        return $this->execute('put', "issue/{$issueIdOrKey}/worklog/$workdlogId", $parameters);
+    }
+
+    /**
+     * Deletes a worklog from an issue.
+     *
+     * @see https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-rest-api-3-issue-issueIdOrKey-worklog-id-delete
+     *
+     * @param string|int $issueIdOrKey
+     * @param int $workdlogId
+     * @param \Atlassian\JiraRest\Requests\Issue\Parameters\GetParameters|array $parameters
+     *
+     * @return \GuzzleHttp\Psr7\Response
+     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \TypeError
+     */
+    public function deleteWorklog($issueIdOrKey, $workdlogId, $parameters = [])
+    {
+        $this->validateParameters($parameters, SearchParameters::class);
+
+        return $this->execute('delete', "issue/{$issueIdOrKey}/worklog/$workdlogId", $parameters);
+    }
 }
