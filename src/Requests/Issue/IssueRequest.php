@@ -234,7 +234,7 @@ class IssueRequest extends AbstractRequest
     {
         $this->validateParameters($parameters, SearchParameters::class);
 
-        return $this->execute('get', "issue/{$issueIdOrKey}/worklog/$workdlogId", $parameters);
+        return $this->execute('get', "issue/{$issueIdOrKey}/worklog/{$workdlogId}", $parameters);
     }
 
     /**
@@ -279,7 +279,7 @@ class IssueRequest extends AbstractRequest
     {
         $this->validateParameters($parameters, SearchParameters::class);
 
-        return $this->execute('put', "issue/{$issueIdOrKey}/worklog/$workdlogId", $parameters);
+        return $this->execute('put', "issue/{$issueIdOrKey}/worklog/{$workdlogId}", $parameters);
     }
 
     /**
@@ -302,6 +302,6 @@ class IssueRequest extends AbstractRequest
     {
         $this->validateParameters($parameters, SearchParameters::class);
 
-        return $this->execute('delete', "issue/{$issueIdOrKey}/worklog/$workdlogId", $parameters);
+        return $this->execute('delete', "issue/{$issueIdOrKey}/worklog/{$workdlogId}", $parameters);
     }
 }
