@@ -24,7 +24,7 @@ class IssueRequest extends AbstractRequest
      *
      * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-issue-post
      *
-     * @param \Atlassian\JiraRest\Requests\Issue\Parameters\UpdateOrCreateParameters|array $parameters
+     * @param array|\Atlassian\JiraRest\Requests\Issue\Parameters\UpdateOrCreateParameters $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
@@ -46,7 +46,7 @@ class IssueRequest extends AbstractRequest
      * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-issue-issueIdOrKey-get
      *
      * @param string|int $issueIdOrKey
-     * @param \Atlassian\JiraRest\Requests\Issue\Parameters\GetParameters|array $parameters
+     * @param array|\Atlassian\JiraRest\Requests\Issue\Parameters\GetParameters $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
@@ -68,7 +68,7 @@ class IssueRequest extends AbstractRequest
      * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-issue-issueIdOrKey-put
      *
      * @param string|int $issueIdOrKey
-     * @param \Atlassian\JiraRest\Requests\Issue\Parameters\UpdateOrCreateParameters|array $parameters
+     * @param array|\Atlassian\JiraRest\Requests\Issue\Parameters\UpdateOrCreateParameters $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
@@ -108,7 +108,7 @@ class IssueRequest extends AbstractRequest
      *
      * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-search-get
      *
-     * @param \Atlassian\JiraRest\Requests\Issue\Parameters\SearchParameters|array $parameters
+     * @param array|\Atlassian\JiraRest\Requests\Issue\Parameters\SearchParameters $parameters
      * @param bool $asGet
      *
      * @return \GuzzleHttp\Psr7\Response
@@ -198,7 +198,7 @@ class IssueRequest extends AbstractRequest
      * @see https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-rest-api-3-issue-issueIdOrKey-worklog-get
      *
      * @param string|int $issueIdOrKey
-     * @param \Atlassian\JiraRest\Requests\Issue\Parameters\GetParameters|array $parameters
+     * @param array|\Atlassian\JiraRest\Requests\Issue\Parameters\GetParameters $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
@@ -221,7 +221,7 @@ class IssueRequest extends AbstractRequest
      *
      * @param string|int $issueIdOrKey
      * @param int $workdlogId
-     * @param \Atlassian\JiraRest\Requests\Issue\Parameters\GetParameters|array $parameters
+     * @param array|\Atlassian\JiraRest\Requests\Issue\Parameters\GetParameters $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
@@ -243,7 +243,7 @@ class IssueRequest extends AbstractRequest
      * @see https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-rest-api-3-issue-issueIdOrKey-worklog-post
      *
      * @param string|int $issueIdOrKey
-     * @param \Atlassian\JiraRest\Requests\Issue\Parameters\GetParameters|array $parameters
+     * @param array|\Atlassian\JiraRest\Requests\Issue\Parameters\UpdateOrCreateParameters $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
@@ -262,11 +262,11 @@ class IssueRequest extends AbstractRequest
     /**
      * Updates a worklog.
      *
-     * @see https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-rest-api-3-issue-issueIdOrKey-worklog-post
+     * @see https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-rest-api-3-issue-issueIdOrKey-worklog-id-put
      *
      * @param string|int $issueIdOrKey
      * @param int $workdlogId
-     * @param \Atlassian\JiraRest\Requests\Issue\Parameters\GetParameters|array $parameters
+     * @param array|\Atlassian\JiraRest\Requests\Issue\Parameters\GetParameters $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
@@ -289,7 +289,7 @@ class IssueRequest extends AbstractRequest
      *
      * @param string|int $issueIdOrKey
      * @param int $workdlogId
-     * @param \Atlassian\JiraRest\Requests\Issue\Parameters\GetParameters|array $parameters
+     * @param array|\Atlassian\JiraRest\Requests\Issue\Parameters\DeleteParameters $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
