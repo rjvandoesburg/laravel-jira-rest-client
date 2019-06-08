@@ -26,6 +26,13 @@ return [
 
             'middleware' => \Atlassian\JiraRest\Requests\Middleware\OAuthMiddleware::class,
         ],
+
+        'basic_token' => [
+            'username' => env('JIRA_USER'),
+            'token' => env('JIRA_API_TOKEN'),
+
+            'middleware' => \Atlassian\JiraRest\Requests\Middleware\BasicApiTokenMiddleware::class,
+        ],
     ],
 
     'log_level' => env('JIRA_LOG_LEVEL', 'WARNING'),
