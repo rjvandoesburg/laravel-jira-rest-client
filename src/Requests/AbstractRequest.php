@@ -40,6 +40,10 @@ abstract class AbstractRequest
                     $middleware = config('atlassian.jira.auth.oauth.middleware', \Atlassian\JiraRest\Requests\Middleware\OAuthMiddleware::class);
                     $this->addMiddleware($middleware , 'auth');
                     break;
+                case 'basic_token':
+                    $middleware = config('atlassian.jira.auth.basic_token.middleware', \Atlassian\JiraRest\Requests\Middleware\BasicApiTokenMiddleware::class);
+                    $this->addMiddleware($middleware , 'auth');
+                    break;
                 case 'session':
                     // TODO: implement session default middleware
                     break;
