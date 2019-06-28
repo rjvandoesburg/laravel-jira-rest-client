@@ -154,7 +154,7 @@ class BoardRequest extends AbstractRequest
     {
         $this->validateParameters($parameters, EpicsParameters::class);
 
-        return $this->execute('get', "board/{$boardId}/epic");
+        return $this->execute('get', "board/{$boardId}/epic", $parameters);
     }
 
     /**
