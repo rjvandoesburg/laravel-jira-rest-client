@@ -355,7 +355,7 @@ class ProjectRequest extends AbstractRequest
     {
         $this->validateParameters($parameters, NotificationSchemaParameters::class);
 
-        return $this->execute('get', "project/{$projectIdOrKey}/notificationscheme");
+        return $this->execute('get', "project/{$projectIdOrKey}/notificationscheme", $parameters);
     }
 
     /**
@@ -377,7 +377,7 @@ class ProjectRequest extends AbstractRequest
     {
         $this->validateParameters($parameters, AssignedPermissionSchemeParameters::class);
 
-        return $this->execute('get', "project/{$projectIdOrKey}/permissionscheme");
+        return $this->execute('get', "project/{$projectIdOrKey}/permissionscheme", $parameters);
     }
 
     /**
