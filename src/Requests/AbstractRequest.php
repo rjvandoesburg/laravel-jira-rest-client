@@ -25,6 +25,11 @@ abstract class AbstractRequest
     protected $middleware = [];
 
     /**
+     * @var bool
+     */
+    protected $async = false;
+
+    /**
      * BaseRequest constructor.
      */
     public function __construct()
@@ -104,6 +109,18 @@ abstract class AbstractRequest
     }
 
     /**
+     * Set the request mode to async
+     *
+     * @return $this
+     */
+    public function async()
+    {
+        $this->async = true;
+
+        return $this;
+    }
+
+    /**
      * Execute the request and return the response as a stream
      *
      * @param string $method
@@ -111,7 +128,7 @@ abstract class AbstractRequest
      * @param \Atlassian\JiraRest\Requests\AbstractParameters|array $parameters
      * @param bool $asQueryParameters Some non-GET requests require sending query parameters instead.
      *
-     * @return \GuzzleHttp\Psr7\Response
+     * @return \GuzzleHttp\Promise\PromiseInterface|\GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
@@ -123,6 +140,10 @@ abstract class AbstractRequest
         $client = $this->createClient();
 
         try {
+            if ($this->async) {
+                return $client->requestAsync($method, $this->getRequestUrl($resource), $this->getOptions($method, $parameters, $asQueryParameters));
+            }
+
             return $client->request($method, $this->getRequestUrl($resource), $this->getOptions($method, $parameters, $asQueryParameters));
         } catch (RequestException $exception) {
             $message = $this->getJiraException($exception);
