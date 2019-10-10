@@ -16,7 +16,7 @@ trait FakeRequest
      */
     public function hasFormatMutator($key)
     {
-        return method_exists($this, 'format'.Str::studly($key).'Body');
+        return \method_exists($this, 'format'.Str::studly($key).'Body');
     }
 
     /**
@@ -38,17 +38,17 @@ trait FakeRequest
         if ($parameters instanceof AbstractParameters) {
             $parameters = $parameters->toArray();
         }
-        $calledMethod = debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 2)[1]['function'];
+        $calledMethod = \debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 2)[1]['function'];
 
         // Remove the _fake from the dirname
-        $dirname = str_replace('_fake', '', Str::snake($reflection->getShortName()));
+        $dirname = \str_replace('_fake', '', Str::snake($reflection->getShortName()));
 
         // Check in a subdirectory of the current fake if there is a json response
-        if (! file_exists($filename = dirname($reflection->getFileName())."/{$dirname}/{$calledMethod}.json")) {
+        if (! \file_exists($filename = \dirname($reflection->getFileName())."/{$dirname}/{$calledMethod}.json")) {
             return new \GuzzleHttp\Psr7\Response(204, [], null);
         }
 
-        $content = file_get_contents($filename);
+        $content = \file_get_contents($filename);
         if ($this->hasFormatMutator($calledMethod)) {
             $content = $this->mutateBody($calledMethod, $content, $parameters);
         }

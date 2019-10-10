@@ -3,6 +3,7 @@
 namespace Atlassian\JiraRest\Requests;
 
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Support\Str;
 
 abstract class AbstractParameters implements Arrayable
 {
@@ -14,8 +15,8 @@ abstract class AbstractParameters implements Arrayable
     public function __construct(array $parameters = [])
     {
         foreach ($parameters as $key => $value) {
-            $key = camel_case($key);
-            if (property_exists($this, $key)) {
+            $key = Str::camel($key);
+            if (\property_exists($this, $key)) {
                 $this->{$key} = $value;
             }
         }
@@ -41,7 +42,7 @@ abstract class AbstractParameters implements Arrayable
     public function toArray()
     {
         // Create an array instance of the object and filter all null values out of the list
-        return array_filter(json_decode(json_encode($this), true), function ($field) {
+        return \array_filter(\json_decode(\json_encode($this), true), static function ($field) {
             return $field !== null;
         });
     }

@@ -3,6 +3,7 @@
 namespace Atlassian\JiraRest\Helpers;
 
 use Atlassian\JiraRest\Requests\Field\FieldRequest;
+use Illuminate\Support\Str;
 
 class Fields
 {
@@ -25,12 +26,12 @@ class Fields
     public function getCustomFields()
     {
         $response = $this->request->get();
-        $fields = collect(json_decode($response->getBody(), true))
-            ->filter(function ($field) {
+        $fields = collect(\json_decode($response->getBody(), true))
+            ->filter(static function ($field) {
                 return $field['custom'];
-            })->mapWithKeys(function ($field) {
-                $key = str_replace('customfield_', '', $field['id']);
-                $name = camel_case(str_slug($field['name']));
+            })->mapWithKeys(static function ($field) {
+                $key = \str_replace('customfield_', '', $field['id']);
+                $name = Str::camel(Str::slug($field['name']));
 
                 return [$key => $name];
             })
