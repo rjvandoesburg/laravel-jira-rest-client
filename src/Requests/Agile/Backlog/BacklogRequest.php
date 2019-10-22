@@ -31,4 +31,23 @@ class BacklogRequest extends AbstractRequest
     {
         return $this->execute('post', 'backlog/issue', ['issues' => $issues]);
     }
+
+    /**
+     * Move issues to the backlog of a particular board (if they are already on that board).
+     *
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-backlog-boardId-issue-post
+     *
+     * @param  int  $boardId
+     * @param  array|\Illuminate\Contracts\Support\Arrayable  $parameters
+     *
+     * @return \GuzzleHttp\Psr7\Response
+     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function moveIssueForBoard($boardId, array $parameters)
+    {
+        return $this->execute('post', "backlog/{$boardId}/issue", $parameters);
+    }
 }

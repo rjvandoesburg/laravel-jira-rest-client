@@ -44,7 +44,25 @@ class BoardRequest extends AbstractRequest
         return $this->execute('post', 'board', $parameters);
     }
 
-    //https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-board-filter-filterId-get
+    /**
+     * Returns any boards which use the provided filter id.
+     * This method can be executed by users without a valid software license in order to find which boards are using a
+     * particular filter.
+     *
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-board-filter-filterId-get
+     *
+     * @param  string|int  $filterId
+     *
+     * @return \GuzzleHttp\Promise\PromiseInterface|\GuzzleHttp\Psr7\Response
+     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function getByFilterId($filterId)
+    {
+        return $this->execute('get', "board/{$filterId}");
+    }
 
     /**
      * Returns the board for the given board Id.
@@ -191,8 +209,38 @@ class BoardRequest extends AbstractRequest
         return $this->execute('get', "board/{$boardId}/epic/{$epicId}/issue", $parameters);
     }
 
-    // https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-board-boardId-features-get
-    // https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-board-boardId-features-put
+    /**
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-board-boardId-features-get
+     *
+     * @param  int  $boardId
+     *
+     * @return \GuzzleHttp\Promise\PromiseInterface|\GuzzleHttp\Psr7\Response
+     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function getFeatures($boardId)
+    {
+        return $this->execute('get', "board/{$boardId}/features");
+    }
+
+    /**
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-board-boardId-features-put
+     *
+     * @param  int  $boardId
+     * @param  array  $parameters
+     *
+     * @return \GuzzleHttp\Promise\PromiseInterface|\GuzzleHttp\Psr7\Response
+     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function toggleFeatures($boardId, $parameters = [])
+    {
+        return $this->execute('put', "board/{$boardId}/features", $parameters);
+    }
 
     /**
      * Returns all issues from a board, for a given board Id.
@@ -219,7 +267,27 @@ class BoardRequest extends AbstractRequest
         return $this->execute('get', "board/{$boardId}/issue", $parameters);
     }
 
-    // https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-board-boardId-issue-post
+    /**
+     * Move issues from the backog to the board (if they are already in the backlog of that board).
+     * This operation either moves an issue(s) onto a board from the backlog (by adding it to the issueList for the
+     * board) Or transitions the issue(s) to the first column for a kanban board with backlog.
+     * At most 50 issues may be moved at once.
+     *
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-board-boardId-issue-post
+     *
+     * @param  int  $boardId
+     * @param  array  $parameters
+     *
+     * @return \GuzzleHttp\Promise\PromiseInterface|\GuzzleHttp\Psr7\Response
+     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function moveIssuesToBoard($boardId, $parameters = [])
+    {
+        return $this->execute('post', "board/{$boardId}/issue", $parameters);
+    }
 
     /**
      * Returns all projects that are associated with the board, for the given board Id.
@@ -382,7 +450,21 @@ class BoardRequest extends AbstractRequest
         return $this->execute('get', "board/{$boardId}/quickfilter/{$quickFilterId}");
     }
 
-    // https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-board-boardId-reports-get
+    /**
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-board-boardId-reports-get
+     *
+     * @param  int  $boardId
+     *
+     * @return \GuzzleHttp\Promise\PromiseInterface|\GuzzleHttp\Psr7\Response
+     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function getReports($boardId)
+    {
+        return $this->execute('get', "board/{$boardId}/reports");
+    }
 
     /**
      * Returns all sprints from a board, for a given board Id. This only includes sprints that the user has permission
