@@ -18,5 +18,5 @@ $request = app(Requests\ServerInfoRequest::class);
 
 $response = $request->get();
 
-$output = json_decode($response->getBody());
+$output = \json_decode($response->getBody()->getContents(), true);
 ```

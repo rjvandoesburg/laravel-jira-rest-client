@@ -49,7 +49,7 @@ use Atlassian\JiraRest\Requests\Project;
 /** @var \Atlassian\JiraRest\Requests\Project\ProjectRequest $request */
 $request = app(Project\ProjectRequest::class);
 
-$parameters = new Project\Parameters\CreateParameters([
+$response = $request->create([
     'key'                 => 'EX',
     'name'                => 'Example',
     'projectTypeKey'      => 'business',
@@ -65,9 +65,7 @@ $parameters = new Project\Parameters\CreateParameters([
     'categoryId'          => 10120,
 ]);
 
-$response = $request->create($parameters);
-
-$output = json_decode($response->getBody());
+$output = \json_decode($response->getBody()->getContents(), true);
 ```
 
 ## Get project paginated
@@ -83,7 +81,7 @@ $request = app(Project\ProjectRequest::class);
 
 $response = $request->search();
 
-$output = json_decode($response->getBody());
+$output = \json_decode($response->getBody()->getContents(), true);
 ```
 
 Limiting the amount of results using the `SearchParameters`
@@ -94,13 +92,11 @@ use Atlassian\JiraRest\Requests\Project;
 /** @var \Atlassian\JiraRest\Requests\Project\ProjectRequest $request */
 $request = app(Project\ProjectRequest::class);
 
-$arameters = new Project\Parameters\SearchParameters([
+$response = $request->search([
     'maxResults' => 10
 ]);
 
-$response = $request->search($arameters);
-
-$output = json_decode($response->getBody());
+$output = \json_decode($response->getBody()->getContents(), true);
 ```
 
 ## Get all project types
@@ -115,7 +111,7 @@ $request = app(Project\ProjectRequest::class);
 
 $response = $request->getAllProjectTypes();
 
-$output = json_decode($response->getBody());
+$output = \json_decode($response->getBody()->getContents(), true);
 ```
 
 ## Get project type by key
@@ -130,7 +126,7 @@ $request = app(Project\ProjectRequest::class);
 
 $response = $request->getProjectType('software');
 
-$output = json_decode($response->getBody());
+$output = \json_decode($response->getBody()->getContents(), true);
 ```
 
 ## Get accessible project type by key
@@ -145,7 +141,7 @@ $request = app(Project\ProjectRequest::class);
 
 $response = $request->getAccessibleProjectType('software');
 
-$output = json_decode($response->getBody());
+$output = \json_decode($response->getBody()->getContents(), true);
 ```
 
 ## Get project
@@ -160,7 +156,7 @@ $request = app(Project\ProjectRequest::class);
 
 $response = $request->get('EX');
 
-$output = json_decode($response->getBody());
+$output = \json_decode($response->getBody()->getContents(), true);
 ```
 
 Or with parameters
@@ -171,12 +167,11 @@ use Atlassian\JiraRest\Requests\Project;
 /** @var \Atlassian\JiraRest\Requests\Project\ProjectRequest $request */
 $request = app(Project\ProjectRequest::class);
 
-$parameters = new Project\Parameters\GetParameters([
+$response = $request->get('EX', [
     'expand' => 'description,lead',
 ]);
-$response = $request->get('EX', $parameters);
 
-$output = json_decode($response->getBody());
+$output = \json_decode($response->getBody()->getContents(), true);
 ```
 
 ## Update project
@@ -189,7 +184,7 @@ use Atlassian\JiraRest\Requests\Project;
 /** @var \Atlassian\JiraRest\Requests\Project\ProjectRequest $request */
 $request = app(Project\ProjectRequest::class);
 
-$parameters = new Project\Parameters\UpdateParameters([
+$response = $request->update('EX', [
     'body' => [
         'key'                 => 'EX',
         'name'                => 'Example',
@@ -207,9 +202,7 @@ $parameters = new Project\Parameters\UpdateParameters([
     ]
 ]);
 
-$response = $request->update('EX', $parameters);
-
-$output = json_decode($response->getBody());
+$output = \json_decode($response->getBody()->getContents(), true);
 ```
 
 ## Delete project
@@ -224,7 +217,7 @@ $request = app(Project\ProjectRequest::class);
 
 $response = $request->delete('EX');
 
-$output = json_decode($response->getBody());
+$output = \json_decode($response->getBody()->getContents(), true);
 ```
 
 ## Set project avatar
@@ -259,7 +252,7 @@ $request = app(Project\ProjectRequest::class);
 
 $response = $request->getComponentsPaginated('EX');
 
-$output = json_decode($response->getBody());
+$output = \json_decode($response->getBody()->getContents(), true);
 ```
 
 ## Get project components
@@ -274,7 +267,7 @@ $request = app(Project\ProjectRequest::class);
 
 $response = $request->getComponents('EX');
 
-$output = json_decode($response->getBody());
+$output = \json_decode($response->getBody()->getContents(), true);
 ```
 
 ## Get project property keys
@@ -289,7 +282,7 @@ $request = app(Project\ProjectRequest::class);
 
 $response = $request->getPropertyKeys('EX');
 
-$output = json_decode($response->getBody());
+$output = \json_decode($response->getBody()->getContents(), true);
 ```
 
 ## Get project property
@@ -304,7 +297,7 @@ $request = app(Project\ProjectRequest::class);
 
 $response = $request->getProperty('EX', 'projectAccount');
 
-$output = json_decode($response->getBody());
+$output = \json_decode($response->getBody()->getContents(), true);
 ```
 
 ## Set project property
@@ -319,7 +312,7 @@ $request = app(Project\ProjectRequest::class);
 
 $response = $request->setProperty('EX', 'office', 'New-York');
 
-$output = json_decode($response->getBody());
+$output = \json_decode($response->getBody()->getContents(), true);
 ```
 
 ## Delete project property
@@ -334,7 +327,7 @@ $request = app(Project\ProjectRequest::class);
 
 $response = $request->deleteProperty('EX', 'office');
 
-$output = json_decode($response->getBody());
+$output = \json_decode($response->getBody()->getContents(), true);
 ```
 
 ## Get project roles for project
@@ -349,7 +342,7 @@ $request = app(Project\ProjectRequest::class);
 
 $response = $request->getRoles('EX');
 
-$output = json_decode($response->getBody());
+$output = \json_decode($response->getBody()->getContents(), true);
 ```
 
 ## Get project role for project
@@ -364,7 +357,7 @@ $request = app(Project\ProjectRequest::class);
 
 $response = $request->getRoles('EX');
 
-$output = json_decode($response->getBody());
+$output = \json_decode($response->getBody()->getContents(), true);
 ```
 
 ## Set actors for project role
@@ -377,7 +370,7 @@ use Atlassian\JiraRest\Requests\Project;
 /** @var \Atlassian\JiraRest\Requests\Project\ProjectRequest $request */
 $request = app(Project\ProjectRequest::class);
 
-$parameters = new Project\Parameters\SetActorsParameters([
+$response = $request->setActors('EX', 10001, [
     'categorisedActors' => [
         'atlassian-user-role-actor'  => [
             '2345678-9abc-def1-2345-6789abcdef12',
@@ -388,9 +381,7 @@ $parameters = new Project\Parameters\SetActorsParameters([
     ],
 ]);
 
-$response = $request->setActors('EX', 10001, $parameters);
-
-$output = json_decode($response->getBody());
+$output = \json_decode($response->getBody()->getContents(), true);
 ```
 
 ## Add actors to project role
@@ -403,15 +394,13 @@ use Atlassian\JiraRest\Requests\Project;
 /** @var \Atlassian\JiraRest\Requests\Project\ProjectRequest $request */
 $request = app(Project\ProjectRequest::class);
 
-$parameters = new Project\Parameters\AddActorParameters([
+$response = $request->addActor('EX', 10001, [
     'group' => [
         'jira-developers',
     ],
 ]);
 
-$response = $request->addActor('EX', 10001, $parameters);
-
-$output = json_decode($response->getBody());
+$output = \json_decode($response->getBody()->getContents(), true);
 ```
 
 ## Delete actors from project role
@@ -424,15 +413,13 @@ use Atlassian\JiraRest\Requests\Project;
 /** @var \Atlassian\JiraRest\Requests\Project\ProjectRequest $request */
 $request = app(Project\ProjectRequest::class);
 
-$parameters = new Project\Parameters\DeleteActorParameters([
+$response = $request->deleteActor('EX', 10001, [
     'group' => [
         'jira-developers',
     ],
 ]);
 
-$response = $request->deleteActor('EX', 10001, $parameters);
-
-$output = json_decode($response->getBody());
+$output = \json_decode($response->getBody()->getContents(), true);
 ```
 
 ## Get project role details
@@ -447,7 +434,7 @@ $request = app(Project\ProjectRequest::class);
 
 $response = $request->getRole('EX', 10001);
 
-$output = json_decode($response->getBody());
+$output = \json_decode($response->getBody()->getContents(), true);
 ```
 
 ## Get all statuses for project
@@ -462,7 +449,7 @@ $request = app(Project\ProjectRequest::class);
 
 $response = $request->getStatuses('EX');
 
-$output = json_decode($response->getBody());
+$output = \json_decode($response->getBody()->getContents(), true);
 ```
 
 ## Update project type
@@ -477,7 +464,7 @@ $request = app(Project\ProjectRequest::class);
 
 $response = $request->updateProjectType('EX', 'business');
 
-$output = json_decode($response->getBody());
+$output = \json_decode($response->getBody()->getContents(), true);
 ```
 
 ## Get project versions paginated
@@ -492,7 +479,7 @@ $request = app(Project\ProjectRequest::class);
 
 $response = $request->getVersionsPaginated('EX');
 
-$output = json_decode($response->getBody());
+$output = \json_decode($response->getBody()->getContents(), true);
 ```
 
 Or with parameters
@@ -503,13 +490,11 @@ use Atlassian\JiraRest\Requests\Project;
 /** @var \Atlassian\JiraRest\Requests\Project\ProjectRequest $request */
 $request = app(Project\ProjectRequest::class);
 
-$parameters = new Project\Parameters\VersionsPageinatedParameters([
+$response = $request->getVersionsPaginated('EX', [
     'maxResults' => 5,
 ]);
 
-$response = $request->getVersionsPaginated('EX', $parameters);
-
-$output = json_decode($response->getBody());
+$output = \json_decode($response->getBody()->getContents(), true);
 ```
 
 ## Get project versions
@@ -524,7 +509,7 @@ $request = app(Project\ProjectRequest::class);
 
 $response = $request->getVersions('EX');
 
-$output = json_decode($response->getBody());
+$output = \json_decode($response->getBody()->getContents(), true);
 ```
 
 ## Get project issue security scheme
@@ -539,7 +524,7 @@ $request = app(Project\ProjectRequest::class);
 
 $response = $request->getIssueSecurityScheme('EX');
 
-$output = json_decode($response->getBody());
+$output = \json_decode($response->getBody()->getContents(), true);
 ```
 
 ## Get project notification scheme
@@ -554,7 +539,7 @@ $request = app(Project\ProjectRequest::class);
 
 $response = $request->getNotificationScheme('EX');
 
-$output = json_decode($response->getBody());
+$output = \json_decode($response->getBody()->getContents(), true);
 ```
 
 ## Get assigned permission scheme
@@ -569,7 +554,7 @@ $request = app(Project\ProjectRequest::class);
 
 $response = $request->getAssignedPermissionScheme('EX');
 
-$output = json_decode($response->getBody());
+$output = \json_decode($response->getBody()->getContents(), true);
 ```
 
 ## Assign permission scheme
@@ -584,7 +569,7 @@ $request = app(Project\ProjectRequest::class);
 
 $response = $request->assignPermissionScheme('EX', 10000);
 
-$output = json_decode($response->getBody());
+$output = \json_decode($response->getBody()->getContents(), true);
 ```
 
 ## Get project issue security levels
@@ -599,5 +584,5 @@ $request = app(Project\ProjectRequest::class);
 
 $response = $request->getSecurityLevels('EX');
 
-$output = json_decode($response->getBody());
+$output = \json_decode($response->getBody()->getContents(), true);
 ```
