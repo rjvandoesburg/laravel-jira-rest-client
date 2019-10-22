@@ -9,6 +9,8 @@ use Atlassian\JiraRest\Requests\AbstractParameters;
  *
  * @package Atlassian\JiraRest\Requests\Group\Parameters
  * @see https://developer.atlassian.com/cloud/jira/platform/rest/v3/#api-api-3-groups-picker-get
+ *
+ * @deprecated Use your own abstraction of \Atlassian\JiraRest\Requests\AbstractParameters or use an array instead
  */
 class FindParameters extends AbstractParameters
 {

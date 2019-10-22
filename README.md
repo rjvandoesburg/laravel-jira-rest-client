@@ -66,53 +66,12 @@ $response = json_decode($response->getBody(), true);
 Which will return a response like seen in the [API](https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-issue-issueIdOrKey-get)
 
 ### Parameters
-Most request have additional parameters like `maxResults` and `startAt` or `query`.
+Sending parameter with requests is possible via two ways
+1. Using an array
+2. Creating a class that implements `\Illuminate\Contracts\Support\Arrayable`
 
-Within the package I try to create a parameter class for every request that has multiple.
+When using an array you can create a request like so:
 
-For example:
-
-Requesting projects with fewer results
-```php
-<?php
-
-use Atlassian\JiraRest\Requests\Project;
-
-/** @var \Atlassian\JiraRest\Requests\Project\ProjectRequest $request */
-$request = app(Project\ProjectRequest::class);
-
-$parameters = new Project\Parameters\SearchParameters;
-$parameters->maxResults = 10;
-$parameters->startAt = 0;
-
-$response = $request->search($parameters);
-
-$output = json_decode($response->getBody());
-```
-
-Using it like this you can manipulate the default search parameters.
-
-But other ways of using the parameters are as followed:
-
-```php
-<?php
-
-use Atlassian\JiraRest\Requests\Project;
-
-/** @var \Atlassian\JiraRest\Requests\Project\ProjectRequest $request */
-$request = app(Project\ProjectRequest::class);
-
-$parameters = new Project\Parameters\SearchParameters([
-    'maxResults' => 10,
-    'startAt' => 0
-]);
-
-$response = $request->search($parameters);
-
-$output = json_decode($response->getBody());
-```
-
-Or as an array directly in the request.
 ```php
 <?php
 
@@ -126,9 +85,13 @@ $response = $request->search([
     'startAt' => 0
 ]);
 
-$output = json_decode($response->getBody());
+$output = \json_decode($response->getBody()->getContents(), true);
 ```
 
+You can opt for creating a class implementing `\Illuminate\Contracts\Support\Arrayable`, the `toArray` method will return the parameters for the request.
+Or you could extend `\Atlassian\JiraRest\Requests\AbstractParameters` so you can 'fill' or 'override' the parameters set within the class.
+
+Using a class can be usefull when doing requests in multiple places to make sure the same values are requests every time.
 
 ### Authentication
 So Jira allows for multiple ways of authentication. By default this is basic auth.

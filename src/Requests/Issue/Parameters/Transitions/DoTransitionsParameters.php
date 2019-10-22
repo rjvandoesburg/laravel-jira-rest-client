@@ -9,6 +9,8 @@ use Atlassian\JiraRest\Requests\AbstractParameters;
  *
  * @package Atlassian\JiraRest\Requests\Issue\Parameters\Transitions
  * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-issue-issueIdOrKey-transitions-post
+ *
+ * @deprecated Use your own abstraction of \Atlassian\JiraRest\Requests\AbstractParameters or use an array instead
  */
 class DoTransitionsParameters extends AbstractParameters
 {

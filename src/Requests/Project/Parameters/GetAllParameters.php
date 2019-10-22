@@ -9,6 +9,8 @@ use Atlassian\JiraRest\Requests\AbstractParameters;
  *
  * @package Atlassian\JiraRest\Requests\Project\Parameters
  * @see https://developers.atlassian.com/cloud/jira/platform/rest/#api-api-2-project-get
+ *
+ * @deprecated Use your own abstraction of \Atlassian\JiraRest\Requests\AbstractParameters or use an array instead
  */
 class GetAllParameters extends AbstractParameters
 {

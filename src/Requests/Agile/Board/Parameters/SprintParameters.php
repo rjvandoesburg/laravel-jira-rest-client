@@ -8,6 +8,8 @@ use Atlassian\JiraRest\Requests\AbstractParameters;
  * Class SprintParameters
  *
  * @package Atlassian\JiraRest\Requests\Agile\Board\Parameters
+ *
+ * @deprecated Use your own abstraction of \Atlassian\JiraRest\Requests\AbstractParameters or use an array instead
  */
 class SprintParameters extends AbstractParameters
 {

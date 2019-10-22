@@ -9,6 +9,8 @@ use Atlassian\JiraRest\Requests\AbstractParameters;
  *
  * @package Atlassian\JiraRest\Requests\Agile\Sprint\Parameters
  * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-sprint-post
+ *
+ * @deprecated Use your own abstraction of \Atlassian\JiraRest\Requests\AbstractParameters or use an array instead
  */
 class CreateParameters extends AbstractParameters
 {
