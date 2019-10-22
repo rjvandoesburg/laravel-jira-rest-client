@@ -4,7 +4,6 @@ namespace Atlassian\JiraRest\Requests\Agile;
 
 class FeatureFlagsRequest extends AbstractRequest
 {
-
     /**
      * Update / insert Feature Flag data.
      *
@@ -46,7 +45,7 @@ class FeatureFlagsRequest extends AbstractRequest
      *
      * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-featureflags-0-1-flag-featureFlagId-get
      *
-     * @param string $featureFlagId
+     * @param  string  $featureFlagId
      *
      * @return \GuzzleHttp\Promise\PromiseInterface|\GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
@@ -64,7 +63,7 @@ class FeatureFlagsRequest extends AbstractRequest
      *
      * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-featureflags-0-1-flag-featureFlagId-delete
      *
-     * @param string $featureFlagId
+     * @param  string  $featureFlagId
      * @param  array|\Illuminate\Contracts\Support\Arrayable  $parameters
      *
      * @return \GuzzleHttp\Promise\PromiseInterface|\GuzzleHttp\Psr7\Response

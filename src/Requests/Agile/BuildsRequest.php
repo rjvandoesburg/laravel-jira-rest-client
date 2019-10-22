@@ -2,12 +2,12 @@
 
 namespace Atlassian\JiraRest\Requests\Agile;
 
-class DeploymentsRequest extends AbstractRequest
+class BuildsRequest extends AbstractRequest
 {
     /**
-     * Update / insert deployment data.
+     * Update / insert builds data.
      *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-deployments-0-1-bulk-post
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-builds-0-1-bulk-post
      *
      * @param  array|\Illuminate\Contracts\Support\Arrayable  $parameters
      *
@@ -23,9 +23,9 @@ class DeploymentsRequest extends AbstractRequest
     }
 
     /**
-     * Bulk delete all deployments that match the given request.
+     * Bulk delete all builds data that match the given request.
      *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-deployments-0-1-bulkByProperties-delete
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-builds-0-1-bulkByProperties-delete
      *
      * @param  array|\Illuminate\Contracts\Support\Arrayable  $parameters
      *
@@ -41,14 +41,12 @@ class DeploymentsRequest extends AbstractRequest
     }
 
     /**
-     * Retrieve the currently stored deployment data for the given pipelineId, environmentId and
-     * deploymentSequenceNumber combination.
+     * Retrieve the currently stored build data for the given pipelineId and buildNumber combination.
      *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-deployments-0-1-pipelines-pipelineId-environments-environmentId-deployments-deploymentSequenceNumber-get
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-builds-0-1-pipelines-pipelineId-builds-buildNumber-get
      *
      * @param  string  $pipelineId
-     * @param  string  $environmentId
-     * @param  int  $deploymentSequenceNumber
+     * @param  int  $buildNumber
      *
      * @return \GuzzleHttp\Promise\PromiseInterface|\GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
@@ -56,21 +54,18 @@ class DeploymentsRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function getById($pipelineId, $environmentId, $deploymentSequenceNumber)
+    public function getById($pipelineId, $buildNumber)
     {
-        return $this->execute('get',
-            "pipelines/{$pipelineId}/environments/{$environmentId}/deployments/{$deploymentSequenceNumber}");
+        return $this->execute('get', "pipelines/{$pipelineId}/builds/{$buildNumber}");
     }
 
     /**
-     * Delete the currently stored deployment data for the given pipelineId, environmentId and deploymentSequenceNumber
-     * combination.
+     * Delete the build data currently stored for the given pipelineId and buildNumber combination.
      *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-deployments-0-1-pipelines-pipelineId-environments-environmentId-deployments-deploymentSequenceNumber-delete
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-builds-0-1-pipelines-pipelineId-builds-buildNumber-delete
      *
      * @param  string  $pipelineId
-     * @param  string  $environmentId
-     * @param  int  $deploymentSequenceNumber
+     * @param  int  $buildNumber
      * @param  array|\Illuminate\Contracts\Support\Arrayable  $parameters
      *
      * @return \GuzzleHttp\Promise\PromiseInterface|\GuzzleHttp\Psr7\Response
@@ -79,11 +74,9 @@ class DeploymentsRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function deleteById($pipelineId, $environmentId, $deploymentSequenceNumber, array $parameters)
+    public function deleteById($pipelineId, $buildNumber, array $parameters)
     {
-        return $this->execute('delete',
-            "pipelines/{$pipelineId}/environments/{$environmentId}/deployments/{$deploymentSequenceNumber}",
-            $parameters, true);
+        return $this->execute('delete', "pipelines/{$pipelineId}/builds/{$buildNumber}", $parameters, true);
     }
 
     /**
@@ -93,7 +86,7 @@ class DeploymentsRequest extends AbstractRequest
      */
     public function getApi()
     {
-        return 'rest/deployments/0.1';
+        return 'rest/builds/0.1';
     }
 
 }
