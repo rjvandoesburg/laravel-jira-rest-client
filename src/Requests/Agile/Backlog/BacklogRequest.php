@@ -17,14 +17,15 @@ class BacklogRequest extends AbstractRequest
      * This operation is equivalent to remove future and active sprints from a given set of issues.
      * At most 50 issues may be moved at once.
      *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-backlog-issue-post
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-backlog-issue-post
      *
-     * @param array $issues A list of both issue id or key are accepted.
+     * @param  array  $issues  A list of both issue id or key are accepted.
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function moveIssues(array $issues)
     {

@@ -3,14 +3,6 @@
 namespace Atlassian\JiraRest\Requests\Agile\Board;
 
 use Atlassian\JiraRest\Requests\Agile\AbstractRequest;
-use Atlassian\JiraRest\Requests\Agile\Board\Parameters\AllQuickFiltersParameters;
-use Atlassian\JiraRest\Requests\Agile\Board\Parameters\SprintsParameters;
-use Atlassian\JiraRest\Requests\Agile\Board\Parameters\CreateParameters;
-use Atlassian\JiraRest\Requests\Agile\Board\Parameters\EpicsParameters;
-use Atlassian\JiraRest\Requests\Agile\Board\Parameters\GetAllParameters;
-use Atlassian\JiraRest\Requests\Agile\Board\Parameters\ProjectsParameters;
-use Atlassian\JiraRest\Requests\Agile\Board\Parameters\VersionsParameters;
-use Atlassian\JiraRest\Requests\Agile\Parameters\IssuesParameters;
 
 class BoardRequest extends AbstractRequest
 {
@@ -18,20 +10,18 @@ class BoardRequest extends AbstractRequest
      * Returns all boards.
      * This only includes boards that the user has permission to view.
      *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-board-get
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-board-get
      *
-     * @param \Atlassian\JiraRest\Requests\Agile\Board\Parameters\GetAllParameters|array $parameters
+     * @param  array|\Illuminate\Contracts\Support\Arrayable  $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function all($parameters = [])
     {
-        $this->validateParameters($parameters, GetAllParameters::class);
-
         return $this->execute('get', 'board', $parameters);
     }
 
@@ -39,35 +29,36 @@ class BoardRequest extends AbstractRequest
      * Creates a new board.
      * Board name, type and filter Id is required.
      *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-board-post
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-board-post
      *
-     * @param \Atlassian\JiraRest\Requests\Agile\Board\Parameters\CreateParameters|array $parameters
+     * @param  array|\Illuminate\Contracts\Support\Arrayable  $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function create($parameters)
     {
-        $this->validateParameters($parameters, CreateParameters::class);
-
         return $this->execute('post', 'board', $parameters);
     }
+
+    //https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-board-filter-filterId-get
 
     /**
      * Returns the board for the given board Id.
      * This board will only be returned if the user has permission to view it.
      *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-board-boardId-get
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-board-boardId-get
      *
-     * @param int $boardId
+     * @param  int  $boardId
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function get($boardId)
     {
@@ -77,14 +68,15 @@ class BoardRequest extends AbstractRequest
     /**
      * Deletes the board.
      *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-board-boardId-delete
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-board-boardId-delete
      *
-     * @param int $boardId
+     * @param  int  $boardId
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function delete($boardId)
     {
@@ -99,35 +91,34 @@ class BoardRequest extends AbstractRequest
      * Issues returned from this resource include Agile fields, like sprint, closedSprints, flagged, and epic.
      * By default, the returned issues are ordered by rank.
      *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-board-boardId-backlog-get
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-board-boardId-backlog-get
      *
-     * @param int $boardId
-     * @param \Atlassian\JiraRest\Requests\Agile\Parameters\IssuesParameters|array $parameters
+     * @param  int  $boardId
+     * @param  array|\Illuminate\Contracts\Support\Arrayable  $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function issuesForBacklog($boardId, $parameters = [])
     {
-        $this->validateParameters($parameters, IssuesParameters::class);
-
         return $this->execute('get', "board/{$boardId}/backlog", $parameters);
     }
 
     /**
      * Get the board configuration.
      *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-board-boardId-configuration-get
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-board-boardId-configuration-get
      *
-     * @param int $boardId
+     * @param  int  $boardId
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function configuration($boardId)
     {
@@ -139,47 +130,20 @@ class BoardRequest extends AbstractRequest
      * This only includes epics that the user has permission to view.
      * Note, if the user does not have permission to view the board, no epics will be returned at all.
      *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-board-boardId-epic-get
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-board-boardId-epic-get
      *
-     * @param int $boardId
-     * @param \Atlassian\JiraRest\Requests\Agile\Board\Parameters\EpicsParameters|array $parameters
+     * @param  int  $boardId
+     * @param  array|\Illuminate\Contracts\Support\Arrayable  $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function epics($boardId, $parameters = [])
     {
-        $this->validateParameters($parameters, EpicsParameters::class);
-
         return $this->execute('get', "board/{$boardId}/epic", $parameters);
-    }
-
-    /**
-     * Returns all issues that belong to an epic on the board, for the given epic Id and the board Id.
-     * This only includes issues that the user has permission to view.
-     * Issues returned from this resource include Agile fields, like sprint, closedSprints, flagged, and epic.
-     * By default, the returned issues are ordered by rank.
-     *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-board-boardId-epic-epicId-issue-get
-     *
-     * @param int $boardId
-     * @param int $epicId
-     * @param \Atlassian\JiraRest\Requests\Agile\Parameters\IssuesParameters|array $parameters
-     *
-     * @return \GuzzleHttp\Psr7\Response
-     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
-     */
-    public function issuesForEpic($boardId, $epicId, $parameters = [])
-    {
-        $this->validateParameters($parameters, IssuesParameters::class);
-
-        return $this->execute('get', "board/{$boardId}/epic/{$epicId}/issue", $parameters);
     }
 
     /**
@@ -188,21 +152,47 @@ class BoardRequest extends AbstractRequest
      * Issues returned from this resource include Agile fields, like sprint, closedSprints, flagged, and epic.
      * By default, the returned issues are ordered by rank.
      *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-board-boardId-epic-none-issue-get
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-board-boardId-epic-none-issue-get
      *
-     * @param int $boardId
-     * @param \Atlassian\JiraRest\Requests\Agile\Parameters\IssuesParameters|array $parameters
+     * @param  int  $boardId
+     * @param  array|\Illuminate\Contracts\Support\Arrayable  $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function issuesWithoutEpic($boardId, $parameters = [])
     {
         return $this->issuesForEpic($boardId, 'none', $parameters);
     }
+
+    /**
+     * Returns all issues that belong to an epic on the board, for the given epic Id and the board Id.
+     * This only includes issues that the user has permission to view.
+     * Issues returned from this resource include Agile fields, like sprint, closedSprints, flagged, and epic.
+     * By default, the returned issues are ordered by rank.
+     *
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-board-boardId-epic-epicId-issue-get
+     *
+     * @param  int  $boardId
+     * @param  int  $epicId
+     * @param  array|\Illuminate\Contracts\Support\Arrayable  $parameters
+     *
+     * @return \GuzzleHttp\Psr7\Response
+     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function issuesForEpic($boardId, $epicId, $parameters = [])
+    {
+        return $this->execute('get', "board/{$boardId}/epic/{$epicId}/issue", $parameters);
+    }
+
+    // https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-board-boardId-features-get
+    // https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-board-boardId-features-put
 
     /**
      * Returns all issues from a board, for a given board Id.
@@ -213,44 +203,42 @@ class BoardRequest extends AbstractRequest
      * Issues returned from this resource include Agile fields, like sprint, closedSprints, flagged, and epic.
      * By default, the returned issues are ordered by rank.
      *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-board-boardId-issue-get
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-board-boardId-issue-get
      *
-     * @param int $boardId
-     * @param \Atlassian\JiraRest\Requests\Agile\Parameters\IssuesParameters|array $parameters
+     * @param  int  $boardId
+     * @param  array|\Illuminate\Contracts\Support\Arrayable  $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function issues($boardId, $parameters = [])
     {
-        $this->validateParameters($parameters, IssuesParameters::class);
-
         return $this->execute('get', "board/{$boardId}/issue", $parameters);
     }
+
+    // https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-board-boardId-issue-post
 
     /**
      * Returns all projects that are associated with the board, for the given board Id.
      * If the user does not have permission to view the board, no projects will be returned at all.
      * Returned projects are ordered by the name.
      *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-board-boardId-project-get
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-board-boardId-project-get
      *
-     * @param int $boardId
-     * @param \Atlassian\JiraRest\Requests\Agile\Board\Parameters\ProjectsParameters|array $parameters
+     * @param  int  $boardId
+     * @param  array|\Illuminate\Contracts\Support\Arrayable  $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function projects($boardId, $parameters = [])
     {
-        $this->validateParameters($parameters, ProjectsParameters::class);
-
         return $this->execute('get', "board/{$boardId}/project", $parameters);
     }
 
@@ -258,14 +246,15 @@ class BoardRequest extends AbstractRequest
      * Returns all projects that are statically associated with the board, for the given board Id.
      * Returned projects are ordered by the name.
      *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-board-boardId-project-full-get
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-board-boardId-project-full-get
      *
-     * @param int $boardId
+     * @param  int  $boardId
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function projectsFull($boardId)
     {
@@ -276,14 +265,15 @@ class BoardRequest extends AbstractRequest
      * Returns the keys of all properties for the board identified by the id.
      * The user who retrieves the property keys is required to have permissions to view the board.
      *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-board-boardId-properties-get
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-board-boardId-properties-get
      *
-     * @param int $boardId
+     * @param  int  $boardId
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function properties($boardId)
     {
@@ -294,15 +284,16 @@ class BoardRequest extends AbstractRequest
      * Returns the value of the property with a given key from the board identified by the provided id.
      * The user who retrieves the property is required to have permissions to view the board.
      *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-board-boardId-properties-propertyKey-get
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-board-boardId-properties-propertyKey-get
      *
-     * @param int $boardId
-     * @param string $propertyKey
+     * @param  int  $boardId
+     * @param  string  $propertyKey
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function getProperty($boardId, $propertyKey)
     {
@@ -315,16 +306,17 @@ class BoardRequest extends AbstractRequest
      * You can use this resource to store a custom data against the board identified by the id.
      * The user who stores the data is required to have permissions to modify the board.
      *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-board-boardId-properties-propertyKey-put
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-board-boardId-properties-propertyKey-put
      *
-     * @param int $boardId
-     * @param string $propertyKey
-     * @param string $value
+     * @param  int  $boardId
+     * @param  string  $propertyKey
+     * @param  string  $value
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function setProperty($boardId, $propertyKey, $value)
     {
@@ -335,15 +327,16 @@ class BoardRequest extends AbstractRequest
      * Removes the property from the board identified by the id.
      * The user removing the property is required to have permissions to modify the board.
      *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-board-boardId-properties-propertyKey-delete
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-board-boardId-properties-propertyKey-delete
      *
-     * @param int $boardId
-     * @param string $propertyKey
+     * @param  int  $boardId
+     * @param  string  $propertyKey
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function deleteProperty($boardId, $propertyKey)
     {
@@ -353,21 +346,19 @@ class BoardRequest extends AbstractRequest
     /**
      * Returns all quick filters from a board, for a given board Id.
      *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-board-boardId-quickfilter-get
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-board-boardId-quickfilter-get
      *
-     * @param int $boardId
-     * @param \Atlassian\JiraRest\Requests\Agile\Board\Parameters\AllQuickFiltersParameters|array $parameters
+     * @param  int  $boardId
+     * @param  array|\Illuminate\Contracts\Support\Arrayable  $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function allQuickFilters($boardId, $parameters = [])
     {
-         $this->validateParameters($parameters, AllQuickFiltersParameters::class);
-
         return $this->execute('get', "board/{$boardId}/quickfilter", $parameters);
     }
 
@@ -375,39 +366,41 @@ class BoardRequest extends AbstractRequest
      * Returns the quick filter for a given quick filter Id.
      * The quick filter will only be returned if the user can view the board that the quick filter belongs to.
      *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-board-boardId-quickfilter-quickFilterId-get
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-board-boardId-quickfilter-quickFilterId-get
      *
-     * @param int $boardId
-     * @param int $quickFilterId
+     * @param  int  $boardId
+     * @param  int  $quickFilterId
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function getQuickFilter($boardId, $quickFilterId)
     {
         return $this->execute('get', "board/{$boardId}/quickfilter/{$quickFilterId}");
     }
 
+    // https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-board-boardId-reports-get
+
     /**
-     * Returns all sprints from a board, for a given board Id. This only includes sprints that the user has permission to view.
+     * Returns all sprints from a board, for a given board Id. This only includes sprints that the user has permission
+     * to view.
      *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-board-boardId-sprint-get
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-board-boardId-sprint-get
      *
-     * @param int $boardId
-     * @param \Atlassian\JiraRest\Requests\Agile\Board\Parameters\SprintsParameters|array $parameters
+     * @param  int  $boardId
+     * @param  array|\Illuminate\Contracts\Support\Arrayable  $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function sprints($boardId, $parameters = [])
     {
-         $this->validateParameters($parameters, SprintsParameters::class);
-
         return $this->execute('get', "board/{$boardId}/sprint", $parameters);
     }
 
@@ -417,46 +410,44 @@ class BoardRequest extends AbstractRequest
      * Issues are returned ordered by rank.
      * JQL order has higher priority than default rank.
      *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-board-boardId-sprint-sprintId-issue-get
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-board-boardId-sprint-sprintId-issue-get
      *
-     * @param int $boardId
-     * @param int $sprintId
-     * @param \Atlassian\JiraRest\Requests\Agile\Parameters\IssuesParameters|array $parameters
+     * @param  int  $boardId
+     * @param  int  $sprintId
+     * @param  array|\Illuminate\Contracts\Support\Arrayable  $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function issuesForSprint($boardId, $sprintId, $parameters = [])
     {
-         $this->validateParameters($parameters, IssuesParameters::class);
-
         return $this->execute('get', "board/{$boardId}/sprint/{$sprintId}/issue");
     }
 
     /**
-     * Returns all versions from a board, for a given board Id. This only includes versions that the user has permission to view.
+     * Returns all versions from a board, for a given board Id. This only includes versions that the user has
+     * permission to view.
      *
      * Note, if the user does not have permission to view the board, no versions will be returned at all.
-     * Returned versions are ordered by the name of the project from which they belong and then by sequence defined by user.
+     * Returned versions are ordered by the name of the project from which they belong and then by sequence defined by
+     * user.
      *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-board-boardId-version-get
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-board-boardId-version-get
      *
-     * @param int $boardId
-     * @param \Atlassian\JiraRest\Requests\Agile\Board\Parameters\VersionsParameters|array $parameters
+     * @param  int  $boardId
+     * @param  array|\Illuminate\Contracts\Support\Arrayable  $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function versions($boardId, $parameters = [])
     {
-        $this->validateParameters($parameters, VersionsParameters::class);
-
         return $this->execute('get', "board/{$boardId}/version", $parameters);
     }
 }

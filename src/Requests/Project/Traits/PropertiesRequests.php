@@ -4,11 +4,10 @@ namespace Atlassian\JiraRest\Requests\Project\Traits;
 
 trait PropertiesRequests
 {
-
     /**
      * Returns the keys of all properties for the project identified by the key or by the id.
      *
-     * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-project-projectIdOrKey-properties-get
+     * @see https://developer.atlassian.com/cloud/jira/platform/rest/v3/#api-rest-api-3-project-projectIdOrKey-properties-get
      *
      * @param int|string $projectIdOrKey
      *
@@ -16,6 +15,7 @@ trait PropertiesRequests
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function getPropertyKeys($projectIdOrKey)
     {
@@ -26,7 +26,7 @@ trait PropertiesRequests
      * Returns the value of the property with a given key from the project identified by the key or by the id.
      * The user who retrieves the property is required to have permissions to read the project.
      *
-     * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-project-projectIdOrKey-properties-propertyKey-get
+     * @see https://developer.atlassian.com/cloud/jira/platform/rest/v3/#api-rest-api-3-project-projectIdOrKey-properties-propertyKey-get
      *
      * @param int|string $projectIdOrKey
      * @param string $propertyKey
@@ -35,6 +35,7 @@ trait PropertiesRequests
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function getProperty($projectIdOrKey, $propertyKey)
     {
@@ -44,7 +45,7 @@ trait PropertiesRequests
     /**
      * Sets the value of the specified project’s property.
      *
-     * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-project-projectIdOrKey-properties-propertyKey-put
+     * @see https://developer.atlassian.com/cloud/jira/platform/rest/v3/#api-rest-api-3-project-projectIdOrKey-properties-propertyKey-put
      *
      * @param int|string $projectIdOrKey
      * @param string $propertyKey
@@ -65,7 +66,7 @@ trait PropertiesRequests
      * Removes the property from the project identified by the key or by the id.
      * The user removing the property is required to have permissions to administer the project.
      *
-     * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-project-projectIdOrKey-properties-propertyKey-delete
+     * @see https://developer.atlassian.com/cloud/jira/platform/rest/v3/#api-rest-api-3-project-projectIdOrKey-properties-propertyKey-delete
      *
      * @param int|string $projectIdOrKey
      * @param string $propertyKey

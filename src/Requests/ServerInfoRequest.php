@@ -7,7 +7,7 @@ class ServerInfoRequest extends AbstractRequest
     /**
      * Returns general information about the current Jira server.
      *
-     * @see https://developer.atlassian.com/cloud/jira/platform/rest/v3/#api-api-3-serverInfo-get
+     * @see https://developer.atlassian.com/cloud/jira/platform/rest/v3/#api-rest-api-3-serverInfo-get
      *
      * @param bool $doHealthCheck Deprecated.
      *

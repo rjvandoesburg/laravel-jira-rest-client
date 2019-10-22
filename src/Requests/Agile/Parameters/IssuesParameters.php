@@ -4,6 +4,13 @@ namespace Atlassian\JiraRest\Requests\Agile\Parameters;
 
 use Atlassian\JiraRest\Requests\AbstractParameters;
 
+/**
+ * Class IssuesParameters
+ *
+ * @package Atlassian\JiraRest\Requests\Agile\Parameters
+ *
+ * @deprecated Use your own abstraction of \Atlassian\JiraRest\Requests\AbstractParameters or use an array instead
+ */
 class IssuesParameters extends AbstractParameters
 {
     /**

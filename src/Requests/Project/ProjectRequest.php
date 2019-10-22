@@ -3,45 +3,55 @@
 namespace Atlassian\JiraRest\Requests\Project;
 
 use Atlassian\JiraRest\Requests\AbstractRequest;
-use Atlassian\JiraRest\Requests\Project\Parameters\AssignedPermissionSchemeParameters;
-use Atlassian\JiraRest\Requests\Project\Parameters\CreateParameters;
-use Atlassian\JiraRest\Requests\Project\Parameters\GetAllParameters;
-use Atlassian\JiraRest\Requests\Project\Parameters\SearchParameters;
-use Atlassian\JiraRest\Requests\Project\Parameters\NotificationSchemaParameters;
-use Atlassian\JiraRest\Requests\Project\Parameters\VersionsPageinatedParameters;
-use Atlassian\JiraRest\Requests\Project\Traits\AvatarRequests;
-use Atlassian\JiraRest\Requests\Project\Traits\PropertiesRequests;
-use Atlassian\JiraRest\Requests\Project\Traits\RoleRequests;
 
 class ProjectRequest extends AbstractRequest
 {
-    use AvatarRequests;
-    use PropertiesRequests;
-    use RoleRequests;
+    use Traits\AvatarRequests;
+    use Traits\ComponentsRequests;
+    use Traits\PermissionsSchemesRequests;
+    use Traits\PropertiesRequests;
+    use Traits\RoleRequests;
+    use Traits\TypesRequests;
+    use Traits\VersionsRequests;
 
     /**
      * Returns all projects visible for the currently logged in user, ie. all the projects the user has either ‘Browse
      * projects’ or ‘Administer projects’ permission.
      * If no user is logged in, it returns all projects that are visible for anonymous users.
      *
-     * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-project-get
+     * @see https://developer.atlassian.com/cloud/jira/platform/rest/v3/#api-rest-api-3-project-get
      *
-     * @param \Atlassian\JiraRest\Requests\Project\Parameters\GetAllParameters|array $parameters
+     * @param  array|\Illuminate\Contracts\Support\Arrayable  $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \TypeError
      *
      * @deprecated Use search instead
      */
     public function all($parameters = [])
     {
-        $this->validateParameters($parameters, GetAllParameters::class);
-
         return $this->execute('get', 'project', $parameters);
+    }
+
+    /**
+     * Creates a new project from a JSON representation.
+     *
+     * @see https://developer.atlassian.com/cloud/jira/platform/rest/v3/#api-rest-api-3-project-post
+     *
+     * @param  array|\Illuminate\Contracts\Support\Arrayable  $parameters
+     *
+     * @return \GuzzleHttp\Psr7\Response
+     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function create($parameters = [])
+    {
+        return $this->execute('post', 'project', $parameters);
     }
 
     /**
@@ -49,101 +59,71 @@ class ProjectRequest extends AbstractRequest
      * projects’ or ‘Administer projects’ permission. If no user is logged in, it returns all projects that are visible
      * for anonymous users.
      *
-     * @see https://developer.atlassian.com/cloud/jira/platform/rest/v3/#api-api-3-project-search-get
+     * @see https://developer.atlassian.com/cloud/jira/platform/rest/v3/#api-rest-api-3-project-search-get
      *
-     * @param \Atlassian\JiraRest\Requests\Project\Parameters\SearchParameters|array $parameters
+     * @param  array|\Illuminate\Contracts\Support\Arrayable  $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function search($parameters = [])
     {
-        $this->validateParameters($parameters, SearchParameters::class);
-
         return $this->execute('get', 'project/search', $parameters);
-    }
-
-    /**
-     * Creates a new project from a JSON representation.
-     *
-     * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-project-post
-     *
-     * @param \Atlassian\JiraRest\Requests\Project\Parameters\CreateParameters|array $parameters
-     *
-     * @return \GuzzleHttp\Psr7\Response
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
-     */
-    public function create($parameters = [])
-    {
-        $this->validateParameters($parameters, CreateParameters::class);
-
-        return $this->execute('post', 'project', $parameters);
     }
 
     /**
      * Returns a full representation of a single project.
      *
-     * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-project-projectIdOrKey-get
+     * @see https://developer.atlassian.com/cloud/jira/platform/rest/v3/#api-rest-api-3-project-projectIdOrKey-get
      *
-     * @param int|string $projectIdOrKey
-     * @param \Atlassian\JiraRest\Requests\Project\Parameters\GetParameters|array $parameters
+     * @param  int|string  $projectIdOrKey
+     * @param  array|\Illuminate\Contracts\Support\Arrayable  $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
-     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function get($projectIdOrKey, $parameters = [])
     {
-        $this->validateParameters($parameters, SearchParameters::class);
-
         return $this->execute('get', "project/{$projectIdOrKey}", $parameters);
     }
 
     /**
      * Updates the details of an existing project.
      *
-     * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-project-projectIdOrKey-put
+     * @see https://developer.atlassian.com/cloud/jira/platform/rest/v3/#api-rest-api-3-project-projectIdOrKey-put
      *
-     * @param int|string $projectIdOrKey
-     * @param \Atlassian\JiraRest\Requests\Project\Parameters\UpdateParameters|array $parameters
+     * @param  int|string  $projectIdOrKey
+     * @param  array|\Illuminate\Contracts\Support\Arrayable  $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
-     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function update($projectIdOrKey, $parameters = [])
     {
-        $this->validateParameters($parameters, SearchParameters::class);
-
         return $this->execute('put', "project/{$projectIdOrKey}", $parameters);
     }
 
     /**
      * Deletes an existing project.
      *
-     * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-project-projectIdOrKey-delete
+     * @see https://developer.atlassian.com/cloud/jira/platform/rest/v3/#api-rest-api-3-project-projectIdOrKey-delete
      *
-     * @param int|string $projectIdOrKey
+     * @param  int|string  $projectIdOrKey
      *
      * @return \GuzzleHttp\Psr7\Response
-     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function delete($projectIdOrKey)
     {
@@ -151,108 +131,18 @@ class ProjectRequest extends AbstractRequest
     }
 
     /**
-     * Returns all the project types defined on the Jira instance, not taking into account whether the license to use
-     * those project types is valid or not.
-     *
-     * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-project-type-get
-     *
-     * @return \GuzzleHttp\Psr7\Response
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     */
-    public function getAllProjectTypes()
-    {
-        return $this->execute('get', 'project/type');
-    }
-
-    /**
-     * Returns the project type with the given key.
-     *
-     * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-project-type-projectTypeKey-get
-     *
-     * @param string $projectTypeKey
-     *
-     * @return \GuzzleHttp\Psr7\Response
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     */
-    public function getProjectType($projectTypeKey)
-    {
-        return $this->execute('get', "project/type/{$projectTypeKey}");
-    }
-
-    /**
-     * Returns the project type with the given key.
-     *
-     * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-project-type-projectTypeKey-accessible-get
-     *
-     * @param string $projectTypeKey
-     *
-     * @return \GuzzleHttp\Psr7\Response
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     */
-    public function getAccessibleProjectType($projectTypeKey)
-    {
-        return $this->execute('get', "project/type/{$projectTypeKey}/accessible");
-    }
-
-    /**
-     * Returns a paginated representation of all components existing in a single project.
-     * See the Get project components resource if you want to get a full list of versions without pagination.
-     *
-     * @see https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-project-projectIdOrKey-component-get
-     *
-     * @param int|string $projectIdOrKey
-     *
-     * @return \GuzzleHttp\Psr7\Response
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     */
-    public function getComponentsPaginated($projectIdOrKey)
-    {
-        return $this->execute('get', "project/{$projectIdOrKey}/component");
-    }
-
-    /**
-     * Contains a full representation of a the specified project's components.
-     *
-     * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-project-projectIdOrKey-components-get
-     *
-     * @param int|string $projectIdOrKey
-     *
-     * @return \GuzzleHttp\Psr7\Response
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     */
-    public function getComponents($projectIdOrKey)
-    {
-        return $this->execute('get', "project/{$projectIdOrKey}/components");
-    }
-
-    /**
      * Returns a full representation of all issue types associated with a specified project, together with valid
      * statuses for each issue type.
      *
-     * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-project-projectIdOrKey-statuses-get
+     * @see https://developer.atlassian.com/cloud/jira/platform/rest/v3/#api-rest-api-3-project-projectIdOrKey-statuses-get
      *
-     * @param int|string $projectIdOrKey
+     * @param  int|string  $projectIdOrKey
      *
      * @return \GuzzleHttp\Psr7\Response
-     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function getStatuses($projectIdOrKey)
     {
@@ -262,16 +152,18 @@ class ProjectRequest extends AbstractRequest
     /**
      * Updates project type of a single project.
      *
-     * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-project-projectIdOrKey-type-newProjectTypeKey-put
+     * @see https://developer.atlassian.com/cloud/jira/platform/rest/v3/#api-rest-api-3-project-projectIdOrKey-type-newProjectTypeKey-put
      *
-     * @param int|string $projectIdOrKey
-     * @param string $newProjectTypeKey
+     * @param  int|string  $projectIdOrKey
+     * @param  string  $newProjectTypeKey
      *
      * @return \GuzzleHttp\Psr7\Response
-     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     *
+     * @deprecated Deprecated, this feature is no longer supported and no alternatives are available.
      */
     public function updateProjectType($projectIdOrKey, $newProjectTypeKey)
     {
@@ -279,143 +171,21 @@ class ProjectRequest extends AbstractRequest
     }
 
     /**
-     * Returns a paginated representation of all versions existing in a single project.
-     *
-     * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-project-projectIdOrKey-version-get
-     *
-     * @param int|string $projectIdOrKey
-     * @param \Atlassian\JiraRest\Requests\Project\Parameters\VersionsPageinatedParameters|array $parameters
-     *
-     * @return \GuzzleHttp\Psr7\Response
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
-     */
-    public function getVersionsPaginated($projectIdOrKey, $parameters = [])
-    {
-        $this->validateParameters($parameters, VersionsPageinatedParameters::class);
-
-        return $this->execute('get', "project/{$projectIdOrKey}/version", $parameters);
-    }
-
-    /**
-     * Returns a full representation of all versions existing in a single project.
-     *
-     * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-project-projectIdOrKey-versions-get
-     *
-     * @param int|string $projectIdOrKey
-     *
-     * @return \GuzzleHttp\Psr7\Response
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     */
-    public function getVersions($projectIdOrKey)
-    {
-        return $this->execute('get', "project/{$projectIdOrKey}/versions");
-    }
-
-    /**
-     * Returns the issue security scheme for project.
-     *
-     * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-project-projectKeyOrId-issuesecuritylevelscheme-get
-     *
-     * @param int|string $projectIdOrKey
-     *
-     * @return \GuzzleHttp\Psr7\Response
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     */
-    public function getIssueSecurityScheme($projectIdOrKey)
-    {
-        return $this->execute('get', "project/{$projectIdOrKey}/issuesecuritylevelscheme");
-    }
-
-    /**
      * Gets a notification scheme associated with the project.
      *
-     * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-project-projectKeyOrId-notificationscheme-get
+     * @see https://developer.atlassian.com/cloud/jira/platform/rest/v3/#api-rest-api-3-project-projectKeyOrId-notificationscheme-get
      *
-     * @param int|string $projectIdOrKey
-     * @param \Atlassian\JiraRest\Requests\Project\Parameters\NotificationSchemaParameters|array $parameters
+     * @param  int|string  $projectIdOrKey
+     * @param  array|\Illuminate\Contracts\Support\Arrayable  $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
-     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function getNotificationScheme($projectIdOrKey, $parameters = [])
     {
-        $this->validateParameters($parameters, NotificationSchemaParameters::class);
-
         return $this->execute('get', "project/{$projectIdOrKey}/notificationscheme", $parameters);
     }
-
-    /**
-     * Gets a permission scheme assigned with a project.
-     *
-     * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-project-projectKeyOrId-permissionscheme-get
-     *
-     * @param int|string $projectIdOrKey
-     * @param \Atlassian\JiraRest\Requests\Project\Parameters\AssignedPermissionSchemeParameters|array $parameters
-     *
-     * @return \GuzzleHttp\Psr7\Response
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
-     */
-    public function getAssignedPermissionScheme($projectIdOrKey, $parameters = [])
-    {
-        $this->validateParameters($parameters, AssignedPermissionSchemeParameters::class);
-
-        return $this->execute('get', "project/{$projectIdOrKey}/permissionscheme", $parameters);
-    }
-
-    /**
-     * Assigns a permission scheme with a project.
-     *
-     * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-project-projectKeyOrId-permissionscheme-put
-     *
-     * @param int|string $projectIdOrKey
-     * @param int $newPermissionScheme
-     *
-     * @return \GuzzleHttp\Psr7\Response
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     */
-    public function assignPermissionScheme($projectIdOrKey, $newPermissionScheme)
-    {
-        return $this->execute('put', "project/{$projectIdOrKey}/permissionscheme", $newPermissionScheme);
-    }
-
-    /**
-     * Returns all security levels for the project that the current logged in user has access to.
-     * If the user does not have the Set Issue Security permission, the list will be empty.
-     *
-     * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-project-projectKeyOrId-securitylevel-get
-     *
-     * @param int|string $projectIdOrKey
-     *
-     * @return \GuzzleHttp\Psr7\Response
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     */
-    public function getSecurityLevels($projectIdOrKey)
-    {
-        return $this->execute('get', "project/{$projectIdOrKey}/securitylevel");
-    }
-
 }

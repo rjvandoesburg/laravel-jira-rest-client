@@ -2,7 +2,6 @@
 
 namespace Atlassian\JiraRest\Requests\Auth;
 
-use Atlassian\JiraRest\Requests\Auth\Parameters\LoginParameters;
 use Atlassian\JiraRest\Requests\AbstractRequest;
 
 class SessionRequest extends AbstractRequest
@@ -26,7 +25,7 @@ class SessionRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function get()
     {
@@ -38,17 +37,16 @@ class SessionRequest extends AbstractRequest
      *
      * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-auth-1-session-post
      *
-     * @param \Atlassian\JiraRest\Requests\Auth\Parameters\LoginParameters|array $parameters
+     * @param  \Atlassian\JiraRest\Requests\Auth\Parameters\LoginParameters|array  $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function login($parameters)
     {
-        $this->validateParameters($parameters, LoginParameters::class);
         $this->disableMiddleware('auth');
 
         return $this->execute('post', 'session', $parameters);
@@ -63,7 +61,7 @@ class SessionRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function logout()
     {

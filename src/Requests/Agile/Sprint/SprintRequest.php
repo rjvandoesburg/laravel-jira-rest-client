@@ -3,9 +3,6 @@
 namespace Atlassian\JiraRest\Requests\Agile\Sprint;
 
 use Atlassian\JiraRest\Requests\Agile\AbstractRequest;
-use Atlassian\JiraRest\Requests\Agile\Parameters\IssuesParameters;
-use Atlassian\JiraRest\Requests\Agile\Sprint\Parameters\CreateParameters;
-use Atlassian\JiraRest\Requests\Agile\Sprint\Parameters\UpdateParameters;
 
 /**
  * Class SprintRequest
@@ -20,35 +17,35 @@ class SprintRequest extends AbstractRequest
      *
      * Note, the sprint name is trimmed.
      *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-sprint-post
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-sprint-post
      *
-     * @param \Atlassian\JiraRest\Requests\Agile\Sprint\Parameters\CreateParameters|array $parameters
+     * @param  array|\Illuminate\Contracts\Support\Arrayable  $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function create($parameters = [])
     {
-        $this->validateParameters($parameters, CreateParameters::class);
-
         return $this->execute('post', 'sprint', $parameters);
     }
 
     /**
      * Returns the sprint for a given sprint Id.
-     * The sprint will only be returned if the user can view the board that the sprint was created on, or view at least one of the issues in the sprint.
+     * The sprint will only be returned if the user can view the board that the sprint was created on, or view at least
+     * one of the issues in the sprint.
      *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-sprint-sprintId-get
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-sprint-sprintId-get
      *
-     * @param int $sprintId The Id of the requested sprint.
+     * @param  int  $sprintId  The Id of the requested sprint.
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function get($sprintId)
     {
@@ -56,63 +53,59 @@ class SprintRequest extends AbstractRequest
     }
 
     /**
-     * Performs a partial update of a sprint.
-     * A partial update means that fields not present in the request JSON will not be updated.
-     *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-sprint-sprintId-post
-     *
-     * @param int $sprintId The Id of the sprint to update.
-     * @param \Atlassian\JiraRest\Requests\Agile\Sprint\Parameters\UpdateParameters|array $parameters
-     *
-     * @return \GuzzleHttp\Psr7\Response
-     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
-     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
-     */
-    public function partialUpdate($sprintId, $parameters = [])
-    {
-        $this->validateParameters($parameters, UpdateParameters::class);
-
-        return $this->execute('post', "sprint/{$sprintId}", $parameters);
-    }
-
-    /**
      * Performs a full update of a sprint.
      * A full update means that the result will be exactly the same as the request body.
      * Any fields not present in the request JSON will be set to null.
      *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-sprint-sprintId-put
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-sprint-sprintId-put
      *
-     * @param int $sprintId The Id of the sprint to update.
-     * @param \Atlassian\JiraRest\Requests\Agile\Sprint\Parameters\|array $parameters
+     * @param  int  $sprintId  The Id of the sprint to update.
+     * @param  array|\Illuminate\Contracts\Support\Arrayable  $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function update($sprintId, $parameters = [])
     {
-        $this->validateParameters($parameters, UpdateParameters::class);
-
         return $this->execute('put', "sprint/{$sprintId}", $parameters);
+    }
+
+    /**
+     * Performs a partial update of a sprint.
+     * A partial update means that fields not present in the request JSON will not be updated.
+     *
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-sprint-sprintId-post
+     *
+     * @param  int  $sprintId  The Id of the sprint to update.
+     * @param  array|\Illuminate\Contracts\Support\Arrayable  $parameters
+     *
+     * @return \GuzzleHttp\Psr7\Response
+     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function partialUpdate($sprintId, $parameters = [])
+    {
+        return $this->execute('post', "sprint/{$sprintId}", $parameters);
     }
 
     /**
      * Deletes a sprint.
      * Once a sprint is deleted, all open issues in the sprint will be moved to the backlog.
      *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-sprint-sprintId-delete
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-sprint-sprintId-delete
      *
-     * @param int $sprintId The Id of the sprint to delete.
+     * @param  int  $sprintId  The Id of the sprint to delete.
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function delete($sprintId)
     {
@@ -125,21 +118,19 @@ class SprintRequest extends AbstractRequest
      *
      * By default, the returned issues are ordered by rank.
      *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-sprint-sprintId-issue-get
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-sprint-sprintId-issue-get
      *
-     * @param int $sprintId The Id of the sprint that contains the requested issues.
-     * @param \Atlassian\JiraRest\Requests\Agile\Parameters\IssuesParameters|array $parameters
+     * @param  int  $sprintId  The Id of the sprint that contains the requested issues.
+     * @param  array|\Illuminate\Contracts\Support\Arrayable  $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
-     * @throws \TypeError
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function issues($sprintId, $parameters = [])
     {
-        $this->validateParameters($parameters, IssuesParameters::class);
-
         return $this->execute('get', "sprint/{$sprintId}/issue", $parameters);
     }
 
@@ -147,15 +138,16 @@ class SprintRequest extends AbstractRequest
      * Moves issues to a sprint, for a given sprint Id. Issues can only be moved to open or active sprints.
      * The maximum number of issues that can be moved in one operation is 50.
      *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-sprint-sprintId-issue-post
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-sprint-sprintId-issue-post
      *
-     * @param int $sprintId The Id of the sprint that you want to assign issues to.
-     * @param array $issues A list of issues, both id and key are accepted.
+     * @param  int  $sprintId  The Id of the sprint that you want to assign issues to.
+     * @param  array  $issues  A list of issues, both id and key are accepted.
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function moveIssues($sprintId, array $issues = [])
     {
@@ -166,14 +158,15 @@ class SprintRequest extends AbstractRequest
      * Returns the keys of all properties for the sprint identified by the id.
      * The user who retrieves the property keys is required to have permissions to view the sprint.
      *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-sprint-sprintId-properties-get
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-sprint-sprintId-properties-get
      *
-     * @param int $sprintId The id of the sprint from which property keys will be returned.
+     * @param  int  $sprintId  The id of the sprint from which property keys will be returned.
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function properties($sprintId)
     {
@@ -184,15 +177,16 @@ class SprintRequest extends AbstractRequest
      * Returns the value of the property with a given key from the sprint identified by the provided id.
      * The user who retrieves the property is required to have permissions to view the sprint.
      *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-sprint-sprintId-properties-propertyKey-get
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-sprint-sprintId-properties-propertyKey-get
      *
-     * @param int $sprintId The id of the sprint from which the property will be returned.
-     * @param string $propertyKey The key of the property to return.
+     * @param  int  $sprintId  The id of the sprint from which the property will be returned.
+     * @param  string  $propertyKey  The key of the property to return.
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function getProperty($sprintId, $propertyKey)
     {
@@ -205,16 +199,17 @@ class SprintRequest extends AbstractRequest
      * You can use this resource to store a custom data against the sprint identified by the id.
      * The user who stores the data is required to have permissions to modify the sprint.
      *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-sprint-sprintId-properties-propertyKey-put
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-sprint-sprintId-properties-propertyKey-put
      *
-     * @param int $sprintId The id of the sprint on which the property will be set.
-     * @param string $propertyKey The key of the sprint’s property. The maximum length of the key is 255 bytes.
-     * @param string $value
+     * @param  int  $sprintId  The id of the sprint on which the property will be set.
+     * @param  string  $propertyKey  The key of the sprint’s property. The maximum length of the key is 255 bytes.
+     * @param  string  $value
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function setProperty($sprintId, $propertyKey, $value)
     {
@@ -225,15 +220,16 @@ class SprintRequest extends AbstractRequest
      * Removes the property from the sprint identified by the id.
      * The user removing the property is required to have permissions to modify the sprint.
      *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-sprint-sprintId-properties-propertyKey-delete
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-sprint-sprintId-properties-propertyKey-delete
      *
-     * @param int $sprintId The id of the sprint from which the property will be removed.
-     * @param string $propertyKey The key of the property to remove.
+     * @param  int  $sprintId  The id of the sprint from which the property will be removed.
+     * @param  string  $propertyKey  The key of the property to remove.
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function deleteProperty($sprintId, $propertyKey)
     {
@@ -243,15 +239,16 @@ class SprintRequest extends AbstractRequest
     /**
      * Swap the position of the sprint with the second sprint.
      *
-     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-sprint-sprintId-swap-post
+     * @see https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-sprint-sprintId-swap-post
      *
-     * @param int $sprintId The Id of the sprint to swap.
-     * @param int $sprintToSwapWith
+     * @param  int  $sprintId  The Id of the sprint to swap.
+     * @param  int  $sprintToSwapWith
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
      * @throws \Atlassian\JiraRest\Exceptions\JiraNotFoundException
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function swap($sprintId, $sprintToSwapWith)
     {

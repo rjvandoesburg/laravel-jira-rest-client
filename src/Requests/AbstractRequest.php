@@ -8,6 +8,7 @@ use Atlassian\JiraRest\Exceptions\JiraUnauthorizedException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7;
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
 
 abstract class AbstractRequest
@@ -125,7 +126,7 @@ abstract class AbstractRequest
      *
      * @param string $method
      * @param string $resource
-     * @param \Atlassian\JiraRest\Requests\AbstractParameters|array $parameters
+     * @param \Illuminate\Contracts\Support\Arrayable|array $parameters
      * @param bool $asQueryParameters Some non-GET requests require sending query parameters instead.
      *
      * @return \GuzzleHttp\Promise\PromiseInterface|\GuzzleHttp\Psr7\Response
@@ -182,7 +183,7 @@ abstract class AbstractRequest
 
     /**
      * @param string $method
-     * @param \Atlassian\JiraRest\Requests\AbstractParameters|array $parameters
+     * @param \Illuminate\Contracts\Support\Arrayable|array $parameters
      * @param bool $asQueryParameters Some non-GET requests require sending query parameters instead.
      *
      * @return array
@@ -190,7 +191,7 @@ abstract class AbstractRequest
     public function getOptions($method, $parameters = [], $asQueryParameters = false)
     {
         // Check if the parameters is an array or an instance of AbstractParameters
-        if ($parameters instanceof AbstractParameters) {
+        if ($parameters instanceof Arrayable) {
             $parameters = $parameters->toArray();
         }
 
@@ -221,7 +222,7 @@ abstract class AbstractRequest
      * Because the user can enter either a raw array or an pre-defined class.
      * This method will validate the type of the parameters
      *
-     * @param array|\Atlassian\JiraRest\Requests\AbstractParameters $parameters
+     * @param array|\Illuminate\Contracts\Support\Arrayable $parameters
      * @param string $class
      *
      * @return bool

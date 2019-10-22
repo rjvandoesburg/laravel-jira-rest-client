@@ -2,7 +2,6 @@
 
 namespace Atlassian\JiraRest\Requests\Auth;
 
-use Atlassian\JiraRest\Requests\Auth\Parameters\LoginParameters;
 use Atlassian\JiraRest\Requests\AbstractRequest;
 
 class OAuthRequest extends AbstractRequest
@@ -50,7 +49,7 @@ class OAuthRequest extends AbstractRequest
      *
      * @see https://developer.atlassian.com/cloud/jira/platform/rest/#api-auth-1-session-post
      *
-     * @param \Atlassian\JiraRest\Requests\Auth\Parameters\LoginParameters|array $parameters
+     * @param  array|\\Illuminate\\Contracts\\Support\\Arrayable |array $parameters
      *
      * @return \GuzzleHttp\Psr7\Response
      * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
@@ -61,7 +60,6 @@ class OAuthRequest extends AbstractRequest
      */
     public function login($parameters)
     {
-        $this->validateParameters($parameters, LoginParameters::class);
         $this->disableMiddleware('auth');
 
         return $this->execute('post', 'session', $parameters);
