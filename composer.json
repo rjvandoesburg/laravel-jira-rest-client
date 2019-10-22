@@ -10,7 +10,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=5.6.4",
-        "laravel/framework": ">=5.4|^6.0",
+        "laravel/framework": ">=5.4||^6.0",
         "guzzlehttp/guzzle": "^6.0",
         "ext-json": "*"
     },
