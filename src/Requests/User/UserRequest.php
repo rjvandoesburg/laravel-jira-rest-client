@@ -41,7 +41,7 @@ class UserRequest extends AbstractRequest
      */
     public function search($parameters)
     {
-        return $this->execute('get', 'user/search', $parameters);
+        return $this->execute('get', 'users/search', $parameters);
     }
 
 
