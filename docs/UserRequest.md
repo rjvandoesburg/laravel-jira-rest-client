@@ -59,6 +59,41 @@ _Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-
 ## Get user groups
 _Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-user-groups-get_
 
+## Get all users
+
+`GET /rest/api/3/users/search`
+
+Returns a list of all (active and inactive) users.
+
+**[Permissions](https://developer.atlassian.com/cloud/jira/platform/rest/v3/intro/#permissions) required:** _Browse users and groups_ [global permission](https://confluence.atlassian.com/x/x4dKLg).
+
+**OAuth scopes required:** `read:jira-user`
+
+_Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3/#api-rest-api-3-users-search-get_
+
+### Request
+
+Query parameters
+
+| Name       | Type    | Description                            |                                   |
+|------------|---------|----------------------------------------|-----------------------------------|
+| startAt    | Integer | The index of the first item to return. | Default: `0`,<br>Format:`int32`   |
+| maxResults | Integer | The maximum number of items to return. | Default: `50`,<br>Format: `int32` |
+
+### Example
+
+```php
+<?php
+use Atlassian\JiraRest\Requests;
+
+/** @var \Atlassian\JiraRest\Requests\ServerInfoRequest $request */
+$request = app(Requests\User\UserRequest::class);
+
+$response = $request->searchAll();
+
+$output = \json_decode($response->getBody()->getContents(), true);
+```
+
 ## Find users with permissions
 _Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3#api-api-3-user-permission-search-get_
 
