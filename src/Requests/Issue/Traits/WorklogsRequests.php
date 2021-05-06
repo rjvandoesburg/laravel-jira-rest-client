@@ -130,4 +130,59 @@ trait WorklogsRequests
         return $this->execute('delete', "issue/{$issueIdOrKey}/worklog/{$workdlogId}", $parameters);
     }
 
+
+    /**
+     * Returns a list of IDs and update timestamps for worklogs updated after a date and time.
+     *
+     * @see https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-worklogs/#api-rest-api-3-worklog-updated-get
+     *
+     * @param  array|\Illuminate\Contracts\Support\Arrayable  $parameters
+     *
+     * @return \GuzzleHttp\Psr7\Response
+     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \TypeError
+     */
+    public function getUpdatedWorklogs($parameters = [])
+    {
+        return $this->execute('get', "worklog/updated", $parameters);
+    }
+
+
+    /**
+     * Returns the worklogs with all the information
+     *
+     * @see https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-worklogs/#api-rest-api-3-worklog-updated-get
+     *
+     * @param  array|\Illuminate\Contracts\Support\Arrayable  $parameters
+     *
+     * @return \GuzzleHttp\Psr7\Response
+     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \TypeError
+     */
+    public function getRealWorklogs($parameters = [])
+    {
+        return $this->execute('post', "worklog/list", $parameters);
+    }
+
+    /**
+     * Returns the ids of all deleted worklogs
+     *
+     * @see https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-worklogs/#api-rest-api-3-worklog-updated-get
+     *
+     * @param  array|\Illuminate\Contracts\Support\Arrayable  $parameters
+     *
+     * @return \GuzzleHttp\Psr7\Response
+     * @throws \Atlassian\JiraRest\Exceptions\JiraClientException
+     * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \TypeError
+     */
+    public function getDeletedWorklogs($parameters = [])
+    {
+        return $this->execute('get', "worklog/deleted", $parameters);
+    }
 }
