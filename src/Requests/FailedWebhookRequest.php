@@ -17,7 +17,7 @@ class FailedWebhookRequest extends AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function get($parameters)
+    public function get($parameters = [])
     {
         return $this->execute('get', 'webhook/failed', $parameters);
     }
