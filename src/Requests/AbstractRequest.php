@@ -96,7 +96,7 @@ abstract class AbstractRequest
      */
     public function getRequestUrl($resource)
     {
-        return Psr7\uri_for($this->getApi().'/'.$resource);
+        return Psr7\Utils::uriFor($this->getApi().'/'.$resource);
     }
 
     /**
@@ -213,7 +213,7 @@ abstract class AbstractRequest
     protected function getJiraHost()
     {
         $host = config('atlassian.jira.host');
-        $uri = Psr7\uri_for($host);
+        $uri = Psr7\Utils::uriFor($host);
 
         return $uri->getHost();
     }
