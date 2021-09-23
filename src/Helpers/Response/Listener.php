@@ -234,16 +234,12 @@ class Listener implements \JsonStreamingParser\Listener
     public function value($value)
     {
         // Replace a string with the php value
-        switch ($value) {
-            case 'true':
-                $value = true;
-                break;
-            case 'false':
-                $value = false;
-                break;
-            case 'null':
-                $value = null;
-                break;
+        if ($value === 'true') {
+            $value = true;
+        } elseif($value === 'false') {
+            $value = false;
+        } elseif ($value === 'null') {
+            $value = null;
         }
 
         // If the top level is an object, return the key values
