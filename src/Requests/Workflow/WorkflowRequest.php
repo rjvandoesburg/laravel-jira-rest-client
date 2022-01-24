@@ -1,6 +1,6 @@
 <?php
 
-namespace Atlassian\JiraRest\Requests\User;
+namespace Atlassian\JiraRest\Requests\Workflow;
 
 use Atlassian\JiraRest\Requests\AbstractRequest;
 
