@@ -39,6 +39,15 @@ class Jira
     {
         return new Issue($issueIdOrKey);
     }
+    /**
+     * @param int|string $attachmentId
+     *
+     * @return \Atlassian\JiraRest\Helpers\Attachment
+     */
+    public function attachment($attachmentId)
+    {
+        return new Attachment($attachmentId);
+    }
 
     /**
      * @return \Atlassian\JiraRest\Helpers\Fields
