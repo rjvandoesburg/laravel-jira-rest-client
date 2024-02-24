@@ -65,15 +65,12 @@ abstract class AbstractRequest
     /**
      * @return \GuzzleHttp\Client
      */
-    public function createClient()
+    public function createClient( $headers )
     {
         // Default Options
         $options = [
             'base_uri' => config('atlassian.jira.host'),
-            'headers'  => [
-                'Accept'       => 'application/json',
-                'Content-Type' => 'application/json',
-            ],
+            'headers'  => $headers ,
         ];
 
         // Pipe the options through all middleware defined in the config
@@ -135,10 +132,13 @@ abstract class AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    protected function execute($method, $resource, $parameters = [], $asQueryParameters = false)
+    protected function execute($method, $resource, $parameters = [], $asQueryParameters = false , $headrs = [
+        'Accept'       => 'application/json',
+        'Content-Type' => 'application/json',
+    ])
     {
         $method = strtoupper($method);
-        $client = $this->createClient();
+        $client = $this->createClient($headrs);
 
         try {
             if ($this->async) {
