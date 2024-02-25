@@ -37,7 +37,7 @@ class Attachment
     {
         $response = $this->request->content($this->attachmentId, $parameters);
 
-        return json_decode($response->getBody(), $assoc);
+        return $response->getBody()->getContents();
     }
 
     public function get($parameters = [], $assoc = true)

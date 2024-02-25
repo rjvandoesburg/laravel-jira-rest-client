@@ -22,7 +22,7 @@ class AttachmentRequest extends AbstractRequest
      */
     public function content($attachmentId, $parameters = [])
     {
-        return $this->execute('get', "attachment/content/{$attachmentId}", $parameters , false , [] ) ;
+        return $this->execute('get', "attachment/content/{$attachmentId}", $parameters ) ;
     }
     public function get($attachmentId, $parameters = [])
     {
