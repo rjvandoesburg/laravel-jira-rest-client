@@ -65,7 +65,7 @@ abstract class AbstractRequest
     /**
      * @return \GuzzleHttp\Client
      */
-    public function createClient(  )
+    public function createClient()
     {
         // Default Options
         $options = [

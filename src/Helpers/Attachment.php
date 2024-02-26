@@ -17,7 +17,7 @@ class Attachment
     protected $attachmentId;
 
     /**
-     * Issue constructor.
+     * Attachment constructor.
      *
      * @param int|string $attachmentId
      */
@@ -26,13 +26,6 @@ class Attachment
         $this->request = app(AttachmentRequest::class);
         $this->attachmentId = $attachmentId;
     }
-
-    /**
-     * @param \Atlassian\JiraRest\Requests\Issue\Parameters\GetParameters|array $parameters
-     * @param bool $assoc
-     *
-     * @return array|\stdClass
-     */
     public function content($parameters = [], $assoc = true)
     {
         $response = $this->request->content($this->attachmentId, $parameters);

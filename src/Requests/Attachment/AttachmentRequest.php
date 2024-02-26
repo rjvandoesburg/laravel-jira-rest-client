@@ -7,9 +7,9 @@ use Atlassian\JiraRest\Requests\AbstractRequest;
 class AttachmentRequest extends AbstractRequest
 {
     /**
-     * Returns a full representation of the issue for the given issue key.
+     * Returns a  representation of the attachment for the given attachment key.
      *
-     * @see https://developer.atlassian.com/cloud/jira/platform/rest/v3/#api-rest-api-3-issue-issueIdOrKey-get
+     * @see https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-attachments
      *
      * @param  string|int  $attachmentId
      * @param  array|\Illuminate\Contracts\Support\Arrayable  $parameters
