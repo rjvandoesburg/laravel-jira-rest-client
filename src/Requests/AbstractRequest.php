@@ -73,7 +73,7 @@ abstract class AbstractRequest
             'headers'  => [
                 'Accept'       => 'application/json',
                 'Content-Type' => 'application/json',
-            ],
+            ] ,
         ];
 
         // Pipe the options through all middleware defined in the config
@@ -135,7 +135,7 @@ abstract class AbstractRequest
      * @throws \Atlassian\JiraRest\Exceptions\JiraUnauthorizedException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    protected function execute($method, $resource, $parameters = [], $asQueryParameters = false)
+    protected function execute($method, $resource, $parameters = [], $asQueryParameters = false  )
     {
         $method = strtoupper($method);
         $client = $this->createClient();
